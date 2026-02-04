@@ -31,11 +31,16 @@ public class Biblioteca{
 
         String genero = libro.getGenero();
         this.libros.add(libro); //añadimos a la lista de libros 
-        if(!this.porGenero.containsKey(genero)){
-            this.porGenero.put(genero, new ArrayList<>()); //si no existe el genero lo creamos
-        }
-        this.porGenero.get(genero).add(libro); //añadimos el libro al genero correspondiente
+        //if(!this.porGenero.containsKey(genero)){
+            //this.porGenero.put(genero, new ArrayList<>()); //si no existe el genero lo creamos
+        //}
+        //this.porGenero.get(genero).add(libro); //añadimos el libro al genero correspondiente
+        this.porGenero.computeIfAbsent(genero, k -> new ArrayList<>()).add(libro); //esto hace lo mismo que las 3 lineas comentadas arriba
 
+    }
+
+    public List<Libro> buscarPorGenero(String genero){
+        return this.porGenero.getOrDefault(genero, new ArrayList<>()); //si no existe el genero devuelve una lista vacia
     }
 
     
