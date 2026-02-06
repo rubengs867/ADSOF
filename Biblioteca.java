@@ -31,6 +31,7 @@ public class Biblioteca {
     this.libros = new ArrayList<>(); // inicializamos la lista de libros
   }
 
+
   public void añadirLibro(Libro libro) {
     String genero = libro.getGenero();
     int año = libro.getAño();
@@ -54,6 +55,7 @@ public class Biblioteca {
    */
   public List<Libro> librosPorGenero(String genero) {
     return this.porGenero.getOrDefault(genero, new ArrayList<>()); // si no existe el genero devuelve una lista vacia
+    //La lista vacía es mejor que null porque así evitamos NullPointerException al intentar acceder a una lista que no existe
   }
 
   /**
@@ -63,7 +65,7 @@ public class Biblioteca {
   public List<Libro> librosPosterioresA(int añoPublicacion) {
     List<Libro> total = new ArrayList<>();
     
-    // Guarda las listas de libros cuyo año de publicación es mayor al dato pasado
+    // Guarda las listas de libros cuyo año de publicación es mayor al dato pasado, pero lo devuelve como un mapa ordenado por año
     NavigableMap<Integer, List<Libro>> librosFiltrados = this.porAño.tailMap(añoPublicacion, false);
 
     // Junto todos los libros en la misma lista
