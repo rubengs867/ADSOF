@@ -52,6 +52,7 @@ public class Biblioteca {
   public void añadirLibro(Libro libro) {
     // Control de errores
     if(libro == null) return;
+    if(this.libros.contains(libro)) return; // Si el libro ya existe, no lo añadimos
 
     String genero = libro.getGenero();
     int año = libro.getAño();

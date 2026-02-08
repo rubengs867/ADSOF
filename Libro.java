@@ -113,4 +113,11 @@ public class Libro{
       return base + ", Género: "+ this.genero + ", Año: " + this.año;
     return base;
   }
+  @Override
+  public boolean equals(Object o){
+    if (this == o) return true; // Si es el mismo objeto, son iguales, comparamos direcciones de memoria
+    if (o == null || getClass() != o.getClass()) return false; // Si el objeto es null o de diferente clase, no son iguales
+    Libro libro = (Libro) o; // Convertimos el objeto a Libro
+    return this.isbn.equals(libro.getISBN()); // Comparamos los ISBN
+  }
 }
