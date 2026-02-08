@@ -67,9 +67,5 @@ public class BibliotecaApp {
     System.out.println("\nPrueba 8: Imprimir los libros con género \"Novela\"\n");
     System.out.println("Output esperado: lista vacía\n");
     System.out.println("\n " + biblio.librosPorGenero("Novela") + "\n");
-
-    System.out.println("\nPrueba 9: Devolver un libro que nunca a sido prestado\n");
-    libros.get(0).devolver();
-    System.out.println("\n " + libros.get(0) + "\n");
   }
 }

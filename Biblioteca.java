@@ -54,6 +54,7 @@ public class Biblioteca {
 
   /**
    * Añade un libro a la biblioteca.
+   * En caso de existir, no lo añadimos.
    */
   public void añadirLibro(Libro libro) {
     // Control de errores

@@ -113,6 +113,10 @@ public class Libro{
       return base + ", Género: "+ this.genero + ", Año: " + this.año;
     return base;
   }
+
+  /**
+   * Compara si dos libros son iguales.
+  */
   @Override
   public boolean equals(Object o){
     if (this == o) return true; // Si es el mismo objeto, son iguales, comparamos direcciones de memoria
