@@ -38,9 +38,19 @@ public class BibliotecaApp {
     System.out.println("\n " + biblio.librosPorGenero("Novela") + "\n");
     System.out.println("\nPrueba 4: Imprimir los libros posteriores a 2026 \nOutput esperado: Lista vacía\n");
     System.out.println("\n " + biblio.librosPosterioresA(2026) + "\n");
-    System.out.println("\nPrueba 5: Imprimir los libros posteriores a 1800\n Output esperado: 3 libros\n");
+    System.out.println("\nPrueba 5: Imprimir los libros posteriores a 1800\n Output esperado: 5 libros: El murcielago, Learn Java y Learn C (3 veces)\n");
     System.out.println("\n " + biblio.librosPosterioresA(1800) + "\n");
-    System.out.println("\nPrueba 6: Imprimir los libros posteriores a 1900\n Output esperado: 2 libros\n");
+    System.out.println("\nPrueba 6: Imprimir los libros posteriores a 1900\n Output esperado: 4 libros: Learn Java y Learn C (3 veces)\n");
     System.out.println("\n " + biblio.librosPosterioresA(1900) + "\n");
+    System.out.println("\nPrueba 7: Imprimir los libros posteriores a 1899\n Output esperado: 5 libros: El murcielago, Learn Java y Learn C (3 veces)\n");
+    System.out.println("\n " + biblio.librosPosterioresA(1899) + "\n");
+    System.out.println("\nPrueba 8: Imprimir todos los libros\n");
+    System.out.println("\n " + biblio.librosPosterioresA(0000) + "\n");
+    System.out.println("\nPrueba 9: se pasa un número negativo\n");
+    System.out.println("\n " + biblio.librosPosterioresA(-1000) + "\n");
+
+    System.out.println("\nPrueba 9: Devolver un libro que nunca a sido prestado\n");
+    libros.get(0).devolver();
+    System.out.println("\n " + libros.get(0) + "\n");
   }
 }
