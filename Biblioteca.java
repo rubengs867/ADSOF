@@ -30,10 +30,16 @@ public class Biblioteca {
     if (libros == null) {
       this.libros = new ArrayList<>();
     } else {
-      this.libros = libros;
+      this.libros = libros; 
     }
     this.porGenero = new HashMap<>(); // inicializamos el mapa
     this.porAño = new TreeMap<>(); // inicializamos el treemap
+    for (Libro libro : this.libros) { // Añadimos los libros al mapa y treemap
+      String genero = libro.getGenero();
+      int año = libro.getAño();
+      this.porGenero.computeIfAbsent(genero, k -> new ArrayList<>()).add(libro);
+      this.porAño.computeIfAbsent(año, k -> new ArrayList<>()).add(libro);
+    }
   }
   /**
    * Constructor.
