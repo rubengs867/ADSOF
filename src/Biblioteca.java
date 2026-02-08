@@ -66,11 +66,14 @@ public class Biblioteca {
     
     this.libros.add(libro); // Añadimos el libro a la lista
     
-    /* Añadimos el libro al Hashmap en función del género */
-    this.porGenero.computeIfAbsent(genero, k -> new ArrayList<>()).add(libro);
+    /* En caso de haber género y año se añaden los libros */
+    if(libro.getGenero() != null) {
+      /* Añadimos el libro al Hashmap en función del género */
+      this.porGenero.computeIfAbsent(genero, k -> new ArrayList<>()).add(libro);
 
-    /* Añadimos el libro al Treemap en función del año */
-    this.porAño.computeIfAbsent(año, k -> new ArrayList<>()).add(libro);
+      /* Añadimos el libro al Treemap en función del año */
+      this.porAño.computeIfAbsent(año, k -> new ArrayList<>()).add(libro);
+    }
   }
 
   /**

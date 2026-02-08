@@ -109,7 +109,8 @@ public class Libro{
   @Override
   public String toString(){
     String base = "ISBN: " + this.isbn + ", " + descripcion() + "("+this.ejemplaresDisponibles+ " ejemplares disponibles)";
-    if((this.getGenero() != null) && (this.getAño() >= 0 ))
+    /* Solo se comprueba el género, porque o existe género y año de publicación, o no existe ninguno */
+    if((this.getGenero() != null))
       return base + ", Género: "+ this.genero + ", Año: " + this.año;
     return base;
   }
