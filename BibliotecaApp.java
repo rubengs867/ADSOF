@@ -21,7 +21,7 @@ public class BibliotecaApp {
     for(Libro l : libros)
       biblio.añadirLibro(l);
 
-    System.out.println("\nPrueba 1:\n");
+    System.out.println("\nPrueba 1: Imprimir la lista de libros de un género determinado (Ficcion)\n");
     // Imprimo los libros con género X
     System.out.println("\n\n" + biblio.librosPorGenero("Ficcion") + "\n");
     // Imprimo los libros posteriores a X año
@@ -34,8 +34,13 @@ public class BibliotecaApp {
     } 
     System.out.println("\n " + biblio.librosPorGenero("Poesia") + "\n");
 
-    System.out.println("\nPrueba 3:\n");
+    System.out.println("\nPrueba 3: Imprimir los libros con género \"Novela\"\nOutput esperado: ----\n");
     System.out.println("\n " + biblio.librosPorGenero("Novela") + "\n");
+    System.out.println("\nPrueba 4: Imprimir los libros posteriores a 2026 \nOutput esperado: Lista vacía\n");
     System.out.println("\n " + biblio.librosPosterioresA(2026) + "\n");
+    System.out.println("\nPrueba 5: Imprimir los libros posteriores a 1800\n Output esperado: 3 libros\n");
+    System.out.println("\n " + biblio.librosPosterioresA(1800) + "\n");
+    System.out.println("\nPrueba 6: Imprimir los libros posteriores a 1900\n Output esperado: 2 libros\n");
+    System.out.println("\n " + biblio.librosPosterioresA(1900) + "\n");
   }
 }
