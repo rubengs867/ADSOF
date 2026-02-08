@@ -1,13 +1,9 @@
-/*
- * Libro
- * Descripción: Implementación de la clase Libro.
- * 
- * Version 2.1
- * Autores: Alejandro Seguido y Rubén García
- */
-
 /**
- * Clase Libro.
+ * Representa un libro físico dentro del sistema de la biblioteca.
+ * 
+ * @author Alejandro Seguido
+ * @author Rubén García
+ * @version Version 2.1
  */
 public class Libro{
   private String isbn = null;
@@ -20,6 +16,11 @@ public class Libro{
   /**
    * Constructor.
    * No instancia género ni año.
+   * 
+   * @param isbn ISBN del libro.
+   * @param titulo Titulo del libro.
+   * @param autor Autor del libro.
+   * @param ejemplaresDisponibles Número de ejemplares disponibles del libro.
    */
   public Libro( String isbn, String titulo, 
                 String autor, int ejemplaresDisponibles) 
@@ -33,6 +34,13 @@ public class Libro{
   /**
    * Constructor.
    * Instancia todos los atributos.
+   * 
+   * @param isbn ISBN del libro.
+   * @param titulo Titulo del libro.
+   * @param autor Autor del libro.
+   * @param ejemplaresDisponibles Número de ejemplares disponibles del libro.
+   * @param genero Género del libro.
+   * @param año Año de publicación del libro.
    */
   public Libro( String isbn,    String titulo, 
                 String autor,   int ejemplaresDisponibles, 
@@ -44,14 +52,16 @@ public class Libro{
   }
 
   /**
-   * Verifica si hay ejemplares disponibles.
+   * Verifica la disponiblilidad de ejemplares.
+   * @return True si hay al menos un ejemplar disponible, False en caso contrario.
   */
   public boolean estaDisponible() {
     return this.ejemplaresDisponibles > 0;
   }
 
   /**
-   * Disminuye el número de ejemplares en una unidad.
+   * Realiza el préstamo de un libro reduciendo el stock.
+   * @return True si hay al menos un ejemplar disponible, False en caso contrario.
    */
   public boolean prestar() {
     if(estaDisponible()){
@@ -69,24 +79,28 @@ public class Libro{
 
   /**
    * Devuelve el ISBN del libro.
+   * @return cadena de caracteres del ISBN.
    */
   public String getISBN() {
     return this.isbn;
   }
   /**
    * Devuelve el autor del libro.
+   * @return cadena de caracteres del nombre del autor.
    */
   public String getAutor() {
     return this.autor;
   }
   /**
    * Devuelve el género del libro.
+   * @return cadena de caracteres del género del libro.
    */
   public String getGenero() {
       return this.genero;
   }
   /**
    * Devuelve el año del libro.
+   * @return integer del año de publicación.
    */
   public int getAño() {
     return this.año;
@@ -94,7 +108,7 @@ public class Libro{
 
   /**
    * Obtiene la descripción del libro.
-   * Formato: 'TÍTULO por AUTOR [ESTADO(Disponible/No disponible)]'
+   * @return cadena de caracteres con formato: 'TÍTULO por AUTOR [ESTADO(Disponible/No disponible)]'
    */
   private String descripcion() {
     String estado = this.estaDisponible() ? "Disponible" : "No disponible";
@@ -103,8 +117,9 @@ public class Libro{
   }
 
   /**
-   * Imprime el objeto Libro. 
+   * Devuelve una representación textual del libro.
    * En caso de no haber género ni año, no los imprime.
+   * @return cadena de caracteres el formato: ISBN, Título, Autor y Disponibilidad.
    */
   @Override
   public String toString(){
@@ -117,6 +132,8 @@ public class Libro{
 
   /**
    * Compara si dos libros son iguales.
+   * @param o Objeto a comparar.
+   * @return True si los ISBN coinciden, False en caso contrario.
   */
   @Override
   public boolean equals(Object o){

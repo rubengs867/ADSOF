@@ -1,14 +1,24 @@
-/*
- * BibliotecaApp
- * Descripción: Implementa el main
- * 
- * Version 2.2
- * Autores: Alejandro Seguido y Rubén García
- */
-
 import java.util.*;
 
+/**
+ * BibliotecaApp
+ * Esta clase implementa el punto de entrada de la aplicación y las pruebas 
+ * unitarias manuales para las clases Biblioteca y Libros.
+ * 
+ * El programa ejecuta 8 pruebas consecutivas para validar los filtros 
+ * por año de publicación y género.
+ * 
+ * @author Alejandro Seguido
+ * @author Rubén García
+ * @version Version 2.2
+ *
+ */
 public class BibliotecaApp {
+  /**
+   * Punto de entrada principal del programa. 
+   * @param args Arreglo de cadenas que contiene los argumentos 
+   * pasados a través de la línea de comandos.
+   */
   public static void main (String[] args)
   {
     /* Crea una array de libros */

@@ -1,16 +1,13 @@
-/*
- * Biblioteca
- * Descripción: Implementación de la clase Biblioteca.
- * 
- * Version 1.2
- * Autores: Alejandro Seguido y Rubén García
- */
-
 import java.util.*;
 
 /**
- * Clase Biblioteca.
- * Compuesto por una lista de libros.
+ * Representa una biblioteca que gestiona una colección de libros.
+ * Permite realizar búsquedas eficientes por género y año mediante el uso 
+ * de estructuras indexadas (HashMap y TreeMap).
+ * 
+ * @author Alejandro Seguido
+ * @author Rubén García
+ * @version Version 1.2
  */
 public class Biblioteca {
 
@@ -22,6 +19,8 @@ public class Biblioteca {
 
   /**
    * Constructor. En caso de pasar libros = null, se crea un array de libros vacío.
+   * @param nombre Nombre de la biblioteca
+   * @param libros Lista inicial de libros
    */
   public Biblioteca(String nombre, List<Libro> libros) {
     this.nombre = nombre;
@@ -42,6 +41,7 @@ public class Biblioteca {
   }
   /**
    * Constructor. Inicializa el resto de atributos.
+   * @param nombre Nombre de la biblioteca
    */
   public Biblioteca(String nombre) {
     this.nombre = nombre;
@@ -52,7 +52,9 @@ public class Biblioteca {
 
   /**
    * Añade un libro a la biblioteca.
-   * En caso de existir, no lo añadimos.
+   * Si el libro es null o ya existe en la biblioteca, no se realiza ninguna acción.
+   * 
+   * @param libro Lista de libros.
    */
   public void añadirLibro(Libro libro) {
     // Control de errores
@@ -75,15 +77,19 @@ public class Biblioteca {
   }
 
   /**
-   * Devuelve una lista con todos los libros que pertenecen a un género.
-   * En caso de no existir el género, devuelve una lista vacía.
+   * Devuelve todos los libros que pertenecen a un género específico.
+   *
+   * @param genero Género del libro a buscar.
+   * @return Lista con los libros encontrados, o una lista vacía si el género no existe.
    */
   public List<Libro> librosPorGenero(String genero) {
     return this.porGenero.getOrDefault(genero, new ArrayList<>());
   }
   /**
-   * Devuelve una lista con todos los libros publicados después de un año.
-   * En caso de no haber, devuelve una lista vacía.
+   * Busca libros cuya fecha de publicación sea estrictamente posterior al año indicado.
+   *
+   * @param añoPublicacion Año de publicación límite del libro
+   * @return Lista de libros publicados después del año dado, o lista vacía en caso de no haber
    */
   public List<Libro> librosPosterioresA(int añoPublicacion) {
     List<Libro> total = new ArrayList<>();
