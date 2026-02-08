@@ -21,8 +21,7 @@ public class Biblioteca {
   private TreeMap<Integer, List<Libro>> porAño;
 
   /**
-   * Constructor.
-   * En caso de pasar libros = null, se crea un array de libros vacío.
+   * Constructor. En caso de pasar libros = null, se crea un array de libros vacío.
    */
   public Biblioteca(String nombre, List<Libro> libros) {
     this.nombre = nombre;
@@ -42,8 +41,7 @@ public class Biblioteca {
     }
   }
   /**
-   * Constructor.
-   * Inicializa el resto de atributos.
+   * Constructor. Inicializa el resto de atributos.
    */
   public Biblioteca(String nombre) {
     this.nombre = nombre;
