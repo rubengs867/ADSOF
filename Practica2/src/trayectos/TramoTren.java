@@ -10,6 +10,10 @@ public class TramoTren extends TramoTrayecto {
     this.numParadas = numParadas;
   }
 
+  public double tiempo(Linea linea){
+    return this.linea.getTiempo() * (this.numParadas -1);
+  }
+
   @Override
   public String toString() {
     return "En tren de la línea "+this.linea+" "+super.toString();
