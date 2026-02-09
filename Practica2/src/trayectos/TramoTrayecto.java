@@ -8,10 +8,10 @@ public abstract class TramoTrayecto {
     this.destino = destino;
   }
 
-  public abstract int tiempo();
+  public abstract double tiempo();
 
   @Override
   public String toString(){
-    return "desde "+this.origen+ "a "+this.destino+ ": "+this.tiempo() + " minutos";
+    return "desde "+this.origen+ " a "+this.destino+ ": "+this.tiempo() + " minutos";
   }
 }

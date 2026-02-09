@@ -6,14 +6,14 @@ public enum Linea {
   C5("amarilla", 30);
 
   private String color;
-  private int tiempo;
+  private double tiempo;
   /*En este constructor le pasamos tanto el color como el tiempo. Por tanto el enum contiene dos piezas de información */
-  private Linea(String color, int tiempo){
+  private Linea(String color, double tiempo){
     this.color = color;
     this.tiempo = tiempo;
   }
 
-  public int getTiempo(){
+  public double getTiempo(){
     return this.tiempo;
   }
   public String toString(){
