@@ -1,8 +1,10 @@
 package trayectos;
+
 public class Main {
   public static void main(String[] args) {
     TramoTrayecto[] trayecto = {
       new TramoTren("Sol Renfe", "Cantoblanco Renfe", Linea.C4, 4),
+      new TramoAPie("Cantoblanco Renfe", "EPS", 2.6, Ritmo.RAPIDO),
     };
 
 
