@@ -7,9 +7,8 @@ public abstract class TramoTrayecto {
     this.origen = origen;
     this.destino = destino;
   }
-  public double tiempo(){
-    return 0.0;
-  }
+
+  public abstract int tiempo();
 
   @Override
   public String toString(){

@@ -7,7 +7,7 @@ public enum Linea {
 
   private String color;
   private int tiempo;
-
+  /*En este constructor le pasamos tanto el color como el tiempo. Por tanto el enum contiene dos piezas de información */
   private Linea(String color, int tiempo){
     this.color = color;
     this.tiempo = tiempo;

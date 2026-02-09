@@ -9,9 +9,9 @@ public class TramoTren extends TramoTrayecto {
     this.linea = linea;
     this.numParadas = numParadas;
   }
-
-  public double tiempo(Linea linea){
-    return this.linea.getTiempo() * (this.numParadas -1);
+  @Override
+  public int tiempo(){
+    return this.linea.getTiempo() * (this.numParadas);
   }
 
   @Override
