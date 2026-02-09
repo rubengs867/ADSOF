@@ -1,5 +1,4 @@
 package trayectos;
-
 public class Main {
   public static void main(String[] args) {
     TramoTrayecto[] trayecto = {

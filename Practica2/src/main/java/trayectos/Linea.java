@@ -1,4 +1,4 @@
-package Practica2.src.trayectos;
+package trayectos;
 
 public enum Linea {
   C1("azul claro"),
