@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <help_text/>
+  <zoom_level>12</zoom_level>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1428</x>
+      <y>492</y>
+      <w>264</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+m2=*
+r2=tareas
+m1=0..1</panel_attributes>
+    <additional_attributes>150.0;170.0;200.0;170.0;200.0;10.0;10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>996</x>
+      <y>144</y>
+      <w>1104</w>
+      <h>264</h>
+    </coordinates>
+    <panel_attributes>Asistente
+--
+-llmsDefecto: LLMs
+-historial: List&lt;Tarea&gt;
+-TareasSolicitadas: Treeset&lt;Integer, List&lt;Tarea&gt; &gt;
+-TareasAplicadas: Treeset&lt;Integer, List&lt;Tarea&gt; &gt;
+--
+-elegirTarea(String solicitud): Tarea
++procesarRespuesta(String solicitud): String
+-guardarTarea(	Tarea t, String nombre, String solicitud, String respuesta, timestamp tSolicitud, timestamp tRespuesta): boolean
++getTareasSolicitadas(): List&lt;Tarea&gt;
++getTareasAplicadas(): List&lt;Tarea&gt;
++setTareasAplicadas(): boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1308</x>
+      <y>396</y>
+      <w>108</w>
+      <h>204</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;
+m2=*
+r2=tareas
+m1=asistente</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;150.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>912</x>
+      <y>1212</y>
+      <w>228</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>Generacion
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1188</x>
+      <y>1212</y>
+      <w>228</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>Optimizacion
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1428</x>
+      <y>1020</y>
+      <w>312</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>Consulta
+--
+
+--
++getCoste(t): double
++resolverTarea(): String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1008</x>
+      <y>1140</y>
+      <w>132</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>90.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1212</x>
+      <y>1140</y>
+      <w>108</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;70.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1428</x>
+      <y>900</y>
+      <w>132</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;90.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>300</x>
+      <y>1020</y>
+      <w>288</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;abstract&gt;&gt;
+/InformacionAdicional/
+--
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>144</x>
+      <y>1104</y>
+      <w>228</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>170.0;10.0;10.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>36</x>
+      <y>1212</y>
+      <w>228</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>CodigoMetodoActual
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>300</x>
+      <y>1212</y>
+      <w>228</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>ClaseActual
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>408</x>
+      <y>1104</y>
+      <w>36</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>564</x>
+      <y>1212</y>
+      <w>228</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>TodoProyecto
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>516</x>
+      <y>1104</y>
+      <w>180</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;130.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>612</x>
+      <y>576</y>
+      <w>516</w>
+      <h>216</h>
+    </coordinates>
+    <panel_attributes>LLMs
+--
+-APIkey:String
+-nombre:String
+-temperatura: double
+-costePorToken: double
+--
++resolver(String prompt, InformacionAdicional[] i): String
++resolver(String prompt): String
++getCoste(): double</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1056</x>
+      <y>396</y>
+      <w>72</w>
+      <h>204</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;
+m2=1..*
+r2=llms</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;150.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1116</x>
+      <y>588</y>
+      <w>192</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+r1=llms</panel_attributes>
+    <additional_attributes>10.0;20.0;140.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>876</x>
+      <y>1020</y>
+      <w>528</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;abstract&gt;&gt;
+/DeCodigo/
+--
+
+--
++getCoste(): double
++resolverTarea(): String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1260</x>
+      <y>900</y>
+      <w>120</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>80.0;10.0;10.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>576</x>
+      <y>1020</y>
+      <w>324</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;
+m2=*
+r2=infoAdicional</panel_attributes>
+    <additional_attributes>250.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>120</x>
+      <y>192</y>
+      <w>504</w>
+      <h>192</h>
+    </coordinates>
+    <panel_attributes>Programador
+--
+-nombre:String
+-github:String
+-costeAcumulado: double
+--
++solicitarAsistencia(): String
++aplicarResultado(): boolean
++añadirCoste(int coste): boolean
++getCoste(): double</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>612</x>
+      <y>180</y>
+      <w>408</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+r1=*
+m1=programadores</panel_attributes>
+    <additional_attributes>10.0;20.0;320.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>1812</x>
+      <y>540</y>
+      <w>456</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>elegirTarea se llama dentro de procesarRespuesta.
+Una vez elegida la tarea, se borra del
+árbol TareasSolicitadas, aumenta nSolicitudes en 
+una unidad, y se vuelve a introducir.
+
+setTareasAplicadas borra la última tarea añadida al 
+historial, del árbol TareasAplicadas, aumenta 
+nAplicadas en una unidad, y lo vuelve a introducir.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1944</x>
+      <y>396</y>
+      <w>36</w>
+      <h>168</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1284</x>
+      <y>576</y>
+      <w>324</w>
+      <h>336</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;abstract&gt;&gt;
+/Tarea/
+--
+-nombre: String
+-prompt: String
+-lenguaje: String
+-nSolicitudes: int
+-nAplicadas: int
+--
+/+resolverTarea(): String/
+/+getCoste(): double/
++getPrompt(): String
++setPrompt(String prompt): boolean
++getNSolicitudes(): int
++addSolicitud(): boolean
++getNAplicadas(): int
++addAplicada(): boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>120</x>
+      <y>12</y>
+      <w>1104</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>DUDA:
+declaración Treeset
+timestamp ¿es un tipo de dato?
+puedo declarar getCoste() en Programador, LLMs y en Tarea?</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

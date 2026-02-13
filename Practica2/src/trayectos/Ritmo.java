@@ -9,7 +9,8 @@ package trayectos;
 public enum Ritmo{
   SUAVE(15),
   MODERADO(10),
-  RAPIDO(8);
+  RAPIDO(8),
+  DEFECTO(MODERADO);
 
   private double ritmo;
 

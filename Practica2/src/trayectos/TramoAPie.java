@@ -11,7 +11,7 @@ public class TramoAPie extends TramoTrayecto {
   private double km;
 
   /**
-   * Establece de forma predeterminada el ritmo como MODERADO.
+   * Establece de el ritmo por DEFECTO que haya establecido en Ritmo.
    * @param origen Origen del tramo.
    * @param destino Destino del tramo.
    * @param km Distancia en kilómetros del tramo.
@@ -19,7 +19,7 @@ public class TramoAPie extends TramoTrayecto {
   public TramoAPie(String origen, String destino, double km) {
     super(origen, destino);
     this.km = km;
-    this.ritmo = Ritmo.MODERADO;
+    this.ritmo = Ritmo.DEFECTO;
   }
   /**
    * Iniciliza todos los atributos del tramo.
