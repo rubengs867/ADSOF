@@ -249,18 +249,6 @@ r2=llms</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;150.0</additional_attributes>
   </element>
   <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1116</x>
-      <y>588</y>
-      <w>192</w>
-      <h>48</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-
-r1=llms</panel_attributes>
-    <additional_attributes>10.0;20.0;140.0;20.0</additional_attributes>
-  </element>
-  <element>
     <id>UMLClass</id>
     <coordinates>
       <x>876</x>
@@ -403,5 +391,19 @@ declaración Treeset
 timestamp ¿es un tipo de dato?
 puedo declarar getCoste() en Programador, LLMs y en Tarea?</panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1116</x>
+      <y>588</y>
+      <w>192</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+r1=llm
+m1=1
+m2=*</panel_attributes>
+    <additional_attributes>10.0;20.0;140.0;20.0</additional_attributes>
   </element>
 </diagram>
