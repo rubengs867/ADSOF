@@ -1,78 +1,369 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="15.1">
   <help_text/>
-  <zoom_level>12</zoom_level>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1428</x>
-      <y>492</y>
-      <w>264</w>
-      <h>240</h>
-    </coordinates>
-    <panel_attributes>lt=-&gt;
-m2=*
-r2=tareas
-m1=0..1</panel_attributes>
-    <additional_attributes>150.0;170.0;200.0;170.0;200.0;10.0;10.0;10.0;10.0;70.0</additional_attributes>
-  </element>
+  <zoom_level>10</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>996</x>
-      <y>144</y>
-      <w>1104</w>
-      <h>264</h>
+      <x>620</x>
+      <y>310</y>
+      <w>920</w>
+      <h>220</h>
     </coordinates>
     <panel_attributes>Asistente
 --
--llmsDefecto: LLMs
--historial: List&lt;Tarea&gt;
--TareasSolicitadas: Treeset&lt;Integer, List&lt;Tarea&gt; &gt;
--TareasAplicadas: Treeset&lt;Integer, List&lt;Tarea&gt; &gt;
+
+
 --
--elegirTarea(String solicitud): Tarea
-+procesarRespuesta(String solicitud): String
--guardarTarea(	Tarea t, String nombre, String solicitud, String respuesta, timestamp tSolicitud, timestamp tRespuesta): boolean
-+getTareasSolicitadas(): List&lt;Tarea&gt;
-+getTareasAplicadas(): List&lt;Tarea&gt;
-+setTareasAplicadas(): boolean</panel_attributes>
++ procesarRespuesta(solicitud:String): String
+- asignarTarea(solicitud:String): Tarea
+- añadirTareaSolicitada(t:Tarea): boolean
++ mostrarRespuesta(s:String): boolean
++ aplicarRespuesta(): boolean</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1308</x>
-      <y>396</y>
-      <w>108</w>
-      <h>204</h>
+      <x>380</x>
+      <y>430</y>
+      <w>260</w>
+      <h>270</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=_llmDefecto_</panel_attributes>
+    <additional_attributes>10.0;250.0;10.0;160.0;240.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>160</x>
+      <y>680</y>
+      <w>430</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>LLMs
+--
+- APIkey:String
+- nombre:String
+- temperatura: double
+- costePorToken: double
+--
++ resolver(tokens:int[]): String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>530</x>
+      <y>520</y>
+      <w>180</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;
+m2=1..*
+r2=llms
+r1=*</panel_attributes>
+    <additional_attributes>150.0;10.0;150.0;80.0;10.0;90.0;10.0;160.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>580</x>
+      <y>700</y>
+      <w>110</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+r1=llm
+m1=*</panel_attributes>
+    <additional_attributes>10.0;20.0;90.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>670</x>
+      <y>680</y>
+      <w>260</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>GestorLLM
+--
+--
+- calcularTokens(s:String): int
++ calcularCoste(s:String): double
++ ejecutarLLM(s:String[]):String
+- tokenizar(s:String): int[]
+- destokenizar(token:int[]): String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>710</x>
+      <y>830</y>
+      <w>170</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enum&gt;&gt;
+Lenguage
+--
++ JAVA
++ C
++ PYTHON
++ PHP
++ DEFECTO</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>870</x>
+      <y>830</y>
+      <w>200</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+r1=lenguage
+m2=*</panel_attributes>
+    <additional_attributes>10.0;20.0;180.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>920</x>
+      <y>690</y>
+      <w>150</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+r1=gestorLLM
+m2=*</panel_attributes>
+    <additional_attributes>10.0;20.0;130.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1080</x>
+      <y>520</y>
+      <w>70</w>
+      <h>180</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;
 m2=*
 r2=tareas
-m1=asistente</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;150.0</additional_attributes>
+r1=0..1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;160.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>912</x>
-      <y>1212</y>
-      <w>228</w>
-      <h>108</h>
+      <x>1050</x>
+      <y>680</y>
+      <w>330</w>
+      <h>230</h>
     </coordinates>
-    <panel_attributes>Generacion
+    <panel_attributes>&lt;&lt;abstract&gt;&gt;
+/Tarea/
 --
+- nombre: String
+- prompt: String
+- nSolicitudes: int
+
+--
+/+ resolverTarea(): String/
+
 </panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1180</x>
+      <y>610</y>
+      <w>280</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;
+m2=*
+r2=tareas
+m1=0..1</panel_attributes>
+    <additional_attributes>200.0;170.0;260.0;170.0;260.0;10.0;10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1500</x>
+      <y>520</y>
+      <w>150</w>
+      <h>300</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;
+m2=*
+r2=historial</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;100.0;80.0;100.0;80.0;280.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1530</x>
+      <y>340</y>
+      <w>230</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-&gt;&gt;&gt;&gt;&gt;
+r1=*
+m1=programadores</panel_attributes>
+    <additional_attributes>210.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1740</x>
+      <y>340</y>
+      <w>490</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>Programador
+--
+- nombre:String
+- github:String
+
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1830</x>
+      <y>490</y>
+      <w>120</w>
+      <h>330</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+r1=programador
+m2=*</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;310.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1540</x>
+      <y>800</y>
+      <w>330</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>Solicitud
+--
+- solicitud: String
+- respuesta: String
+- horaSolicitud: Timestamp
+- horaRespuesta: Timestamp
+--
++ solicitarTarea(): boolean
++ aplicarTarea(): boolean
++ calcularCoste(): double</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1370</x>
+      <y>820</y>
+      <w>190</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+r1=tarea
+m2=*</panel_attributes>
+    <additional_attributes>10.0;20.0;170.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1370</x>
+      <y>900</y>
+      <w>270</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;250.0;150.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>1540</x>
+      <y>1050</y>
+      <w>410</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>En función de si la tarea necesita algún tipo de 
+información adicional para ser ejecutada, la función 
+'resolverTarea' pasa esa información en un array de
+String al gestor LLM, quien tokeniza la informacion y 
+se la pasa al LLM.</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1188</x>
-      <y>1212</y>
-      <w>228</w>
-      <h>108</h>
+      <x>1180</x>
+      <y>1050</y>
+      <w>260</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>Consulta
+--
+
+--
++ resolverTarea(): String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1180</x>
+      <y>900</y>
+      <w>110</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;90.0;150.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1040</x>
+      <y>900</y>
+      <w>100</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>80.0;10.0;10.0;150.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>720</x>
+      <y>1050</y>
+      <w>440</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;abstract&gt;&gt;
+/DeCodigo/
+--
+
+--
++ resolverTarea(): String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>980</x>
+      <y>1210</y>
+      <w>190</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>Optimizacion
 --
@@ -82,26 +373,23 @@ m1=asistente</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1428</x>
-      <y>1020</y>
-      <w>312</w>
-      <h>108</h>
+      <x>750</x>
+      <y>1210</y>
+      <w>190</w>
+      <h>90</h>
     </coordinates>
-    <panel_attributes>Consulta
+    <panel_attributes>Generacion
 --
-
---
-+getCoste(t): double
-+resolverTarea(): String</panel_attributes>
+</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1008</x>
-      <y>1140</y>
-      <w>132</w>
-      <h>96</h>
+      <x>830</x>
+      <y>1150</y>
+      <w>110</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>90.0;10.0;10.0;60.0</additional_attributes>
@@ -109,10 +397,10 @@ m1=asistente</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1212</x>
-      <y>1140</y>
-      <w>108</w>
-      <h>96</h>
+      <x>1000</x>
+      <y>1150</y>
+      <w>90</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;70.0;60.0</additional_attributes>
@@ -120,21 +408,23 @@ m1=asistente</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1428</x>
-      <y>900</y>
-      <w>132</w>
-      <h>144</h>
+      <x>470</x>
+      <y>1050</y>
+      <w>270</w>
+      <h>50</h>
     </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;90.0;100.0</additional_attributes>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;
+m2=*
+r2=infoAdicional</panel_attributes>
+    <additional_attributes>250.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>300</x>
-      <y>1020</y>
-      <w>288</w>
-      <h>96</h>
+      <x>240</x>
+      <y>1050</y>
+      <w>240</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>&lt;&lt;abstract&gt;&gt;
 /InformacionAdicional/
@@ -146,71 +436,32 @@ m1=asistente</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>144</x>
-      <y>1104</y>
-      <w>228</w>
-      <h>132</h>
+      <x>110</x>
+      <y>1120</y>
+      <w>190</w>
+      <h>110</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>170.0;10.0;10.0;90.0</additional_attributes>
   </element>
   <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>36</x>
-      <y>1212</y>
-      <w>228</w>
-      <h>108</h>
-    </coordinates>
-    <panel_attributes>CodigoMetodoActual
---
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>300</x>
-      <y>1212</y>
-      <w>228</w>
-      <h>108</h>
-    </coordinates>
-    <panel_attributes>ClaseActual
---
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
     <id>Relation</id>
     <coordinates>
-      <x>408</x>
-      <y>1104</y>
-      <w>36</w>
-      <h>132</h>
+      <x>330</x>
+      <y>1120</y>
+      <w>30</w>
+      <h>110</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
   </element>
   <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>564</x>
-      <y>1212</y>
-      <w>228</w>
-      <h>108</h>
-    </coordinates>
-    <panel_attributes>TodoProyecto
---
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
     <id>Relation</id>
     <coordinates>
-      <x>516</x>
-      <y>1104</y>
-      <w>180</w>
-      <h>132</h>
+      <x>420</x>
+      <y>1120</y>
+      <w>150</w>
+      <h>110</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;130.0;90.0</additional_attributes>
@@ -218,192 +469,40 @@ m1=asistente</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>612</x>
-      <y>576</y>
-      <w>516</w>
-      <h>216</h>
+      <x>460</x>
+      <y>1210</y>
+      <w>190</w>
+      <h>90</h>
     </coordinates>
-    <panel_attributes>LLMs
+    <panel_attributes>TodoProyecto
 --
--APIkey:String
--nombre:String
--temperatura: double
--costePorToken: double
---
-+resolver(String prompt, InformacionAdicional[] i): String
-+resolver(String prompt): String
-+getCoste(): double</panel_attributes>
+</panel_attributes>
     <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1056</x>
-      <y>396</y>
-      <w>72</w>
-      <h>204</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;
-m2=1..*
-r2=llms</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;150.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>876</x>
-      <y>1020</y>
-      <w>528</w>
-      <h>132</h>
+      <x>240</x>
+      <y>1210</y>
+      <w>190</w>
+      <h>90</h>
     </coordinates>
-    <panel_attributes>&lt;&lt;abstract&gt;&gt;
-/DeCodigo/
+    <panel_attributes>ClaseActual
 --
-
---
-+getCoste(): double
-+resolverTarea(): String</panel_attributes>
+</panel_attributes>
     <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1260</x>
-      <y>900</y>
-      <w>120</w>
-      <h>144</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>80.0;10.0;10.0;100.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>576</x>
-      <y>1020</y>
-      <w>324</w>
-      <h>60</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;
-m2=*
-r2=infoAdicional</panel_attributes>
-    <additional_attributes>250.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>120</x>
-      <y>192</y>
-      <w>504</w>
-      <h>192</h>
+      <x>20</x>
+      <y>1210</y>
+      <w>190</w>
+      <h>90</h>
     </coordinates>
-    <panel_attributes>Programador
+    <panel_attributes>CodigoMetodoActual
 --
--nombre:String
--github:String
--costeAcumulado: double
---
-+solicitarAsistencia(): String
-+aplicarResultado(): boolean
-+añadirCoste(int coste): boolean
-+getCoste(): double</panel_attributes>
+</panel_attributes>
     <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>612</x>
-      <y>180</y>
-      <w>408</w>
-      <h>60</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-
-r1=*
-m1=programadores</panel_attributes>
-    <additional_attributes>10.0;20.0;320.0;20.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLNote</id>
-    <coordinates>
-      <x>1812</x>
-      <y>540</y>
-      <w>456</w>
-      <h>180</h>
-    </coordinates>
-    <panel_attributes>elegirTarea se llama dentro de procesarRespuesta.
-Una vez elegida la tarea, se borra del
-árbol TareasSolicitadas, aumenta nSolicitudes en 
-una unidad, y se vuelve a introducir.
-
-setTareasAplicadas borra la última tarea añadida al 
-historial, del árbol TareasAplicadas, aumenta 
-nAplicadas en una unidad, y lo vuelve a introducir.</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1944</x>
-      <y>396</y>
-      <w>36</w>
-      <h>168</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1284</x>
-      <y>576</y>
-      <w>324</w>
-      <h>336</h>
-    </coordinates>
-    <panel_attributes>&lt;&lt;abstract&gt;&gt;
-/Tarea/
---
--nombre: String
--prompt: String
--lenguaje: String
--nSolicitudes: int
--nAplicadas: int
---
-/+resolverTarea(): String/
-/+getCoste(): double/
-+getPrompt(): String
-+setPrompt(String prompt): boolean
-+getNSolicitudes(): int
-+addSolicitud(): boolean
-+getNAplicadas(): int
-+addAplicada(): boolean</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLNote</id>
-    <coordinates>
-      <x>120</x>
-      <y>12</y>
-      <w>1104</w>
-      <h>96</h>
-    </coordinates>
-    <panel_attributes>DUDA:
-declaración Treeset
-timestamp ¿es un tipo de dato?
-puedo declarar getCoste() en Programador, LLMs y en Tarea?</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1116</x>
-      <y>588</y>
-      <w>192</w>
-      <h>60</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-
-r1=llm
-m1=1
-m2=*</panel_attributes>
-    <additional_attributes>10.0;20.0;140.0;20.0</additional_attributes>
   </element>
 </diagram>
