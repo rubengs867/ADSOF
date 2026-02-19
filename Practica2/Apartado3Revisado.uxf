@@ -5,17 +5,19 @@
     <id>UMLClass</id>
     <coordinates>
       <x>840</x>
-      <y>240</y>
+      <y>220</y>
       <w>510</w>
-      <h>130</h>
+      <h>150</h>
     </coordinates>
     <panel_attributes>Periodico
 --
 - nombre:String
-- suscriptores:HashMap&lt;Integer, List&lt;Suscripcion&gt; &gt;
+- suscriptores: Map&lt;String, Suscriptor&gt;
+- dnisActivos: Set&lt;String&gt;
 --
 + getSuscriptoresActivos(): Suscriptor[*]
-+ getSuscripcionesDe(dni: String): Suscripcion[*]</panel_attributes>
++ getSuscripcionesDe(dni: String): Suscripcion[*]
++ addSuscripcion(dni: String, s: Suscripcion)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -24,7 +26,7 @@
       <x>730</x>
       <y>460</y>
       <w>280</w>
-      <h>150</h>
+      <h>120</h>
     </coordinates>
     <panel_attributes>&lt;&lt;abstract&gt;&gt;
 /Suscripcion/
@@ -33,7 +35,6 @@
 - fechaInicio: Date
 - fechaFin: Date
 --
-+getArticulosAccesibles(): Articulo[*]
 
 </panel_attributes>
     <additional_attributes/>
@@ -68,12 +69,12 @@ m2=*</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>790</x>
-      <y>600</y>
+      <y>570</y>
       <w>70</w>
-      <h>110</h>
+      <h>140</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>50.0;10.0;10.0;90.0</additional_attributes>
+    <additional_attributes>50.0;10.0;10.0;120.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
@@ -92,12 +93,12 @@ m2=*</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>910</x>
-      <y>600</y>
+      <y>570</y>
       <w>80</w>
-      <h>110</h>
+      <h>140</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;60.0;90.0</additional_attributes>
+    <additional_attributes>10.0;10.0;60.0;120.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
