@@ -1,0 +1,122 @@
+<diagram program="umletino" version="15.1"><zoom_level>9</zoom_level><element><id>UMLClass</id><coordinates><x>531</x><y>621</y><w>207</w><h>90</h></coordinates><panel_attributes>&lt;&lt;abstract&gt;&gt;
+/Pizza/
+--
+
+--
++precio();
++calcularPrecio(p: pizza): double
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>297</x><y>801</y><w>207</w><h>90</h></coordinates><panel_attributes>PizzaEspecial
+--
+
+--
++precio(): double
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>0</x><y>810</y><w>207</w><h>90</h></coordinates><panel_attributes>&lt;&lt;Enum&gt;&gt;
+Tipo
+--
+-margarita
+-vegetariana
+-peperroni
+-cuatro quesos</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>396</x><y>702</y><w>225</w><h>117</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>230;10;10;110</additional_attributes></element><element><id>UMLClass</id><coordinates><x>531</x><y>459</y><w>207</w><h>99</h></coordinates><panel_attributes>&lt;&lt;Enum&gt;&gt;
+Tamaño
+--
+-pequeña, 0
+-mediana, 3
+-grande, 6
+--
++recargo(): int</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>630</x><y>549</y><w>72</w><h>90</h></coordinates><panel_attributes>lt=&lt;-
+m1=1 tamaño</panel_attributes><additional_attributes>10;10;10;80</additional_attributes></element><element><id>UMLClass</id><coordinates><x>576</x><y>936</y><w>207</w><h>117</h></coordinates><panel_attributes>&lt;&lt;Enum&gt;&gt;
+Ingredientes
+--
+-bacon
+-piña
+-atun
+-extra queso
+--
++precio():double</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>198</x><y>855</y><w>117</w><h>36</h></coordinates><panel_attributes>lt=&lt;-
+m1=tipo</panel_attributes><additional_attributes>10;10;110;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>567</x><y>729</y><w>207</w><h>90</h></coordinates><panel_attributes>PizzaConfigurable
+--
+
+--
++precio(): double
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>567</x><y>846</y><w>207</w><h>54</h></coordinates><panel_attributes>Configuracion
+--
+
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>684</x><y>891</y><w>99</w><h>63</h></coordinates><panel_attributes>lt=&lt;-
+m1=* ingredientes</panel_attributes><additional_attributes>10;50;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>675</x><y>810</y><w>108</w><h>54</h></coordinates><panel_attributes>lt=&lt;-
+m1=1 configuracion</panel_attributes><additional_attributes>10;40;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>873</x><y>711</y><w>207</w><h>90</h></coordinates><panel_attributes>PizzaMitades
+--
+
+--
++precio(): double
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>765</x><y>792</y><w>216</w><h>108</h></coordinates><panel_attributes>lt=&lt;-
+m1=2 configuracion</panel_attributes><additional_attributes>10;100;220;10</additional_attributes></element><element><id>Relation</id><coordinates><x>675</x><y>702</y><w>27</w><h>45</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;30</additional_attributes></element><element><id>Relation</id><coordinates><x>729</x><y>675</y><w>261</w><h>54</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;270;40</additional_attributes></element><element><id>UMLClass</id><coordinates><x>261</x><y>603</y><w>207</w><h>99</h></coordinates><panel_attributes>&lt;&lt;Enum&gt;&gt;
+Masa
+--
+-fina, 0
+-normal, 0
+-gruesa, 5
+--
++recargo(): int</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>459</x><y>648</y><w>90</w><h>54</h></coordinates><panel_attributes>lt=&lt;-
+m1= 1 masa</panel_attributes><additional_attributes>10;10;80;40</additional_attributes></element><element><id>UMLClass</id><coordinates><x>873</x><y>360</y><w>207</w><h>162</h></coordinates><panel_attributes>Pedido
+--
+-nombre: String
+-DNI: String
+-numeroTarjeta: int
+-direccion: String 
+-pagado: Boolean
+-fecha: Date
+-hora: TimeStamp
+-id: String
+--
++asignarID(): Boolean
++precioTotal(): double</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>729</x><y>405</y><w>162</w><h>261</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m1= * pizzas</panel_attributes><additional_attributes>160;10;20;30;10;270</additional_attributes></element><element><id>UMLClass</id><coordinates><x>882</x><y>585</y><w>207</w><h>90</h></coordinates><panel_attributes>&lt;&lt;Enum&gt;&gt;
+Bebida
+--
+-refrescodecola, precio
+-botelladeagua. precio
+-cervezasinalcohol, precio
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>945</x><y>513</y><w>90</w><h>90</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m1= * bebida</panel_attributes><additional_attributes>40;10;10;80</additional_attributes></element><element><id>UMLClass</id><coordinates><x>558</x><y>234</y><w>288</w><h>135</h></coordinates><panel_attributes>Aplicacion
+--
+--
++obtenerRecaudacion(fecha: Date): double
++obtenerRepartidoresDisponibles(): List&lt;Repartidor&gt;
++obtenerRepartidoresEnReparto(): List&lt;Repartidor&gt;
++tiempoMedioPreparacion(): double
++tiempoMedioServicio(): double
++empleadoMayorTiempoEntrega(): Repartidor
++asignarPedido(p: Pedido, r: Repartidor</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>513</x><y>135</y><w>207</w><h>90</h></coordinates><panel_attributes>Gestor
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>216</x><y>252</y><w>207</w><h>90</h></coordinates><panel_attributes>Repartidor
+--
+-disponible: Boolean
+--
++entrega(p: Pedido): Boolean</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>414</x><y>279</y><w>162</w><h>36</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>160;10;10;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1035</x><y>207</y><w>207</w><h>99</h></coordinates><panel_attributes>&lt;&lt;Enum&gt;&gt;
+Estado
+--
++pagado
++entregado
+--
++recargo(): int</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1071</x><y>297</y><w>45</w><h>153</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>30;10;10;150</additional_attributes></element><element><id>UMLClass</id><coordinates><x>837</x><y>63</y><w>207</w><h>90</h></coordinates><panel_attributes>Cliente
+--
+-nombre: String
+-DNI: String
+-direccion: String</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>927</x><y>144</y><w>135</w><h>234</h></coordinates><panel_attributes>lt=&lt;-
+m1=* pedidos</panel_attributes><additional_attributes>80;240;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>513</x><y>0</y><w>207</w><h>90</h></coordinates><panel_attributes>Credenciales
+--
+-usuario: String
+-contraseña: String
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>711</x><y>36</y><w>234</w><h>45</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;240;30</additional_attributes></element><element><id>Relation</id><coordinates><x>288</x><y>45</y><w>243</w><h>225</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>250;10;10;230</additional_attributes></element><element><id>Relation</id><coordinates><x>621</x><y>81</y><w>27</w><h>72</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;10;60</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1107</x><y>414</y><w>207</w><h>90</h></coordinates><panel_attributes>Entrega
+--
+-fecha: Date
+-hora: Timestamp
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1071</x><y>441</y><w>54</w><h>27</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>40;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>522</x><y>378</y><w>369</w><h>36</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;390;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>324</x><y>360</y><w>207</w><h>90</h></coordinates><panel_attributes>Reparto
+--
+-fecha: Date
+-hora: Timestamp
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>288</x><y>333</y><w>135</w><h>45</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;130;30</additional_attributes></element><element><id>Relation</id><coordinates><x>837</x><y>261</y><w>144</w><h>117</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m2= *pedidos</panel_attributes><additional_attributes>10;10;90;20;90;110</additional_attributes></element><element><id>Relation</id><coordinates><x>747</x><y>144</y><w>153</w><h>108</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m2= *clientes</panel_attributes><additional_attributes>10;100;70;70;150;10</additional_attributes></element></diagram>
