@@ -466,15 +466,17 @@ m2=*</panel_attributes>
       <x>710</x>
       <y>800</y>
       <w>170</w>
-      <h>150</h>
+      <h>160</h>
     </coordinates>
     <panel_attributes>&lt;&lt;enum&gt;&gt;
-Lenguage
+Lenguaje
 --
 + JAVA
-+ C
++ C++
++ C#
 + PYTHON
 + PHP
++ TypeScript
 + DEFECTO</panel_attributes>
     <additional_attributes/>
   </element>
@@ -494,8 +496,8 @@ m2=*</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>620</x>
-      <y>140</y>
+      <x>200</x>
+      <y>290</y>
       <w>330</w>
       <h>60</h>
     </coordinates>
@@ -506,13 +508,13 @@ que usa el treeset para ordenar las tareas</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>780</x>
-      <y>190</y>
-      <w>30</w>
-      <h>110</h>
+      <x>520</x>
+      <y>310</y>
+      <w>120</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>lt=&lt;.</panel_attributes>
-    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
+    <additional_attributes>100.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLNote</id>
@@ -539,5 +541,28 @@ se la pasa al LLM.</panel_attributes>
     </coordinates>
     <panel_attributes>lt=&lt;.</panel_attributes>
     <additional_attributes>10.0;10.0;250.0;150.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>200</x>
+      <y>360</y>
+      <w>330</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>añadirTareaSolicitada y asignarTarea
+se ejecutan dentro de procesarRespuesta</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>520</x>
+      <y>370</y>
+      <w>120</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>100.0;10.0;10.0;10.0</additional_attributes>
   </element>
 </diagram>
