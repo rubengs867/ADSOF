@@ -3,14 +3,18 @@ package trayectos;
 /**
  * Enumeración de valores de ritmo para calcular trayectos a pie.
  * 
- * @author Alejandro Seguido
+ * @author Alejandro Seguido y Ruben Garcia
  * @version 1.0
  */
 public enum Ritmo{
+  /** Ritmo suave: tarda 15 minutos en recorrer 1km. */
   SUAVE(15),
+  /** Ritmo moderado: tarda 10 minutos en recorrer 1km. */
   MODERADO(10),
+  /** Ritmo rápido: tarda 8 minutos en recorrer 1km. */
   RAPIDO(8);
 
+  /** Minutos que tarda en recorrer 1km a este ritmo. */
   private double ritmo;
 
   /**
