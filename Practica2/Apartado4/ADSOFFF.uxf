@@ -1,127 +1,638 @@
-<diagram program="umletino" version="15.1"><zoom_level>9</zoom_level><element><id>UMLClass</id><coordinates><x>675</x><y>657</y><w>252</w><h>90</h></coordinates><panel_attributes>&lt;&lt;abstract&gt;&gt;
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>11</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1067</x>
+      <y>814</y>
+      <w>308</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;abstract&gt;&gt;
 /Pizza/
 --
 - precioBase: double
 --
 /- calcularPrecioSinRecargos(): double/
 + calcularPrecioTotal(): double
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>423</x><y>846</y><w>252</w><h>90</h></coordinates><panel_attributes>PizzaEspecial
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>759</x>
+      <y>1045</y>
+      <w>308</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>PizzaEspecial
 --
 
 --
 - calcularPrecioSinRecargos(): double
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>153</x><y>846</y><w>207</w><h>99</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>429</x>
+      <y>1045</y>
+      <w>253</w>
+      <h>121</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enum&gt;&gt;
 Tipo
 --
 + MARGARITA
 + VEGETARIANA
 + PEPERONI
-+ CUATROQUESOS</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>549</x><y>738</y><w>234</w><h>126</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>240;10;10;120</additional_attributes></element><element><id>UMLClass</id><coordinates><x>396</x><y>612</y><w>135</w><h>90</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
++ CUATROQUESOS</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>913</x>
+      <y>913</y>
+      <w>286</w>
+      <h>154</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>240.0;10.0;10.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>726</x>
+      <y>759</y>
+      <w>165</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enum&gt;&gt;
 Tamaño
 --
 + PEQUEÑA = 0
 + MEDIANA = 3
-+ GRANDE = 6</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>522</x><y>657</y><w>171</w><h>36</h></coordinates><panel_attributes>lt=&lt;-
-r1=tamaño</panel_attributes><additional_attributes>10;20;170;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>351</x><y>972</y><w>207</w><h>108</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
++ GRANDE = 6</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>880</x>
+      <y>814</y>
+      <w>209</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+r1=tamaño</panel_attributes>
+    <additional_attributes>10.0;20.0;170.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>671</x>
+      <y>1199</y>
+      <w>253</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enum&gt;&gt;
 Ingredientes
 --
 + BACON
 + PIÑA
 + ATUN
-+ QUESO</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>351</x><y>891</y><w>90</w><h>36</h></coordinates><panel_attributes>lt=&lt;-
-m1=tipo</panel_attributes><additional_attributes>10;10;80;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>693</x><y>846</y><w>252</w><h>90</h></coordinates><panel_attributes>PizzaConfigurable
++ QUESO</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>671</x>
+      <y>1100</y>
+      <w>110</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=tipo</panel_attributes>
+    <additional_attributes>10.0;10.0;80.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1089</x>
+      <y>1045</y>
+      <w>308</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>PizzaConfigurable
 --
 
 --
 - calcularPrecioSinRecargos(): double
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>693</x><y>999</y><w>207</w><h>63</h></coordinates><panel_attributes>Configuracion
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1089</x>
+      <y>1232</y>
+      <w>253</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>Configuracion
 --
 - costePorIngrediente: double
 --
 + getCosteTotal(): double
 
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>549</x><y>1017</y><w>162</w><h>45</h></coordinates><panel_attributes>lt=&lt;-
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>913</x>
+      <y>1254</y>
+      <w>198</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
 m1=*
-r1=ingredientes</panel_attributes><additional_attributes>10;20;160;20</additional_attributes></element><element><id>Relation</id><coordinates><x>801</x><y>927</y><w>99</w><h>90</h></coordinates><panel_attributes>lt=&lt;-
-m1=configuracion</panel_attributes><additional_attributes>10;80;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>963</x><y>846</y><w>252</w><h>90</h></coordinates><panel_attributes>PizzaMitades
+r1=ingredientes</panel_attributes>
+    <additional_attributes>10.0;20.0;160.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1221</x>
+      <y>1144</y>
+      <w>132</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=configuracion</panel_attributes>
+    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1419</x>
+      <y>1045</y>
+      <w>308</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>PizzaMitades
 --
 
 --
 - calcularPrecioSinRecargos(): double
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>891</x><y>927</y><w>180</w><h>135</h></coordinates><panel_attributes>lt=&lt;-
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1331</x>
+      <y>1144</y>
+      <w>220</w>
+      <h>165</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
 m1=2
-r1=mitades</panel_attributes><additional_attributes>10;120;180;120;180;10</additional_attributes></element><element><id>Relation</id><coordinates><x>801</x><y>738</y><w>27</w><h>126</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;120</additional_attributes></element><element><id>Relation</id><coordinates><x>855</x><y>738</y><w>225</w><h>126</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;230;120</additional_attributes></element><element><id>UMLClass</id><coordinates><x>396</x><y>720</y><w>135</w><h>90</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
+r1=mitades</panel_attributes>
+    <additional_attributes>10.0;120.0;180.0;120.0;180.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1221</x>
+      <y>913</y>
+      <w>33</w>
+      <h>154</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1287</x>
+      <y>913</y>
+      <w>275</w>
+      <h>154</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;230.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>726</x>
+      <y>891</y>
+      <w>165</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enum&gt;&gt;
 Masa
 --
 + FINA = 0
 + NORMAL = 0
-+ GRUESA = 5</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>522</x><y>720</y><w>171</w><h>36</h></coordinates><panel_attributes>lt=&lt;-
-r1=masa</panel_attributes><additional_attributes>10;20;170;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>837</x><y>387</y><w>207</w><h>144</h></coordinates><panel_attributes>Pedido
++ GRUESA = 5</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>880</x>
+      <y>891</y>
+      <w>209</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+r1=masa</panel_attributes>
+    <additional_attributes>10.0;20.0;170.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1265</x>
+      <y>506</y>
+      <w>352</w>
+      <h>198</h>
+    </coordinates>
+    <panel_attributes>Pedido
 --
 - id: String
-- fechaRealizado: Date
-- horaRealizado: Timestamp
-- pagado: boolean
+- tiempoPreparacion: double
+- tiempoServicio: double
 --
-+asignarID(): Boolean
-+precioTotal(): double</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>882</x><y>522</y><w>54</w><h>153</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
++ precioTotal(): double
++ modificarEstado(e: Estado): void
++ añadirFechaActual(): void
++ asignarRepartidor(r: Repartidor): boolean
+- calcularTPreparacion(): double
+- calcularTServicio(): double</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1320</x>
+      <y>693</y>
+      <w>77</w>
+      <h>143</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
 m2= *
-r2=pizzas</panel_attributes><additional_attributes>10;10;10;150</additional_attributes></element><element><id>UMLClass</id><coordinates><x>954</x><y>657</y><w>207</w><h>90</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
+r2=pizzas</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1408</x>
+      <y>814</y>
+      <w>253</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enum&gt;&gt;
 Bebida
 --
 + REFRESCO = precio
 + AGUA = precio
 + CERVECASIN = precio
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>963</x><y>522</y><w>63</w><h>153</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1419</x>
+      <y>693</y>
+      <w>88</w>
+      <h>143</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
 m2= *
-r2=bebidas</panel_attributes><additional_attributes>10;10;10;150</additional_attributes></element><element><id>UMLClass</id><coordinates><x>882</x><y>117</y><w>378</w><h>153</h></coordinates><panel_attributes>Aplicacion
+r2=bebidas</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1320</x>
+      <y>176</y>
+      <w>462</w>
+      <h>209</h>
+    </coordinates>
+    <panel_attributes>Aplicacion
 --
+
 --
-+obtenerRecaudacion(fecha: Date): double
-+obtenerRepartidoresDisponibles(): List&lt;Repartidor&gt;
-+obtenerRepartidoresEnReparto(): List&lt;Repartidor&gt;
-+tiempoMedioPreparacion(): double
-+tiempoMedioServicio(): double
-+empleadoMayorTiempoEntrega(): Repartidor
-+asignarPedido(p: Pedido, r: Repartidor</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>540</x><y>0</y><w>207</w><h>90</h></coordinates><panel_attributes>Gestor
++ obtenerRecaudacion(fecha: Date): double
++ obtenerRepartidoresDisponibles(): Repartidor[*]
++ obtenerRepartidoresEnReparto(): Repartidor[*]
++ obtenerTiempoMedioPreparacion(): double
++ obtenerTiempoMedioServicio(): double
++ obtenerRepartirdorMayorTiempo(): Repartidor
++ asignarRepartidor(p: Pedido, r: Repartidor): boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>902</x>
+      <y>88</y>
+      <w>253</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>Gestor
 --
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>540</x><y>108</y><w>207</w><h>90</h></coordinates><panel_attributes>Repartidor
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>880</x>
+      <y>198</y>
+      <w>297</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>Repartidor
 --
-- disponible: Boolean
+- disponible: boolean
+- tiempoMedio: double
 --
-+ entrega(p: Pedido): Boolean</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>738</x><y>135</y><w>162</w><h>45</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;
++ entregarPedido(): boolean
++ asignarPedido(p: Pedido): boolean
+- actualizarTiempoMedio(): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1166</x>
+      <y>242</y>
+      <w>176</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;
 r2=repartidores
-m2=*</panel_attributes><additional_attributes>160;20;10;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1152</x><y>360</y><w>207</w><h>99</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
+m2=*</panel_attributes>
+    <additional_attributes>140.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1738</x>
+      <y>484</y>
+      <w>253</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enum&gt;&gt;
 Estado
 --
 + SINPAGAR
 + PAGADO
-+ ENTREGADO</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1035</x><y>414</y><w>135</w><h>27</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>130;10;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>540</x><y>216</y><w>207</w><h>90</h></coordinates><panel_attributes>Cliente
++ PREPARADO
++ ENTREGADO</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1606</x>
+      <y>550</y>
+      <w>154</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+r1= estado</panel_attributes>
+    <additional_attributes>120.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>902</x>
+      <y>352</y>
+      <w>253</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>Cliente
 --
 - nombre: String
 - dni: String
 - tarjeta: int
-- direccion: String</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>630</x><y>297</y><w>297</w><h>108</h></coordinates><panel_attributes>lt=&lt;-&gt;
+- direccion: String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1012</x>
+      <y>451</y>
+      <w>275</w>
+      <h>154</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-&gt;
 m1=*
 r1=pedidos
-m2=cliente</panel_attributes><additional_attributes>270;100;270;50;10;50;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>162</x><y>99</y><w>207</w><h>63</h></coordinates><panel_attributes>Credenciales
+m2=cliente</panel_attributes>
+    <additional_attributes>230.0;110.0;10.0;110.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>462</x>
+      <y>396</y>
+      <w>253</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>Credenciales
 --
 - usuario: String
 - contraseña: String
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>360</x><y>135</y><w>198</w><h>135</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;200;130</additional_attributes></element><element><id>Relation</id><coordinates><x>360</x><y>126</y><w>198</w><h>27</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;200;10</additional_attributes></element><element><id>Relation</id><coordinates><x>360</x><y>45</y><w>198</w><h>99</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;90;200;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1152</x><y>477</y><w>207</w><h>90</h></coordinates><panel_attributes>Fecha
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>594</x>
+      <y>297</y>
+      <w>132</w>
+      <h>121</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=credenciales</panel_attributes>
+    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1738</x>
+      <y>638</y>
+      <w>253</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>Fecha
 --
--fecha: Date
--hora: Timestamp
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1035</x><y>495</y><w>135</w><h>36</h></coordinates><panel_attributes>lt=&lt;-
-r1=3 fechas</panel_attributes><additional_attributes>130;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>252</x><y>153</y><w>603</w><h>279</h></coordinates><panel_attributes>lt=&lt;-
-r1=1 repartidor
-r2= 1 pedidoActivo</panel_attributes><additional_attributes>320;20;10;20;10;290;650;290</additional_attributes></element><element><id>Relation</id><coordinates><x>1008</x><y>261</y><w>63</w><h>144</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;
+- fecha: Date
+- hora: Timestamp
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1606</x>
+      <y>638</y>
+      <w>154</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+r1=fechas
+m1=3</panel_attributes>
+    <additional_attributes>120.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>770</x>
+      <y>275</y>
+      <w>517</w>
+      <h>385</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-&gt;
+r1=repartidor
+r2=pedidos
+m2=*</panel_attributes>
+    <additional_attributes>100.0;20.0;10.0;20.0;10.0;320.0;450.0;320.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1474</x>
+      <y>374</y>
+      <w>88</w>
+      <h>154</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;
 m2= *
-r2=pedidos</panel_attributes><additional_attributes>10;10;10;140</additional_attributes></element><element><id>Relation</id><coordinates><x>738</x><y>234</y><w>162</w><h>45</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;
+r2=pedidos</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1144</x>
+      <y>297</y>
+      <w>198</w>
+      <h>121</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;
 m2=*
-r2=clientes</panel_attributes><additional_attributes>160;20;10;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>522</x><y>504</y><w>189</w><h>99</h></coordinates><panel_attributes>Para calcular el precio de una
-pizza se coge el precio base
-y sobre eso se  suma
-el recargo del tamaño
-y de la masa</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>702</x><y>549</y><w>90</w><h>126</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>80;120;10;10</additional_attributes></element></diagram>
+r2=clientes</panel_attributes>
+    <additional_attributes>160.0;10.0;110.0;10.0;110.0;80.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1155</x>
+      <y>770</y>
+      <w>33</w>
+      <h>66</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;40.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>473</x>
+      <y>231</y>
+      <w>253</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>Usuario
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>715</x>
+      <y>242</y>
+      <w>187</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;30.0;150.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>715</x>
+      <y>154</y>
+      <w>209</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;100.0;170.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>715</x>
+      <y>275</y>
+      <w>209</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;170.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1848</x>
+      <y>715</y>
+      <w>33</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>1782</x>
+      <y>781</y>
+      <w>308</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>Se guardan las fechas de realización, 
+asignación y entrega del pedido</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>913</x>
+      <y>715</y>
+      <w>363</w>
+      <h>66</h>
+    </coordinates>
+    <panel_attributes>Para calcular el precio de una pizza se 
+coge el precio base y sobre eso se suma
+el recargo del tamaño y de la masa</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
