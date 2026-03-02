@@ -1,80 +1,134 @@
+/* Esta clase guarda el mensaje, en que usuario esta actualmente y cuanto alcance tiene */
+
 public class Mensaje {
   private String autor;
   private Usuario actual;
   private int alcance;
 
-  public Mensaje(String autor, int alcance, Usuario usuario){
+  /**
+   * 
+   * @param autor   el string del mensaje
+   * @param alcance el alcance del mensaje
+   * @param usuario el usuario en el que se encuentra el mensaje
+   */
+  public Mensaje(String autor, int alcance, Usuario usuario) {
     this.autor = autor;
     this.actual = usuario;
     this.alcance = alcance;
   }
 
-  public void setUsuarioActual(Usuario actual){
+  /**
+   * 
+   * @param actual actualiza el usuario en el que se encuentra el mensaje
+   */
+
+  public void setUsuarioActual(Usuario actual) {
     this.actual = actual;
   }
 
-  public void setAlcanceActual(int alcance){
+  /**
+   * actualiza el alcance del mensaje
+   * 
+   * @param alcance
+   */
+  public void setAlcanceActual(int alcance) {
     this.alcance = alcance;
   }
-  public Usuario getUsuarioActual(){
+
+  /**
+   * devuelve el usuario en el que se encuentra el mensaje
+   * 
+   * @return
+   */
+  public Usuario getUsuarioActual() {
     return this.actual;
   }
 
-  public String getUsuarioAutor(){
+  /**
+   * devuelve el autor del mensaje
+   * 
+   * @return
+   */
+  public String getUsuarioAutor() {
     return this.autor;
   }
 
-  public int getAlcanceActual(){
+  /**
+   * devuelve el alcance del mensaje
+   * 
+   * @return
+   */
+  public int getAlcanceActual() {
     return this.alcance;
   }
 
-  public boolean difunde(Enlace e){
-    Usuario destino = e.getUsuarioDestino(); // Usa el método correcto de tu clase Enlace
-    
-    if(puedeDifundirPor(e) && aceptadoPor(destino)){
+  /**
+   * intenta difundir el mensaje por el enlace e, actualizando el usuario actual y el alcance del mensaje en caso de éxito
+   * @param e
+   * @return
+   */
+  public boolean difunde(Enlace e) {
+    Usuario destino = e.getUsuarioDestino(); 
+
+    if (puedeDifundirPor(e) && aceptadoPor(destino)) {
       // 1. El usuario actual pasa a ser el destino
       this.actual = destino;
-      
-      // 2. El alcance disminuye en el coste (usando el método que te dé el coste)
-      this.alcance -= e.getCoste(); 
-      
-      this.alcance += destino.getCapacidadAmplificacion(); 
-      
+
+      // 2. El alcance disminuye en el coste del enlace
+      this.alcance -= e.getCoste();
+      // 3. El alcance aumenta en la capacidad de amplificación del usuario destino
+      this.alcance += destino.getCapacidadAmplificacion();
+
       return true;
     }
     return false;
   }
 
-  private boolean puedeDifundirPor(Enlace e){
-    if(e.getCoste() <= this.alcance){
+  /**
+   * comprueba si el mensaje puede difundirse por el enlace e, es decir, si el coste del enlace es menor o igual que el alcance actual del mensaje
+   * @param e
+   * @return
+   */
+  private boolean puedeDifundirPor(Enlace e) {
+    if (e.getCoste() <= this.alcance) {
       return true;
     }
     return false;
   }
-  
-  private boolean aceptadoPor(Usuario u){
+
+  /**
+   * comprueba si el usuario u ha aceptado el mensaje
+   * @param u
+   * @return
+   */
+  private boolean aceptadoPor(Usuario u) {
     return true;
   }
 
-  public boolean difunde (Usuario ... ruta){
+    /**
+    * intenta difundir el mensaje por la ruta dada, devolviendo true si se ha difundido con éxito por toda la ruta o false en caso contrario
+    * @param ruta
+    * @return
+    */
+  public boolean difunde(Usuario... ruta) {
     Boolean exito = true;
+    // Recorremos la lista de usuarios que es la ruta del mensaje
+    for (Usuario siguiente : ruta) {
+      //vemos si el usuario siguiente tiene un enlace con el usuario actual
+      Enlace enlace = this.actual.getEnlace(siguiente); 
 
-    for (Usuario siguiente : ruta){
-      Enlace enlace = this.actual.getEnlace(siguiente); /* cogemos el objeto de la clase mensaje, y vemos a que usuario apunta actualmente */
+      if (enlace != null && this.difunde(enlace)) {
 
-      if(enlace != null && this.difunde(enlace)){
-
-      }
-      else{
+      } else {
         exito = false;
       }
     }
     return exito;
-    
+
   }
 
   @Override
-  public String toString(){
-    return "Mensaje(" + this.autor + this.alcance + ") en @" +this.actual.getNombre();
+  public String toString() {
+    return "Mensaje(" + this.autor + this.alcance + ") en @" + this.actual.getNombre();
   }
 }
