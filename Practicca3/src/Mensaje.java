@@ -1,11 +1,11 @@
 public class Mensaje {
-  private Usuario autor;
+  private String autor;
   private Usuario actual;
   private int alcance;
 
-  public Mensaje(Usuario autor, Usuario actual, int alcance){
+  public Mensaje(String autor, int alcance, Usuario usuario){
     this.autor = autor;
-    this.actual = actual;
+    this.actual = usuario;
     this.alcance = alcance;
   }
 
@@ -20,7 +20,7 @@ public class Mensaje {
     return this.actual;
   }
 
-  public Usuario getUsuarioAutor(){
+  public String getUsuarioAutor(){
     return this.autor;
   }
 
@@ -38,8 +38,7 @@ public class Mensaje {
       // 2. El alcance disminuye en el coste (usando el método que te dé el coste)
       this.alcance -= e.getCoste(); 
       
-      // 3. El alcance aumenta según la capacidad de amplificación del destino
-      //this.alcance += destino.getCapacidadAmplificacion(); // Usa el método correcto de tu clase Usuario
+      this.alcance += destino.getCapacidadAmplificacion(); 
       
       return true;
     }
@@ -57,8 +56,25 @@ public class Mensaje {
     return true;
   }
 
+  public boolean difunde (Usuario ... ruta){
+    Boolean exito = true;
+
+    for (Usuario siguiente : ruta){
+      Enlace enlace = this.actual.getEnlace(siguiente); /* cogemos el objeto de la clase mensaje, y vemos a que usuario apunta actualmente */
+
+      if(enlace != null && this.difunde(enlace)){
+
+      }
+      else{
+        exito = false;
+      }
+    }
+    return exito;
+    
+  }
+
   @Override
   public String toString(){
-    return "Mensaje(m:" + this.alcance + ") en @" +this.actual;
+    return "Mensaje(" + this.autor + this.alcance + ") en @" +this.actual.getNombre();
   }
 }
