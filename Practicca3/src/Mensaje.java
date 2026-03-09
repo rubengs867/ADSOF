@@ -4,7 +4,7 @@ public class Mensaje {
   private String autor;
   private Usuario actual;
   private int alcance;
-
+  
   /**
    * 
    * @param autor   el string del mensaje
@@ -63,13 +63,17 @@ public class Mensaje {
   }
 
   /**
-   * intenta difundir el mensaje por el enlace e, actualizando el usuario actual y el alcance del mensaje en caso de éxito
+   * Intenta difundir el mensaje por el enlace e, actualizando el usuario actual 
+   * y el alcance del mensaje en caso de éxito.
    * @param e
    * @return
    */
   public boolean difunde(Enlace e) {
-    Usuario destino = e.getUsuarioDestino(); 
+    if(e == null) {
+      return false;
+    }
 
+    Usuario destino = e.getUsuarioDestino();
     if (puedeDifundirPor(e) && aceptadoPor(destino)) {
       // 1. El usuario actual pasa a ser el destino
       this.actual = destino;
@@ -85,7 +89,8 @@ public class Mensaje {
   }
 
   /**
-   * comprueba si el mensaje puede difundirse por el enlace e, es decir, si el coste del enlace es menor o igual que el alcance actual del mensaje
+   * comprueba si el mensaje puede difundirse por el enlace e, es decir, 
+   * si el coste del enlace es menor o igual que el alcance actual del mensaje.
    * @param e
    * @return
    */
