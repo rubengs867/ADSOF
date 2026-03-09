@@ -94,7 +94,7 @@ public class Mensaje {
    * @param e
    * @return
    */
-  private boolean puedeDifundirPor(Enlace e) {
+  protected boolean puedeDifundirPor(Enlace e) {
     if (e.getCoste() <= this.alcance) {
       return true;
     }
@@ -106,7 +106,7 @@ public class Mensaje {
    * @param u
    * @return
    */
-  private boolean aceptadoPor(Usuario u) {
+  protected boolean aceptadoPor(Usuario u) {
     return true;
   }
 

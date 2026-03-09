@@ -52,6 +52,10 @@ public class Usuario {
     this.exposicion = e;
   }
 
+  public Exposicion getExposicion(){
+    return this.exposicion;
+  }
+
   /**
    * @return El alcance medio de los mensajes recibidos.
    */
