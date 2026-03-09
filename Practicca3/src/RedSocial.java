@@ -9,6 +9,7 @@ public class RedSocial {
   private Mensaje mensaje;
   private Map<String, Usuario> usuarios = new HashMap<>();
 
+
   public RedSocial(String ficheroUsuarios,
       String ficheroEnlaces,
       String ficheroMensaje) throws IOException {
@@ -103,6 +104,26 @@ public class RedSocial {
       }
 
       buffer.close();
+    }
+  }
+
+  //Metodos de la fachada
+
+  public void agregarUsuario(String nombre, int capacidadAmplificacion){
+    if(!usuarios.containsKey(nombre)){
+      this.usuarios.put(nombre, new Usuario(nombre, capacidadAmplificacion));
+    }
+  }
+
+  public void agregarEnlace(String nombreOrigen, String nombreDestino, int coste) {
+    // 1. Buscamos los usuarios
+    Usuario origen = this.usuarios.get(nombreOrigen);
+    Usuario destino = this.usuarios.get(nombreDestino);
+
+    // 2. Si existen, le decimos al usuario origen que lo añada
+    if (origen != null && destino != null) {
+      // El método addEnlace del Usuario ya se encarga de que no se repitan
+      origen.addEnlace(new Enlace(origen, destino, coste));
     }
   }
 }
