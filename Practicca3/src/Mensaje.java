@@ -134,6 +134,6 @@ public class Mensaje {
 
   @Override
   public String toString() {
-    return "Mensaje(" + this.autor + this.alcance + ") en @" + this.actual.getNombre();
+    return "Mensaje(" + this.autor + ":" + this.alcance + ") en @" + this.actual.getNombre();
   }
 }
