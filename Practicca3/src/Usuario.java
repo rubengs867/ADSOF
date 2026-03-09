@@ -12,6 +12,12 @@ public class Usuario {
 
   /** Lista de enlaces salientes desde este usuario. */
   private List<Enlace> enlaces;
+
+  private Exposicion exposicion;
+
+  private List<Mensaje> historialMensajes;
+
+  private double mediaMensajes;
   
   /**
    * Construye un usuario con nombre y capacidad de amplificación especificados.
@@ -23,6 +29,14 @@ public class Usuario {
     this.nombre = nombre;
     this.capacidadAmplificacion = capacidadAmplificacion;
     this.enlaces = new ArrayList<>();
+    this.exposicion = Exposicion.ALTA;
+    this.historialMensajes = new ArrayList<>();
+    this.mediaMensajes = 0.0;
+  }
+
+  public Usuario(String nombre, int capacidadAmplificacion, Exposicion exposicion){
+    this(nombre, capacidadAmplificacion);
+    this.exposicion = exposicion;
   }
 
   /**
@@ -32,6 +46,59 @@ public class Usuario {
    */
   public Usuario(String nombre){
     this(nombre, 2);
+  }
+
+  public void cambiarExposicion (Exposicion e){
+    this.exposicion = e;
+  }
+
+  /**
+   * @return El alcance medio de los mensajes recibidos.
+   */
+  public double alcanceMedio() {
+    return this.mediaMensajes;
+  }
+
+  private void aumentarExposicion() {
+    Exposicion[] niveles = Exposicion.values();
+
+    if (this.exposicion.ordinal() < niveles.length - 1) {
+      this.exposicion = niveles[this.exposicion.ordinal() + 1];
+    }
+  }
+
+  private void reducirExposicion() {
+    Exposicion[] niveles = Exposicion.values();
+    if (this.exposicion.ordinal() > niveles.length - 1) { 
+      this.exposicion = niveles[this.exposicion.ordinal() - 1];
+    }
+  }
+
+  /**
+   * @return Un String con el historial de mensajes, uno por línea.
+   */
+  public String mostrarHistorial() {
+    StringBuilder sb = new StringBuilder();
+    for (Mensaje m : this.historialMensajes) {
+      sb.append(m.toString()).append("\n"); 
+    }
+    return sb.toString();
+  }
+
+
+  public void anadirMensaje(Mensaje mensaje) {
+    int n = this.historialMensajes.size(); 
+    int alcance = mensaje.getAlcanceActual();
+    this.mediaMensajes = ((this.mediaMensajes * n) + alcance) / (n + 1);
+    
+    this.historialMensajes.add(mensaje);
+
+    if(alcance > this.mediaMensajes){
+      aumentarExposicion();
+    }
+    else{
+      reducirExposicion();
+    }
   }
 
   /**
@@ -175,7 +242,9 @@ public class Usuario {
       .append(nombre)
       .append("(")
       .append(capacidadAmplificacion)
-      .append(")[");
+      .append(") EXP:")                      // Añadimos la etiqueta EXP:
+      .append(this.exposicion.name())        // Añadimos el valor del enum 
+      .append(" [");                         // Añadimos un espacio antes del corchete
     
     for (int i = 0; i < enlaces.size(); i++) {
       sb.append(enlaces.get(i).toString());
