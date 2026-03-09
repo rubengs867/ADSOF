@@ -74,10 +74,9 @@ public class Mensaje {
     }
 
     Usuario destino = e.getUsuarioDestino();
-    if (puedeDifundirPor(e) && aceptadoPor(destino)) {
+    if (puedeDifundirPor(e) && aceptadoPor(destino) && e.getUsuarioOrigen().equals(this.actual)) {
       // 1. El usuario actual pasa a ser el destino
       this.actual = destino;
-
       // 2. El alcance disminuye en el coste del enlace
       this.alcance -= e.getCoste();
       // 3. El alcance aumenta en la capacidad de amplificación del usuario destino
@@ -119,7 +118,7 @@ public class Mensaje {
     Boolean exito = true;
     // Recorremos la lista de usuarios que es la ruta del mensaje
     for (Usuario siguiente : ruta) {
-      //vemos si el usuario siguiente tiene un enlace con el usuario actual
+      // Vemos si el usuario siguiente tiene un enlace con el usuario actual
       Enlace enlace = this.actual.getEnlace(siguiente); 
 
       if (enlace != null && this.difunde(enlace)) {
