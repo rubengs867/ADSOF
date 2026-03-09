@@ -99,7 +99,7 @@ public class Pruebas {
 
     // Añadir enlace cuyo origen no es Ana, pero su destino si (debería fallar)
     ret = ana.addEnlace(e3);
-    System.out.println("Añado enlace Luis -> Ana: " + ret + "\n");
+    System.out.println("Añado enlace Luis -> Ana: " + ret);
 
     // Añadir enlace null (debería fallar)
     ret = ana.addEnlace(null);
@@ -111,11 +111,11 @@ public class Pruebas {
         ((e == null) ? "ERROR" : e.toString()));
 
     e = ana.getEnlace(jose);
-    System.out.println("Obtener enlace con destino Jose (ERROR): " +
+    System.out.println("Obtener enlace con destino Jose (no existe enlace): " +
         ((e == null) ? "ERROR" : e.toString()));
 
     e = ana.getEnlace(null);
-    System.out.println("Obtener enlace con destino null (ERROR): " +
+    System.out.println("Obtener enlace con destino null: " +
         ((e == null) ? "ERROR" : e.toString()));
 
     // Obtener enlaces por índice
@@ -128,11 +128,11 @@ public class Pruebas {
         ((e == null) ? "ERROR" : e.toString()));
 
     e = ana.getEnlace(2);
-    System.out.println("Enlace con índice 2 (ERROR): " +
+    System.out.println("Enlace con índice 2: " +
         ((e == null) ? "ERROR" : e.toString()));
 
     e = ana.getEnlace(-1);
-    System.out.println("Enlace con índice -1 (ERROR): " +
+    System.out.println("Enlace con índice -1: " +
         ((e == null) ? "ERROR" : e.toString()));
 
     System.out.println("Número enlaces: " + ana.getNumEnlaces());
@@ -140,15 +140,22 @@ public class Pruebas {
     // Pruebas del método toString de Usuario
     System.out.println("\nPrueba toString");
     System.out.println("Usuario con varios enlaces:");
+    Usuario mario = new Usuario("mario");
+    Usuario estrella = new Usuario("estrella");
+    ana.addEnlace(mario, 50);
+    ana.addEnlace(estrella, -120);
+    System.out.println(ana.toString());
+    
+    System.out.println("\nUsuario con 2 enlaces: ");
     ret = carmen.addEnlace(ana, 8);
     System.out.println("Añado enlace: " + carmen.getEnlace(ana));
-    System.out.println(ana.toString());
-    System.out.println("\nUsuario con 1 enlace: ");
     carmen.addEnlace(e2);
     System.out.println(carmen.toString());
 
+    System.out.println("\nUsuario con 1 enlace: ");
     luis.addEnlace(e3);
     System.out.println(luis.toString());
+
     System.out.println("\nUsuario con 0 enlaces: ");
     System.out.println(jose.toString());
 
@@ -181,8 +188,8 @@ public class Pruebas {
     System.out.println("Difundir Carmen -> Luis -> Carmen -> Ana -> luis: " +
         ret + " - " + m);
 
-    ret = m.difunde(luis, jose, ana, carmen);
-    System.out.println("Difundir Carmen -> Jose -> Ana -> luis " +
+    ret = m.difunde(carmen, jose, ana, carmen);
+    System.out.println("Difundir Luis -> Carmen -> Jose -> Ana -> Carmen " +
         "(ERROR, no hay enlace para jose): " + ret + " - " + m);
 
     // Nuevo mensaje con menor alcance
@@ -203,9 +210,9 @@ public class Pruebas {
         "distinto de usuario actual): " + ret);
 
     ret = m2.difunde((Enlace) null);
-    System.out.println("Difunde ana -> null (ERROR): " + ret);
+    System.out.println("Difunde carmen -> null (ERROR): " + ret);
 
     ret = m2.difunde();
-    System.out.println("Difunde ana -> lista vacia de usuarios: " + ret);
+    System.out.println("Difunde carmen -> lista vacia de usuarios: " + ret);
   }
 }
