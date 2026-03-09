@@ -40,13 +40,15 @@ public class Enlace {
 
   public void cambiarDestino(Usuario nuevoDestino, int nuevoCoste) {
     this.destino = nuevoDestino;
+    int costeOld = this.coste;
     // Aplicamos la misma regla de coste <= 0
     if (nuevoCoste <= 0) {
       this.coste = 1;
     } else {
       this.coste = nuevoCoste;
     }
-
+    // Actualizamos costeTotal
+    costeTotal = costeTotal + (this.coste - costeOld);
   }
 
   public static int getCosteTotalAcumulado() {
@@ -92,7 +94,7 @@ public class Enlace {
   @Override
   public String toString() {
 
-    return "(@" + this.origen + "  " + this.coste + "-->@" + this.destino + ")";
+    return "(@" + this.origen.getNombre() + "--" + this.coste + "-->@" + this.destino.getNombre() + ")";
   }
 
 }
