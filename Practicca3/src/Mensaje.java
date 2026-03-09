@@ -4,7 +4,7 @@ public class Mensaje {
   private String autor;
   private Usuario actual;
   private int alcance;
-  
+
   /**
    * 
    * @param autor   el string del mensaje
@@ -63,13 +63,15 @@ public class Mensaje {
   }
 
   /**
-   * Intenta difundir el mensaje por el enlace e, actualizando el usuario actual 
+   * Intenta difundir el mensaje por el enlace e, actualizando el usuario actual
    * y el alcance del mensaje en caso de éxito.
+   * 
    * @param e
    * @return
    */
   public boolean difunde(Enlace e) {
-    if(e == null) {
+    // Control errores
+    if (e == null) {
       return false;
     }
 
@@ -82,14 +84,16 @@ public class Mensaje {
       // 3. El alcance aumenta en la capacidad de amplificación del usuario destino
       this.alcance += destino.getCapacidadAmplificacion();
 
+      this.alcance = (this.alcance < 0) ? 0 : this.alcance;
       return true;
     }
     return false;
   }
 
   /**
-   * comprueba si el mensaje puede difundirse por el enlace e, es decir, 
+   * comprueba si el mensaje puede difundirse por el enlace e, es decir,
    * si el coste del enlace es menor o igual que el alcance actual del mensaje.
+   * 
    * @param e
    * @return
    */
@@ -102,6 +106,7 @@ public class Mensaje {
 
   /**
    * comprueba si el usuario u ha aceptado el mensaje
+   * 
    * @param u
    * @return
    */
@@ -109,26 +114,24 @@ public class Mensaje {
     return true;
   }
 
-    /**
-    * intenta difundir el mensaje por la ruta dada, devolviendo true si se ha difundido con éxito por toda la ruta o false en caso contrario
-    * @param ruta
-    * @return
-    */
+  /**
+   * intenta difundir el mensaje por la ruta dada, devolviendo true si se ha
+   * difundido con éxito por toda la ruta o false en caso contrario
+   * 
+   * @param ruta
+   * @return
+   */
   public boolean difunde(Usuario... ruta) {
     Boolean exito = true;
     // Recorremos la lista de usuarios que es la ruta del mensaje
     for (Usuario siguiente : ruta) {
       // Vemos si el usuario siguiente tiene un enlace con el usuario actual
-      Enlace enlace = this.actual.getEnlace(siguiente); 
-
-      if (enlace != null && this.difunde(enlace)) {
-
-      } else {
+      Enlace enlace = this.actual.getEnlace(siguiente);
+      if (enlace == null || this.difunde(enlace) == false) {
         exito = false;
       }
     }
     return exito;
-
   }
 
   @Override
