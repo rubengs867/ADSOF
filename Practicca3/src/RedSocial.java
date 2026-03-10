@@ -1,14 +1,18 @@
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class RedSocial {
   private List<Usuario> usuariosMensaje = new ArrayList<>();
   private Mensaje mensaje;
   private Map<String, Usuario> usuarios = new HashMap<>();
-
 
   public RedSocial(String ficheroUsuarios,
       String ficheroEnlaces,
@@ -23,11 +27,13 @@ public class RedSocial {
     difundirMensaje();
   }
 
-  private void difundirMensaje() throws IOException {
+  private void difundirMensaje() {
     for (int i = 0; i < usuariosMensaje.size(); i++) {
+      // Difundo el mensaje persona por persona según la lista de usuarios guardados
       boolean ret = mensaje.difunde(usuarios.get(mensaje.getUsuarioActual().getNombre())
           .getEnlace(usuariosMensaje.get(i)));
       if (ret == true)
+        // En caso de haber sido difundido exitosamente el mensaje, se imprime
         System.out.println(mensaje.toString());
     }
   }
@@ -46,7 +52,7 @@ public class RedSocial {
         int capacidadAmplificacion = Integer.parseInt(partes[1]); // Cap Amplificacion
 
         /* Añado el usuario a la red social */
-        this.usuarios.put(nombre, new Usuario(nombre, capacidadAmplificacion));
+        agregarUsuario(nombre, capacidadAmplificacion);
       }
     }
   }
@@ -62,17 +68,11 @@ public class RedSocial {
         String[] partes = line.split("\\s+"); // Separo las palabras por espacios
 
         String origen = partes[0]; // Nombre usuario origen
-        /* Compruebo si existe el usuario en la red social */
-        Usuario usuarioOrigen = usuarios.get(origen);
-
         String destino = partes[1]; // Nombre usuario destino
-        /* Compruebo si existe el usuario en la red social */
-        Usuario usuarioDestino = usuarios.get(destino);
-
         int coste = Integer.parseInt(partes[2]); // Coste enlace
-        
+
         /* Añado el enlace a la red social */
-        usuarioOrigen.addEnlace(new Enlace(usuarioOrigen, usuarioDestino, coste));
+        agregarEnlace(origen, destino, coste);
       }
     }
   }
@@ -94,36 +94,107 @@ public class RedSocial {
         usuarioOrigen = partes[2]; // Nombre usuario inicial
       }
 
-      // Creo el mensaje
-      this.mensaje = new Mensaje(mensaje, alcance, usuarios.get(usuarioOrigen));
+      // Agrego el mensaje a la Red Social
+      agregarMensaje(mensaje, alcance, usuarioOrigen);
 
       // Añado los usuarios que el mensaje intentará visitar
       while ((line = buffer.readLine()) != null) {
         if (usuariosMensaje.contains(usuarios.get(line)) == false)
           usuariosMensaje.add(usuarios.get(line));
       }
-
-      buffer.close();
     }
   }
 
-  //Metodos de la fachada
+  // Metodos de la fachada
 
-  public void agregarUsuario(String nombre, int capacidadAmplificacion){
-    if(!usuarios.containsKey(nombre)){
+  public boolean agregarUsuario(String nombre, int capacidadAmplificacion) {
+    // Control de errores
+    if (nombre == null)
+      return false;
+
+    // En caso de no contener al usuario lo crea y lo añade
+    if (usuarios.containsKey(nombre) == false) {
       this.usuarios.put(nombre, new Usuario(nombre, capacidadAmplificacion));
     }
+    return true;
   }
 
-  public void agregarEnlace(String nombreOrigen, String nombreDestino, int coste) {
-    // 1. Buscamos los usuarios
+  public boolean agregarEnlace(String nombreOrigen, String nombreDestino, int coste) {
+    // Control de errores
+    if (nombreDestino == null || nombreDestino == null)
+      return false;
+
+    // Buscamos los usuarios
     Usuario origen = this.usuarios.get(nombreOrigen);
     Usuario destino = this.usuarios.get(nombreDestino);
+    // En caso de no existir alguno de los usarios no crea el enlace
+    if (origen == null || destino == null)
+      return false;
 
-    // 2. Si existen, le decimos al usuario origen que lo añada
-    if (origen != null && destino != null) {
-      // El método addEnlace del Usuario ya se encarga de que no se repitan
-      origen.addEnlace(new Enlace(origen, destino, coste));
+    // El método addEnlace del Usuario ya se encarga de que no se repitan
+    origen.addEnlace(new Enlace(origen, destino, coste));
+
+    return true;
+  }
+
+  public boolean agregarMensaje(String autor, int alcance, String usuarioActual) {
+    // Control de errores
+    if (autor == null || usuarioActual == null)
+      return false;
+
+    // Obtengo el usuario
+    Usuario usuario = this.usuarios.get(usuarioActual);
+    if (usuario == null)
+      return false;
+
+    // Creo el mensaje y lo añado a la Red Social
+    this.mensaje = new Mensaje(autor, alcance, usuario);
+    return true;
+  }
+
+  public void guardarRedSocial(String ficheroUsuarios,
+      String ficheroEnlaces,
+      String ficheroMensaje) throws IOException {
+    // Guarda los usuarios, enlaces, o mensajes
+    guardarUsuarios(ficheroUsuarios);
+    guardarEnlaces(ficheroEnlaces);
+    guardarMensaje(ficheroMensaje);
+  }
+
+  private void guardarUsuarios(String ficheroUsuarios) throws IOException {
+    try (PrintWriter output = new PrintWriter(new FileOutputStream(ficheroUsuarios))) {
+
+      for (Usuario u : usuarios.values()) {
+        // Imprimo <NOMBRE> <CAPACIDAD_AMPLIFICACION> para cada usuario
+        output.println(u.getNombre() + " " + u.getCapacidadAmplificacion());
+      }
+    }
+  }
+
+  private void guardarEnlaces(String ficheroEnlaces) throws IOException {
+    try (PrintWriter output = new PrintWriter(new FileOutputStream(ficheroEnlaces))) {
+      int i = 0;
+      for (Usuario u : usuarios.values()) {
+        Enlace enlace = u.getEnlace(i); // Obtengo el i-ésimo enlace del usuario
+        // Imprimo <NOMBRE_ORIGEN> <NOMBRE_DESTINO> <COSTE>
+        if (enlace != null) {
+          output.println(u.getNombre() + " " + enlace.getUsuarioDestino().getNombre() + " " +
+              enlace.getCoste());
+        }
+        i++;
+      }
+    }
+  }
+
+  private void guardarMensaje(String ficheroMensaje) throws IOException {
+    try (PrintWriter output = new PrintWriter(new FileOutputStream(ficheroMensaje))) {
+      // Imprimo "<TEXTO>" <ALCANCE> <NOMBRE_USUARIO_ACTUAL>
+      output.println("\"" + mensaje.getUsuarioAutor() + "\" " + mensaje.getAlcanceActual() + " " +
+          mensaje.getUsuarioActual().getNombre());
+      // Imprimo los nombres de los usuarios que el mensaje intentará visitar
+      for (Usuario u : usuariosMensaje) {
+        output.println(u.getNombre());
+      }
     }
   }
 }
