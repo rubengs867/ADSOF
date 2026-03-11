@@ -1,21 +1,41 @@
 /**
- * Clase de pruebas para comprobar el funcionamiento de:
- * - Enlace
- * - Usuario
- * - Mensaje
+ * Clase de pruebas utilizada para verificar el funcionamiento de las clases
+ * principales del sistema: {@link Enlace} {@link Usuario} {@link Mensaje}
+ *
+ * La salida por consola permite verificar si los resultados obtenidos
+ * coinciden con el comportamiento esperado de cada método.
  */
 public class Pruebas {
 
+  /**
+   * Método principal que ejecuta todas las pruebas del sistema.
+   *
+   * En este método se realizan pruebas sobre:
+   *
+   * <li>La clase {@link Enlace}: creación, coste, coste acumulado y modificación
+   * del destino.</li>
+   * <li>La clase {@link Usuario}: creación de usuarios, inserción de enlaces,
+   * obtención de enlaces y representación textual.</li>
+   * <li>La clase {@link Mensaje}: creación de mensajes, modificación de estado
+   * y difusión a través de enlaces o rutas de usuarios.</li>
+   *
+   * Las pruebas incluyen tanto casos correctos como situaciones de error
+   * para comprobar que los métodos devuelven los valores esperados.
+   *
+   * @param args argumentos de línea de comandos (no utilizados)
+   */
   public static void main(String[] args) {
-
+    
     // Variable auxiliar para comprobar el resultado de métodos booleanos
     boolean ret;
-
+    
     // Creación de usuarios con distinta capacidad de amplificación
     Usuario ana = new Usuario("ana", 31);
     Usuario luis = new Usuario("luis", 85);
     Usuario carmen = new Usuario("carmen");
-    Usuario jose = new Usuario("jose");
+    Usuario jose = new Usuario("jose", -2);
+    Usuario mario = new Usuario("mario", 0);
+    Usuario estrella = new Usuario("estrella", -89);
 
     // Creación de enlaces entre usuarios
     Enlace e1 = new Enlace(ana, luis);
@@ -46,7 +66,11 @@ public class Pruebas {
     System.out.println("Coste acumulado: " + Enlace.getCosteTotalAcumulado() + "\n");
 
     Enlace e3 = new Enlace(luis, ana, -1);
-    System.out.println(e3.toString());
+    System.out.println("Coste introducido < 0.\n" + e3.toString() + " -- ENLACE 3");
+    System.out.println("Coste acumulado: " + Enlace.getCosteTotalAcumulado() + "\n");
+
+    Enlace e4 = new Enlace(jose, estrella, 0);
+    System.out.println("Coste introducido = 0.\n" + e4.toString());
     System.out.println("Coste acumulado: " + Enlace.getCosteTotalAcumulado() + "\n");
 
     System.out.println("\nCambiar destino enlace 3 " +
@@ -64,7 +88,7 @@ public class Pruebas {
     e3.cambiarDestino(carmen, 10);
     System.out.println("Nuevo destino: " + e3.getUsuarioDestino().getNombre());
     System.out.println(e3.toString());
-
+    
     // Comprobar actualización del coste acumulado
     System.out.println("Coste acumulado: " + Enlace.getCosteTotalAcumulado() + "\n");
 
@@ -140,12 +164,10 @@ public class Pruebas {
     // Pruebas del método toString de Usuario
     System.out.println("\nPrueba toString");
     System.out.println("Usuario con varios enlaces:");
-    Usuario mario = new Usuario("mario");
-    Usuario estrella = new Usuario("estrella");
     ana.addEnlace(mario, 50);
     ana.addEnlace(estrella, -120);
     System.out.println(ana.toString());
-    
+
     System.out.println("\nUsuario con 2 enlaces: ");
     ret = carmen.addEnlace(ana, 8);
     System.out.println("Añado enlace: " + carmen.getEnlace(ana));
@@ -210,7 +232,10 @@ public class Pruebas {
         "distinto de usuario actual): " + ret);
 
     ret = m2.difunde((Enlace) null);
-    System.out.println("Difunde carmen -> null (ERROR): " + ret);
+    System.out.println("Difunde carmen -> (Enlace) null (ERROR): " + ret);
+    
+    ret = m2.difunde((Usuario[]) null);
+    System.out.println("Difunde carmen -> (Lista Usuarios) null: " + ret);
 
     ret = m2.difunde();
     System.out.println("Difunde carmen -> lista vacia de usuarios: " + ret);
