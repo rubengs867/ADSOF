@@ -9,11 +9,35 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Clase fachada que representa una red social de usuarios conectados mediante
+ * enlaces por los que se pueden difundir mensajes.
+ *
+ * Esta clase simplifica el acceso a las clases
+ * internas {@link Usuario}, {@link Enlace} y {@link Mensaje}.
+ */
 public class RedSocial {
-  private List<Usuario> usuariosMensaje = new ArrayList<>();
+
+  /** Lista de usuarios que el mensaje intentará visitar. */
+  private List<Usuario> rutaDifusion = new ArrayList<>();
+
+  /** Mensaje actual que se está difundiendo. */
   private Mensaje mensaje;
+
+  /** Lista de usuarios que el mensaje intentará visitar. */
   private Map<String, Usuario> usuarios = new HashMap<>();
 
+  /**
+   * Construye una red social leyendo la información desde tres ficheros:
+   * usuarios, enlaces y mensaje.
+   *
+   * Tras cargar la información, el mensaje se difunde automáticamente.
+   *
+   * @param ficheroUsuarios fichero que contiene la lista de usuarios
+   * @param ficheroEnlaces  fichero que contiene los enlaces entre usuarios
+   * @param ficheroMensaje  fichero que contiene el mensaje y la ruta de difusión
+   * @throws IOException si ocurre algún error durante la lectura de los ficheros
+   */
   public RedSocial(String ficheroUsuarios,
       String ficheroEnlaces,
       String ficheroMensaje) throws IOException {
@@ -27,17 +51,42 @@ public class RedSocial {
     difundirMensaje();
   }
 
-  private void difundirMensaje() {
-    for (int i = 0; i < usuariosMensaje.size(); i++) {
-      // Difundo el mensaje persona por persona según la lista de usuarios guardados
-      boolean ret = mensaje.difunde(usuarios.get(mensaje.getUsuarioActual().getNombre())
-          .getEnlace(usuariosMensaje.get(i)));
-      if (ret == true)
-        // En caso de haber sido difundido exitosamente el mensaje, se imprime
-        System.out.println(mensaje.toString());
+  // =========================
+  // DIFUSIÓN
+  // =========================
+
+  /**
+   * Difunde el mensaje actual siguiendo la ruta de difusión del mensaje.
+   *
+   * Para cada usuario destino se obtiene el enlace correspondiente y se
+   * intenta difundir el mensaje. Si la difusión tiene éxito, el estado
+   * del mensaje se imprime por pantalla.
+   */
+  public void difundirMensaje() {
+    // Navego por todos los usuarios que el mensaje quiere difundir
+    for (Usuario u : rutaDifusion) {
+
+      // Obtengo el enlace que conecta el usuario actual con el siguiente usuario
+      Enlace e = mensaje.getUsuarioActual().getEnlace(u);
+
+      // Intento difunfir el mensaje
+      if (mensaje.difunde(e)) {
+        // Imprimo el mensaje en caso de haber sido difundido
+        System.out.println(mensaje);
+      }
     }
   }
 
+  // =========================
+  // CARGA DESDE FICHEROS
+  // =========================
+
+  /**
+   * Procesa el fichero de usuarios y los añade a la red social.
+   *
+   * @param fichero ruta del fichero de usuarios
+   * @throws IOException si ocurre un error surante la lectura del fichero
+   */
   private void procesarFicheroUsuarios(String fichero) throws IOException {
     try (BufferedReader buffer = new BufferedReader(
         new InputStreamReader(
@@ -57,6 +106,12 @@ public class RedSocial {
     }
   }
 
+  /**
+   * Procesa el fichero de enlaces y los añade a la red social.
+   *
+   * @param fichero ruta del fichero de enlaces
+   * @throws IOException si ocurre un error durante la lectura del fichero
+   */
   private void procesarFicheroEnlaces(String fichero) throws IOException {
     try (BufferedReader buffer = new BufferedReader(
         new InputStreamReader(
@@ -77,6 +132,12 @@ public class RedSocial {
     }
   }
 
+  /**
+   * Procesa el fichero que contiene el mensaje y la ruta de difusión.
+   *
+   * @param fichero ruta del fichero del mensaje
+   * @throws IOException si ocurre un error durante la lectura del fichero
+   */
   private void procesarFicheroMensaje(String fichero) throws IOException {
     String mensaje = "", usuarioOrigen = "";
     int alcance = 0;
@@ -86,6 +147,7 @@ public class RedSocial {
             new FileInputStream(fichero)))) {
 
       String line = buffer.readLine();
+
       // Leer mensaje fichero
       if (line != null) {
         String[] partes = line.split("\\s+");
@@ -99,29 +161,45 @@ public class RedSocial {
 
       // Añado los usuarios que el mensaje intentará visitar
       while ((line = buffer.readLine()) != null) {
-        if (usuariosMensaje.contains(usuarios.get(line)) == false)
-          usuariosMensaje.add(usuarios.get(line));
+        agregarDestinoMensaje(line);
       }
     }
   }
 
-  // Metodos de la fachada
+  // =========================
+  // MÉTODOS DE LA FACHADA
+  // =========================
 
+  /**
+   * Añade un nuevo usuario a la red social.
+   *
+   * @param nombre                 nombre del usuario
+   * @param capacidadAmplificacion capacidad de amplificación del usuario
+   * @return {@code true} si el usuario se añadió correctamente,
+   *         {@code false} si el nombre es nulo o el usuario ya existe
+   */
   public boolean agregarUsuario(String nombre, int capacidadAmplificacion) {
     // Control de errores
-    if (nombre == null)
+    if (nombre == null || usuarios.containsKey(nombre))
       return false;
 
     // En caso de no contener al usuario lo crea y lo añade
-    if (usuarios.containsKey(nombre) == false) {
-      this.usuarios.put(nombre, new Usuario(nombre, capacidadAmplificacion));
-    }
+    usuarios.put(nombre, new Usuario(nombre, capacidadAmplificacion));
     return true;
   }
 
+  /**
+   * Añade un enlace entre dos usuarios existentes de la red social.
+   *
+   * @param nombreOrigen  nombre del usuario origen
+   * @param nombreDestino nombre del usuario destino
+   * @param coste         coste del enlace
+   * @return {@code true} si el enlace se añadió correctamente,
+   *         {@code false} si alguno de los usuarios no existe
+   */
   public boolean agregarEnlace(String nombreOrigen, String nombreDestino, int coste) {
     // Control de errores
-    if (nombreDestino == null || nombreDestino == null)
+    if (nombreOrigen == null || nombreDestino == null)
       return false;
 
     // Buscamos los usuarios
@@ -132,11 +210,18 @@ public class RedSocial {
       return false;
 
     // El método addEnlace del Usuario ya se encarga de que no se repitan
-    origen.addEnlace(new Enlace(origen, destino, coste));
-
-    return true;
+    return origen.addEnlace(new Enlace(origen, destino, coste));
   }
 
+  /**
+   * Crea y establece el mensaje que se difundirá por la red.
+   *
+   * @param autor         texto del mensaje
+   * @param alcance       alcance inicial del mensaje
+   * @param usuarioActual nombre del usuario inicial
+   * @return {@code true} si el mensaje se creó correctamente,
+   *         {@code false} si el usuario inicial no existe
+   */
   public boolean agregarMensaje(String autor, int alcance, String usuarioActual) {
     // Control de errores
     if (autor == null || usuarioActual == null)
@@ -152,15 +237,60 @@ public class RedSocial {
     return true;
   }
 
+  /**
+   * Vacía la ruta de difusión del mensaje.
+   */
+  public void limpiarRutaMensaje() {
+    rutaDifusion.clear();
+  }
+
+  /**
+   * Añade un usuario al final de la ruta de difusión del mensaje.
+   *
+   * El usuario solo se añade si existe en la red social y no estaba
+   * previamente en la lista de difusión.
+   *
+   * @param nombre nombre del usuario destino
+   */
+  public void agregarDestinoMensaje(String nombre) {
+    Usuario u = usuarios.get(nombre); // Obtiene el usuario
+
+    /*
+     * Añade el usuario en caso de exitir en la red social y
+     * no estar en la lista de difusión del mensaje
+     */
+    if (u != null && !rutaDifusion.contains(u))
+      rutaDifusion.add(u);
+  }
+
+  // =========================
+  // GUARDADO EN FICHEROS
+  // =========================
+
+  /**
+   * Guarda el estado completo de la red social en tres ficheros.
+   *
+   * @param ficheroUsuarios fichero donde se guardarán los usuarios
+   * @param ficheroEnlaces  fichero donde se guardarán los enlaces
+   * @param ficheroMensaje  fichero donde se guardará el mensaje
+   * @throws IOException si ocurre un error durante la escritura
+   */
   public void guardarRedSocial(String ficheroUsuarios,
       String ficheroEnlaces,
       String ficheroMensaje) throws IOException {
+
     // Guarda los usuarios, enlaces, o mensajes
     guardarUsuarios(ficheroUsuarios);
     guardarEnlaces(ficheroEnlaces);
     guardarMensaje(ficheroMensaje);
   }
 
+  /**
+   * Guarda la lista de usuarios en un fichero.
+   *
+   * @param ficheroUsuarios ruta del fichero de salida
+   * @throws IOException si ocurre un error durante la escritura
+   */
   private void guardarUsuarios(String ficheroUsuarios) throws IOException {
     try (PrintWriter output = new PrintWriter(new FileOutputStream(ficheroUsuarios))) {
 
@@ -171,28 +301,48 @@ public class RedSocial {
     }
   }
 
+  /**
+   * Guarda todos los enlaces de la red social en un fichero.
+   *
+   * @param ficheroEnlaces ruta del fichero de salida
+   * @throws IOException si ocurre un error durante la escritura
+   */
   private void guardarEnlaces(String ficheroEnlaces) throws IOException {
     try (PrintWriter output = new PrintWriter(new FileOutputStream(ficheroEnlaces))) {
-      int i = 0;
+
       for (Usuario u : usuarios.values()) {
-        Enlace enlace = u.getEnlace(i); // Obtengo el i-ésimo enlace del usuario
-        // Imprimo <NOMBRE_ORIGEN> <NOMBRE_DESTINO> <COSTE>
-        if (enlace != null) {
-          output.println(u.getNombre() + " " + enlace.getUsuarioDestino().getNombre() + " " +
-              enlace.getCoste());
+
+        // Obtengo todos los enlaces del usuario
+        for (int i = 0; i < u.getNumEnlaces(); i++) {
+          Enlace e = u.getEnlace(i);
+
+          // Imprimo <NOMBRE_ORIGEN> <NOMBRE_DESTINO> <COSTE>
+          output.println(
+              u.getNombre() + " " +
+                  e.getUsuarioDestino().getNombre() + " " +
+                  e.getCoste());
         }
-        i++;
       }
     }
   }
 
+  /**
+   * Guarda la información del mensaje y la lista de usuarios destino.
+   *
+   * @param ficheroMensaje ruta del fichero de salida
+   * @throws IOException si ocurre un error durante la escritura
+   */
   private void guardarMensaje(String ficheroMensaje) throws IOException {
     try (PrintWriter output = new PrintWriter(new FileOutputStream(ficheroMensaje))) {
+
       // Imprimo "<TEXTO>" <ALCANCE> <NOMBRE_USUARIO_ACTUAL>
-      output.println("\"" + mensaje.getUsuarioAutor() + "\" " + mensaje.getAlcanceActual() + " " +
-          mensaje.getUsuarioActual().getNombre());
+      output.println(
+          "\"" + mensaje.getUsuarioAutor() + "\" " +
+              mensaje.getAlcanceActual() + " " +
+              mensaje.getUsuarioActual().getNombre());
+
       // Imprimo los nombres de los usuarios que el mensaje intentará visitar
-      for (Usuario u : usuariosMensaje) {
+      for (Usuario u : rutaDifusion) {
         output.println(u.getNombre());
       }
     }

@@ -231,7 +231,7 @@ public class Usuario {
    * El formato es:
    * 
    * <pre>
-   * &#64;nombre(capacidad)[(enlace1), (enlace2), ...]
+   * @nombre(capacidad)[(enlace1), (enlace2), ...]
    * </pre>
    *
    * @return Cadena representando al usuario y sus enlaces.

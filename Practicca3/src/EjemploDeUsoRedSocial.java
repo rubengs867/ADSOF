@@ -3,9 +3,9 @@ import java.io.IOException;
 public class EjemploDeUsoRedSocial {
   public static void main(String[] args) {
     try {
-      String usuario = "usu.txt";
-      String enlace = "enl.txt";
-      String mensaje = "men.txt";
+      String usuario = "USUARIOS.txt";
+      String enlace = "ENLACES.txt";
+      String mensaje = "MENSAJE.txt";
       RedSocial s;
       s = new RedSocial(usuario,
           enlace,
