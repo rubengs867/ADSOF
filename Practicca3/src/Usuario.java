@@ -1,4 +1,5 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Representa un usuario dentro de una red de amplificación.
@@ -20,23 +21,31 @@ public class Usuario {
   private double mediaMensajes;
 
   /**
-   * Construye un usuario con nombre y capacidad de amplificación especificados.
+   * Construye un usuario con nombre, capacidad de amplificación especificados y
+   * nivel de exposición por defecto (ALTA).
    *
    * @param nombre                 Nombre del usuario.
    * @param capacidadAmplificacion Capacidad de amplificación asignada.
    */
   public Usuario(String nombre, int capacidadAmplificacion) {
+    this(nombre, capacidadAmplificacion, Exposicion.ALTA);
+  }
+
+  /**
+   * Construye un usuario con nombre, capacidad de amplificación especificados y
+   * exposición.
+   * 
+   * @param nombre                 Nombre del usuario.
+   * @param capacidadAmplificacion Capacidad de amplificación asignada.
+   * @param exposicion             Nivel de exposición pública.
+   */
+  public Usuario(String nombre, int capacidadAmplificacion, Exposicion exposicion) {
     this.nombre = nombre;
     this.capacidadAmplificacion = (capacidadAmplificacion < 0) ? 0 : capacidadAmplificacion;
     this.enlaces = new ArrayList<>();
-    this.exposicion = Exposicion.ALTA;
+    this.exposicion = exposicion;
     this.historialMensajes = new ArrayList<>();
     this.mediaMensajes = 0.0;
-  }
-
-  public Usuario(String nombre, int capacidadAmplificacion, Exposicion exposicion) {
-    this(nombre, capacidadAmplificacion);
-    this.exposicion = exposicion;
   }
 
   /**
@@ -226,20 +235,23 @@ public class Usuario {
   }
 
   /**
-   * Devuelve una representación textual del usuario.
-   *
-   * El formato es:
+   * Devuelve el número de enlaces salientes que tiene el usuario.
    * 
+   * @return Tamaño de la lista de enlaces salientes.
+   */
+  public int getNumEnlaces() {
+    return this.enlaces.size();
+  }
+  
+  /**
+   * Devuelve una representación textual del usuario.
+   * El formato es:
    * <pre>
    * @nombre(capacidad)[(enlace1), (enlace2), ...]
    * </pre>
    *
    * @return Cadena representando al usuario y sus enlaces.
    */
-  public int getNumEnlaces() {
-    return this.enlaces.size();
-  }
-
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();

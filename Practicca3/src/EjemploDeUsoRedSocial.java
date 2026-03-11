@@ -20,9 +20,9 @@ public class EjemploDeUsoRedSocial {
   public static void main(String[] args) {
 
     try {
-      String usuario = "USUARIOS.txt";
-      String enlace = "ENLACES.txt";
-      String mensaje = "MENSAJE.txt";
+      String usuario = "../txt/USUARIOS.txt";
+      String enlace = "../txt/ENLACES.txt";
+      String mensaje = "../txt/MENSAJE.txt";
 
       RedSocial s;
 
@@ -30,13 +30,13 @@ public class EjemploDeUsoRedSocial {
       s = new RedSocial(usuario, enlace, mensaje);
 
       // Guardar el estado de la red social en nuevos ficheros
-      s.guardarRedSocial("usu.txt", "enl.txt", "men.txt");
+      s.guardarRedSocial("../txt/usu.txt", "../txt/enl.txt", "../txt/men.txt");
 
       /*
        * Crear otra red social con el mismo conjunto de usuarios y enlaces
        * pero utilizando un mensaje diferente
        */
-      s = new RedSocial(usuario, enlace, "MENSAJE2.txt");
+      s = new RedSocial(usuario, enlace, "../txt/MENSAJE2.txt");
 
     } catch (IOException e) {
 
