@@ -1,14 +1,22 @@
 public class MensajeControlado extends Mensaje {
 
   private int rigidez;
-
+  /**
+   * Constructor del mensaje constrolado
+   * la diferencia con un mensaje normal esta en la rigidez
+   * @param autor
+   * @param alcance
+   * @param usuario
+   * @param rigidez
+   */
   public MensajeControlado(String autor, int alcance, Usuario usuario, int rigidez) {
     super(autor, alcance, usuario);
     this.rigidez = rigidez;
   }
 
   /**
-   * Un mensaje controlado NO se propaga por enlaces señuelo.
+   * Un mensaje controlado no se propaga por enlaces señuelo.
+   * @param enlace se mira de que tipo es el enlace
    */
   @Override
   protected boolean puedeDifundirPor(Enlace e) {
@@ -23,6 +31,7 @@ public class MensajeControlado extends Mensaje {
   /**
    * Un mensaje controlado solo es aceptado si la exposición del usuario
    * supera el umbral de rigidez.
+   * @param usuario recibe un usuario
    */
   @Override
   protected boolean aceptadoPor(Usuario u) {
