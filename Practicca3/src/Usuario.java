@@ -14,8 +14,13 @@ public class Usuario {
   /** Lista de enlaces salientes desde este usuario. */
   private List<Enlace> enlaces;
 
+  /**
+   * Nivel de exposición pública, cúan visible o accesible
+   * es para la recepción de mensajes
+   */
   private Exposicion exposicion;
 
+  /** Hisotial de mensajes recibidos */
   private List<Mensaje> historialMensajes;
 
   private double mediaMensajes;
@@ -57,21 +62,37 @@ public class Usuario {
     this(nombre, 2);
   }
 
+  /**
+   * Modifica el nivel de exposición púbicla del usuario.
+   * 
+   * @param e Nuevo nivel de exposición.
+   */
   public void cambiarExposicion(Exposicion e) {
     this.exposicion = e;
   }
 
+  /**
+   * Devuelve el nivel de exposición del usuario.
+   * 
+   * @return Nivel de exposición pública.
+   */
   public Exposicion getExposicion() {
     return this.exposicion;
   }
 
   /**
-   * @return El alcance medio de los mensajes recibidos.
+   * Devuelve el alcance medio de los mensajes recibidos.
+   * 
+   * @return Alcance medio.
    */
   public double alcanceMedio() {
     return this.mediaMensajes;
   }
 
+  /**
+   * Aumenta en un nivel la exposición publica del usuario
+   * en caso de no ser la máxima posible.
+   */
   private void aumentarExposicion() {
     Exposicion[] niveles = Exposicion.values();
 
@@ -80,27 +101,46 @@ public class Usuario {
     }
   }
 
+  /**
+   * Reduce en un nivel la exposición pública del usuario
+   * en caso de no ser la mínima posible.
+   */
   private void reducirExposicion() {
     Exposicion[] niveles = Exposicion.values();
+
     if (this.exposicion.ordinal() > niveles.length - 1) {
       this.exposicion = niveles[this.exposicion.ordinal() - 1];
     }
   }
 
   /**
+   * Representación textual del historial de mensajes.
+   * Cada mensaje es representado textualmente en una lína
+   * 
    * @return Un String con el historial de mensajes, uno por línea.
    */
   public String mostrarHistorial() {
     StringBuilder sb = new StringBuilder();
+
+    // Recorre todos los mensajes del historial del usuario
     for (Mensaje m : this.historialMensajes) {
+      // Añade el mensaje en formato texto y añade un salto de línea
       sb.append(m.toString()).append("\n");
     }
     return sb.toString();
   }
 
+  /**
+   * Añade un mensaje al hitorial de mensajes del usuario.
+   * Actualiza el alcance medio de los mensajes.
+   * Actualiza el nivel de exposición pública del usuario.
+   * 
+   * @param mensaje Mensaje recibido por el usuario.
+   */
   public void anadirMensaje(Mensaje mensaje) {
     int n = this.historialMensajes.size();
     int alcance = mensaje.getAlcanceActual();
+
     this.mediaMensajes = ((this.mediaMensajes * n) + alcance) / (n + 1);
 
     this.historialMensajes.add(mensaje);
@@ -121,8 +161,8 @@ public class Usuario {
    * No debe existir ya un enlace previo con el mismo destino.
    *
    * @param e Enlace a añadir.
-   * @return true si el enlace se añadió correctamente;
-   *         false en caso contrario.
+   * @return {@code true} si el enlace se añadió correctamente;
+   *         {@code false} en caso contrario.
    */
   public boolean addEnlace(Enlace e) {
     // Control de errores
@@ -149,8 +189,8 @@ public class Usuario {
    *
    * @param destino Usuario destino del enlace.
    * @param coste   Coste asociado al enlace.
-   * @return true si el enlace fue creado y añadido correctamente;
-   *         false si el destino es null o ya existe un enlace previo.
+   * @return {@code true} si el enlace fue creado y añadido correctamente;
+   *         {@code false} si el destino es null o ya existe un enlace previo.
    */
   public boolean addEnlace(Usuario destino, int coste) {
     // Control de errores
@@ -164,9 +204,9 @@ public class Usuario {
    * Comprueba si ya existe un enlace saliente hacia un usuario destino dado.
    *
    * @param usuario Usuario destino a comprobar.
-   * @return true si ya existe un enlace hacia ese usuario
+   * @return {@code true} si ya existe un enlace hacia ese usuario
    *         o si el parámetro es null;
-   *         false en caso contrario.
+   *         {@code false} en caso contrario.
    */
   private boolean existeEnlaceConDestino(Usuario usuario) {
     // Error control
@@ -205,7 +245,7 @@ public class Usuario {
    *
    * @param i Índice del enlace en la lista.
    * @return Enlace correspondiente al índice especificado.
-   *         null en caso de que el íncide esté fuera de límites.
+   *         {@code null} en caso de que el íncide esté fuera de límites.
    */
   public Enlace getEnlace(int i) {
     if (i < 0 || i >= enlaces.size())
@@ -242,12 +282,13 @@ public class Usuario {
   public int getNumEnlaces() {
     return this.enlaces.size();
   }
-  
+
   /**
    * Devuelve una representación textual del usuario.
    * El formato es:
+   * 
    * <pre>
-   * @nombre(capacidad)[(enlace1), (enlace2), ...]
+   * &#64;nombre(capacidad)[(enlace1), (enlace2), ...]
    * </pre>
    *
    * @return Cadena representando al usuario y sus enlaces.
