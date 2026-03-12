@@ -1,15 +1,260 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="15.1">
-  <zoom_level>10</zoom_level>
+  <zoom_level>13</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1120</x>
-      <y>430</y>
-      <w>100</w>
-      <h>30</h>
+      <x>260</x>
+      <y>1001</y>
+      <w>481</w>
+      <h>143</h>
     </coordinates>
-    <panel_attributes>SimpleClass</panel_attributes>
+    <panel_attributes>EnlaceSenuelo
+--
+- factorCosteExtra : int
+- probRetorno : double
+--
++ costeEspecial() : int
++ getUsuarioDestino() : Usuario</panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>988</x>
+      <y>689</y>
+      <w>455</w>
+      <h>351</h>
+    </coordinates>
+    <panel_attributes>Usuario
+--
+- nombre : String
+- capacidadAmplificacion : int
+- mediaMensajes : double
+--
++ addEnlace(e: Enlace): boolean
++ addEnlace(u: Usuario,coste: int): boolean
+- existeEnlaceConDestino(u: Usuario): boolean
++ getEnlace(i: int): Enlace
++ getEnlace(destino: Usuario): Enlace
++ getNumEnlaces(): int
++ cambiarExposicion(e: Exposicion): void
+- aumentarExposicion(): void
+- reducirExposicion(): void
++ addMensaje(m: Mensaje): void
++ mostrarHistorial(): String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1768</x>
+      <y>689</y>
+      <w>403</w>
+      <h>195</h>
+    </coordinates>
+    <panel_attributes>Mensaje
+--
+- autor : String
+- alcance : int
+--
++ difunde(e: Enlace): boolean
++ difunde(ruta: Usuario...): boolean
+# puedeDifundirPor(e: Enlace): boolean
+# aceptadoPor(u: Usuario): boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>832</x>
+      <y>156</y>
+      <w>715</w>
+      <h>351</h>
+    </coordinates>
+    <panel_attributes>RedSocial
+--
+- usuarios : Map&lt;String,Usuario&gt;
+--
++ difundirMensaje(): void
+- procesarFicheroUsuarios(fichero: String): void
+- procesarFicheroEnlaces(fichero: String): void
+- procesarFicheroMensaje(fichero: String): void
++ addUsuario(nombre: String, capacidad: int): boolean
++ addEnlace(origen: String, detino: String, coste: int): boolean
++ addMensaje(texto: String, alcance: int, usuario: String): boolean
++ addDestinoMensaje(nombre: String): void
++ limpiarRutaMensaje(): void
++ guardarRedSocial(usuarios: String, enlaces: String, mensaje: String): void
+- guardarUsuarios(fichero: String): void
+- guardarEnlaces(fichero: String): void
+- guardarMensaje(fichero: String): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1131</x>
+      <y>1144</y>
+      <w>169</w>
+      <h>169</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enum&gt;&gt;
+Exposicion
+--
++ OCULTA
++ BAJA
++ MEDIA
++ ALTA
++ VIRAL</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>260</x>
+      <y>689</y>
+      <w>481</w>
+      <h>182</h>
+    </coordinates>
+    <panel_attributes>Enlace
+--
+- coste : int
+_- costeTotal : int_
+--
++ getUsuarioDestino(): Usuario
++ cambiarDestino(nuevo: Usuario,coste: int): void
++ costeEspecial(): int
++ costeReal(): int</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1768</x>
+      <y>949</y>
+      <w>403</w>
+      <h>117</h>
+    </coordinates>
+    <panel_attributes>MensajeControlado
+--
+- rigidez : int
+--
+# puedeDifundirPor(e. Enlace) : boolean
+# aceptadoPor(u: Usuario) : boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1950</x>
+      <y>871</y>
+      <w>39</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>494</x>
+      <y>858</y>
+      <w>39</w>
+      <h>169</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>728</x>
+      <y>728</y>
+      <w>286</w>
+      <h>65</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-&gt;
+r1=enlaces
+m1=*
+r2=origen</panel_attributes>
+    <additional_attributes>10.0;20.0;200.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>728</x>
+      <y>793</y>
+      <w>286</w>
+      <h>52</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+r2=destino</panel_attributes>
+    <additional_attributes>10.0;20.0;200.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1196</x>
+      <y>1027</y>
+      <w>130</w>
+      <h>143</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+m2=exposicion</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1430</x>
+      <y>728</y>
+      <w>364</w>
+      <h>65</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-&gt;
+r1=actual
+r2=historialMensajes
+m2=*</panel_attributes>
+    <additional_attributes>10.0;20.0;260.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1066</x>
+      <y>494</y>
+      <w>117</w>
+      <h>221</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+r2=usuarios
+m2=*</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;150.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1456</x>
+      <y>494</y>
+      <w>611</w>
+      <h>221</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+r2=mensaje
+m2=0..1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0;390.0;80.0;390.0;150.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1248</x>
+      <y>494</y>
+      <w>195</w>
+      <h>221</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+r2=usuariosMensaje
+m2=*</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;150.0</additional_attributes>
   </element>
 </diagram>
