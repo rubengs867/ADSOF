@@ -76,7 +76,10 @@ public class Mensaje {
     }
 
     Usuario destino = e.getUsuarioDestino();
-    if (puedeDifundirPor(e) && aceptadoPor(destino) && e.getUsuarioOrigen().equals(this.actual)) {
+    if (puedeDifundirPor(e) &&
+        aceptadoPor(destino) &&
+        e.getUsuarioOrigen().equals(this.actual)) {
+
       // 1. El usuario actual pasa a ser el destino
       this.actual = destino;
       // 2. El alcance disminuye en el coste del enlace
@@ -89,7 +92,27 @@ public class Mensaje {
     }
     return false;
   }
-
+  
+  /**
+   * intenta difundir el mensaje por la ruta dada, devolviendo true si se ha
+   * difundido con éxito por toda la ruta o false en caso contrario
+   * 
+   * @param ruta
+   * @return
+   */
+  public boolean difunde(Usuario... ruta) {
+    Boolean exito = true;
+    // Recorremos la lista de usuarios que es la ruta del mensaje
+    for (Usuario siguiente : ruta) {
+      // Vemos si el usuario siguiente tiene un enlace con el usuario actual
+      Enlace enlace = this.actual.getEnlace(siguiente);
+      if (enlace == null || this.difunde(enlace) == false) {
+        exito = false;
+      }
+    }
+    return exito;
+  }
+  
   /**
    * comprueba si el mensaje puede difundirse por el enlace e, es decir,
    * si el coste del enlace es menor o igual que el alcance actual del mensaje.
@@ -114,28 +137,11 @@ public class Mensaje {
     return true;
   }
 
-  /**
-   * intenta difundir el mensaje por la ruta dada, devolviendo true si se ha
-   * difundido con éxito por toda la ruta o false en caso contrario
-   * 
-   * @param ruta
-   * @return
-   */
-  public boolean difunde(Usuario... ruta) {
-    Boolean exito = true;
-    // Recorremos la lista de usuarios que es la ruta del mensaje
-    for (Usuario siguiente : ruta) {
-      // Vemos si el usuario siguiente tiene un enlace con el usuario actual
-      Enlace enlace = this.actual.getEnlace(siguiente);
-      if (enlace == null || this.difunde(enlace) == false) {
-        exito = false;
-      }
-    }
-    return exito;
-  }
 
   @Override
   public String toString() {
-    return "Mensaje(" + this.autor + ":" + this.alcance + ") en @" + this.actual.getNombre();
+    return "Mensaje(" +
+        this.autor + ":" + this.alcance +
+        ") en @" + this.actual.getNombre();
   }
 }

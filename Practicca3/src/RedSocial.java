@@ -101,7 +101,7 @@ public class RedSocial {
         int capacidadAmplificacion = Integer.parseInt(partes[1]); // Cap Amplificacion
 
         /* Añado el usuario a la red social */
-        agregarUsuario(nombre, capacidadAmplificacion);
+        addUsuario(nombre, capacidadAmplificacion);
       }
     }
   }
@@ -127,7 +127,7 @@ public class RedSocial {
         int coste = Integer.parseInt(partes[2]); // Coste enlace
 
         /* Añado el enlace a la red social */
-        agregarEnlace(origen, destino, coste);
+        addEnlace(origen, destino, coste);
       }
     }
   }
@@ -154,14 +154,15 @@ public class RedSocial {
         mensaje = partes[0].split("\"")[1]; // Texto mensaje
         alcance = Integer.parseInt(partes[1]); // Alcance
         usuarioOrigen = partes[2]; // Nombre usuario inicial
+        
+        // Agrego el mensaje a la Red Social
+        addMensaje(mensaje, alcance, usuarioOrigen);
       }
 
-      // Agrego el mensaje a la Red Social
-      agregarMensaje(mensaje, alcance, usuarioOrigen);
 
       // Añado los usuarios que el mensaje intentará visitar
       while ((line = buffer.readLine()) != null) {
-        agregarDestinoMensaje(line);
+        addDestinoMensaje(line);
       }
     }
   }
@@ -178,7 +179,7 @@ public class RedSocial {
    * @return {@code true} si el usuario se añadió correctamente,
    *         {@code false} si el nombre es nulo o el usuario ya existe
    */
-  public boolean agregarUsuario(String nombre, int capacidadAmplificacion) {
+  public boolean addUsuario(String nombre, int capacidadAmplificacion) {
     // Control de errores
     if (nombre == null || usuarios.containsKey(nombre))
       return false;
@@ -197,7 +198,7 @@ public class RedSocial {
    * @return {@code true} si el enlace se añadió correctamente,
    *         {@code false} si alguno de los usuarios no existe
    */
-  public boolean agregarEnlace(String nombreOrigen, String nombreDestino, int coste) {
+  public boolean addEnlace(String nombreOrigen, String nombreDestino, int coste) {
     // Control de errores
     if (nombreOrigen == null || nombreDestino == null)
       return false;
@@ -222,7 +223,7 @@ public class RedSocial {
    * @return {@code true} si el mensaje se creó correctamente,
    *         {@code false} si el usuario inicial no existe
    */
-  public boolean agregarMensaje(String autor, int alcance, String usuarioActual) {
+  public boolean addMensaje(String autor, int alcance, String usuarioActual) {
     // Control de errores
     if (autor == null || usuarioActual == null)
       return false;
@@ -252,7 +253,7 @@ public class RedSocial {
    *
    * @param nombre nombre del usuario destino
    */
-  public void agregarDestinoMensaje(String nombre) {
+  public void addDestinoMensaje(String nombre) {
     Usuario u = usuarios.get(nombre); // Obtiene el usuario
 
     /*

@@ -137,7 +137,7 @@ public class Usuario {
    * 
    * @param mensaje Mensaje recibido por el usuario.
    */
-  public void anadirMensaje(Mensaje mensaje) {
+  public void addMensaje(Mensaje mensaje) {
     int n = this.historialMensajes.size();
     int alcance = mensaje.getAlcanceActual();
 

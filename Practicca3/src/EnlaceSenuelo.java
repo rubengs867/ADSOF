@@ -1,21 +1,23 @@
 public class EnlaceSenuelo extends Enlace {
-  
-  private int factor_coste_extra;
-  private double prob_retorno;
 
-  public EnlaceSenuelo(Usuario origen, Usuario destino, int coste, int factor_coste_extra, double prob_retorno){
+  private int factorCosteExtra;
+  private double probRetorno;
+
+  public EnlaceSenuelo(Usuario origen, Usuario destino,
+      int coste, int factorCosteExtra,
+      double probRetorno) {
     super(origen, destino, coste);
-    this.factor_coste_extra = factor_coste_extra;
-    this.prob_retorno = prob_retorno;
+    this.factorCosteExtra = factorCosteExtra;
+    this.probRetorno = probRetorno;
   }
 
   /**
-   * En lugar de cambiar el getCoste(), sobrescribimos el costeEspecial 
+   * En lugar de cambiar el getCoste(), sobrescribimos el costeEspecial
    */
   @Override
   public int costeEspecial() {
     // coste especial = coste original * factor extra
-    return this.getCoste() * this.factor_coste_extra;
+    return this.getCoste() * this.factorCosteExtra;
   }
 
   /**
@@ -23,8 +25,8 @@ public class EnlaceSenuelo extends Enlace {
    */
   @Override
   public Usuario getUsuarioDestino() {
-    if (Math.random() < this.prob_retorno) {
-      return this.getUsuarioOrigen(); 
+    if (Math.random() < this.probRetorno) {
+      return this.getUsuarioOrigen();
     }
     return super.getUsuarioDestino();
   }
