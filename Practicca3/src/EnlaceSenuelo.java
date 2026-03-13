@@ -5,6 +5,7 @@ public class EnlaceSenuelo extends Enlace {
 
   /**
    * Constructor del enlace senuelo
+   * 
    * @param origen
    * @param destino
    * @param coste

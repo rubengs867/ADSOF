@@ -108,7 +108,7 @@ public class Usuario {
   private void reducirExposicion() {
     Exposicion[] niveles = Exposicion.values();
 
-    if (this.exposicion.ordinal() > niveles.length - 1) {
+    if (this.exposicion.ordinal() > 0) {
       this.exposicion = niveles[this.exposicion.ordinal() - 1];
     }
   }
@@ -136,20 +136,29 @@ public class Usuario {
    * Actualiza el nivel de exposición pública del usuario.
    * 
    * @param mensaje Mensaje recibido por el usuario.
+   * @return {@code true} si el mensaje se añadió correctamente;
+   *         {@code false} en caso contrario.
    */
-  public void addMensaje(Mensaje mensaje) {
+  public boolean addMensaje(Mensaje mensaje) {
+    if (mensaje == null)
+      return false;
+
     int n = this.historialMensajes.size();
     int alcance = mensaje.getAlcanceActual();
 
+    // Actualiza el alcance medio de los mensajes
     this.mediaMensajes = ((this.mediaMensajes * n) + alcance) / (n + 1);
 
+    // Añade le mensaje
     this.historialMensajes.add(mensaje);
 
+    // Actualiza exposición
     if (alcance > this.mediaMensajes) {
       aumentarExposicion();
     } else {
       reducirExposicion();
     }
+    return true;
   }
 
   /**

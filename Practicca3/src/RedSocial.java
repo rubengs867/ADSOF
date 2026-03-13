@@ -70,7 +70,7 @@ public class RedSocial {
       Enlace e = mensaje.getUsuarioActual().getEnlace(u);
 
       // Intento difunfir el mensaje
-      if (mensaje.difunde(e)) {
+      if (e != null || mensaje.difunde(e)) {
         // Imprimo el mensaje en caso de haber sido difundido
         System.out.println(mensaje);
       }
@@ -150,15 +150,23 @@ public class RedSocial {
 
       // Leer mensaje fichero
       if (line != null) {
-        String[] partes = line.split("\\s+");
-        mensaje = partes[0].split("\"")[1]; // Texto mensaje
-        alcance = Integer.parseInt(partes[1]); // Alcance
-        usuarioOrigen = partes[2]; // Nombre usuario inicial
-        
+        int primeraComilla = line.indexOf("\""); // Busco la primera comilla
+        int ultimaComilla = line.lastIndexOf("\""); // Buco la segunda commilla
+        // Extraigo el mensaje
+        mensaje = line.substring(primeraComilla + 1, ultimaComilla);
+
+        /*
+         * El resto de la línea empieza después de la última comilla
+         * Quito los posibles espacios que puedan provocar errores (trim)
+         */
+        String resto = line.substring(ultimaComilla + 1).trim();
+        String[] partesResto = resto.split("\\s+"); // Separo las palabras por espacios
+        alcance = Integer.parseInt(partesResto[0]); // Alcance del mensaje
+        usuarioOrigen = partesResto[1]; // Nombre del usuario inicial
+
         // Agrego el mensaje a la Red Social
         addMensaje(mensaje, alcance, usuarioOrigen);
       }
-
 
       // Añado los usuarios que el mensaje intentará visitar
       while ((line = buffer.readLine()) != null) {

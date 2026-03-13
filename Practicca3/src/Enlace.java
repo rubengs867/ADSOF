@@ -40,13 +40,14 @@ public class Enlace {
 
   /**
    * se cambia el destino de un enlace
+   * 
    * @param nuevoDestino
    * @param nuevoCoste
    */
   public void cambiarDestino(Usuario nuevoDestino, int nuevoCoste) {
     this.destino = nuevoDestino;
     int costeOld = this.coste;
-    // Aplicamos la  regla de coste <= 0
+    // Aplicamos la regla de coste <= 0
     if (nuevoCoste <= 0) {
       this.coste = 1;
     } else {
@@ -86,6 +87,7 @@ public class Enlace {
 
   /**
    * este metodo se sobre escribe en la clase hija
+   * 
    * @return
    */
   public int costeEspecial() {
