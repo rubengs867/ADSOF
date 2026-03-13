@@ -1,16 +1,29 @@
+/**
+ * Representa un tipo especial de enlace llamado "señuelo" dentro de la red
+ * social.
+ * Este enlace hereda de la clase {@link Enlace}.
+ */
 public class EnlaceSenuelo extends Enlace {
 
+  /** Multiplicador utilizado para calcular el coste especial del enlace. */
   private int factorCosteExtra;
+
+  /**
+   * Probabilidad (valor entre 0 - 1) de que el enlace devuelva el mensaje al
+   * origen.
+   */
   private double probRetorno;
 
   /**
-   * Constructor del enlace senuelo
+   * Construye un nuevo enlace señuelo con los parámetros especificados.
    * 
-   * @param origen
-   * @param destino
-   * @param coste
-   * @param factorCosteExtra
-   * @param probRetorno
+   * @param origen           el usuario del que parte el enlace
+   * @param destino          el usuario al que teóricamente se dirige el enlace
+   * @param coste            el coste base de atravesar el enlace
+   * @param factorCosteExtra el factor por el cual se multiplicará el coste base
+   *                         para el coste especial
+   * @param probRetorno      la probabilidad (entre 0 - 1) de que el enlace
+   *                         retorne al origen
    */
   public EnlaceSenuelo(Usuario origen, Usuario destino,
       int coste, int factorCosteExtra,
@@ -21,8 +34,10 @@ public class EnlaceSenuelo extends Enlace {
   }
 
   /**
-   * En lugar de cambiar el getCoste(), sobrescribimos el costeEspecial
-   * en la clase padre vale 0, pero en esta clase tiene su propia formula
+   * Calcula el coste especial que aplica este enlace señuelo.
+   * Se obtiene multiplicando el coste base por el factor extra.
+   * 
+   * @return el coste especial calculado para este enlace
    */
   @Override
   public int costeEspecial() {
@@ -31,13 +46,18 @@ public class EnlaceSenuelo extends Enlace {
   }
 
   /**
-   * Mantenemos la lógica de la probabilidad de retorno.
+   * Obtiene el usuario destino al que conducirá este enlace al ser atravesado.
+   * Evalúa aleatoriamente si el mensaje avanza hacia el destino real o
+   * rebota hacia el usuario de origen.
+   * 
+   * @return el usuario de origen si se cumple la probabilidad de retorno,
+   *         o el usuario de destino real en caso contrario
    */
   @Override
   public Usuario getUsuarioDestino() {
     if (Math.random() < this.probRetorno) {
-      return this.getUsuarioOrigen();
+      return this.getUsuarioOrigen(); // El señuelo hace su efecto y rebota
     }
-    return super.getUsuarioDestino();
+    return super.getUsuarioDestino(); // Avanza normalmente
   }
 }

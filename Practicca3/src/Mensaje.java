@@ -1,15 +1,20 @@
-/* Esta clase guarda el mensaje, en que usuario esta actualmente y cuanto alcance tiene */
-
+/**
+ * Representa un mensaje dentro de la red social.
+ * Almacena el contenido del mensaje, el usuario en el que se encuentra
+ * actualmente y el alcance restante para poder seguir difundiéndose.
+ */
 public class Mensaje {
-  private String autor;
+  private String autor; // Funciona como el contenido textual del mensaje
   private Usuario actual;
   private int alcance;
 
   /**
+   * Construye un nuevo Mensaje con su contenido, alcance inicial y usuario de
+   * origen.
    * 
-   * @param autor   el string del mensaje
-   * @param alcance el alcance del mensaje
-   * @param usuario el usuario en el que se encuentra el mensaje
+   * @param autor   el contenido textual del mensaje
+   * @param alcance el alcance inicial del mensaje
+   * @param usuario el usuario en el que se origina o encuentra el mensaje
    */
   public Mensaje(String autor, int alcance, Usuario usuario) {
     this.autor = autor;
@@ -18,56 +23,57 @@ public class Mensaje {
   }
 
   /**
+   * Actualiza el usuario en el que se encuentra posicionado el mensaje.
    * 
-   * @param actual actualiza el usuario en el que se encuentra el mensaje
+   * @param actual el nuevo usuario actual
    */
-
   public void setUsuarioActual(Usuario actual) {
     this.actual = actual;
   }
 
   /**
-   * actualiza el alcance del mensaje
+   * Actualiza el alcance disponible del mensaje.
    * 
-   * @param alcance el nuevo alcance del mensaje
+   * @param alcance el nuevo valor de alcance
    */
   public void setAlcanceActual(int alcance) {
     this.alcance = alcance;
   }
 
   /**
-   * devuelve el usuario en el que se encuentra el mensaje
+   * Obtiene el usuario en el que se encuentra actualmente el mensaje.
    * 
-   * @return devuelve el usuario donde está actualmente el mensaje
+   * @return el usuario actual
    */
   public Usuario getUsuarioActual() {
     return this.actual;
   }
 
   /**
-   * devuelve el autor del mensaje
+   * Obtiene el contenido textual del mensaje.
    * 
-   * @return String con el mensaje, en la practica se llama autor pero se refiere al contenido
+   * @return el texto del mensaje (almacenado en la propiedad autor)
    */
   public String getUsuarioAutor() {
     return this.autor;
   }
 
   /**
-   * devuelve el alcance del mensaje
-   * 
-   * @return el alcance del mensaje
+   * Obtiene el alcance actual disponible para difundir el mensaje.
+   * * @return el alcance del mensaje
    */
   public int getAlcanceActual() {
     return this.alcance;
   }
 
   /**
-   * Intenta difundir el mensaje por el enlace e, actualizando el usuario actual
-   * y el alcance del mensaje en caso de éxito.
+   * Intenta difundir el mensaje a través del enlace especificado.
+   * Si tiene éxito, actualiza el usuario actual y recalcula el alcance del
+   * mensaje.
    * 
-   * @param e enlace
-   * @return devuelve true si todo ha ido bien
+   * @param e el enlace por el cual se intentará difundir
+   * @return {@code true} si la difusión fue exitosa,
+   *         {@code false} en caso contrario o si el enlace es nulo
    */
   public boolean difunde(Enlace e) {
     // Control errores
@@ -94,23 +100,24 @@ public class Mensaje {
   }
 
   /**
-   * intenta difundir el mensaje por la ruta dada, devolviendo true si se ha
-   * difundido con éxito por toda la ruta o false en caso contrario
+   * Intenta difundir el mensaje secuencialmente a través de una ruta de usuarios.
    * 
-   * @param ruta la ruta es un numero variable de usuarios, por eso los 3 puntos
-   * @return true si todo ha ido correctamente, false en caso de error
+   * @param ruta secuencia variable de usuarios que conforman la ruta destino
+   * @return {@code true} si el mensaje logró difundirse por toda la ruta con
+   *         éxito,
+   *         {@code false} en caso de error o si no pudo completar la ruta
    */
   public boolean difunde(Usuario... ruta) {
     // Control de errores
     if (ruta == null)
       return false;
 
-    Boolean exito = true;
+    boolean exito = true;
     // Recorremos la lista de usuarios que es la ruta del mensaje
     for (Usuario siguiente : ruta) {
       // Vemos si el usuario siguiente tiene un enlace con el usuario actual
       Enlace enlace = this.actual.getEnlace(siguiente);
-      if (enlace == null || this.difunde(enlace) == false) {
+      if (enlace == null || !this.difunde(enlace)) {
         exito = false;
       }
     }
@@ -118,11 +125,14 @@ public class Mensaje {
   }
 
   /**
-   * comprueba si el mensaje puede difundirse por el enlace e, es decir,
-   * si el coste del enlace es menor o igual que el alcance actual del mensaje.
+   * Comprueba si el mensaje tiene alcance suficiente para difundirse por el
+   * enlace dado.
    * 
-   * @param e enlace
-   * @return devuelve true si se puede difundir
+   * @param e el enlace a evaluar
+   * @return {@code true} si el coste del enlace es menor o igual al alcance
+   *         actual,
+   *         {@code false}
+   *         en caso contrario
    */
   protected boolean puedeDifundirPor(Enlace e) {
     if (e.getCoste() <= this.alcance) {
@@ -132,18 +142,20 @@ public class Mensaje {
   }
 
   /**
-   * comprueba si el usuario u ha aceptado el mensaje
-   * como se sobre escribe en el mensaje controlado usamos protected ya que solo se utiliza dentro de esta herencia
-   * @param u usuario
-   * @return en este caso siempre true
+   * Comprueba si el usuario destino acepta recibir el mensaje.
+   * Diseñado para ser sobrescrito en clases hijas (ej. MensajeControlado).
+   * 
+   * @param u el usuario destino a evaluar
+   * @return {@code true} por defecto para un mensaje estándar
    */
   protected boolean aceptadoPor(Usuario u) {
     return true;
   }
 
   /**
-   * La composicion del mensaje
-   * @return String con el formato del mensaje
+   * Devuelve la representación en cadena de texto del estado actual del mensaje.
+   * 
+   * @return cadena con el formato "Mensaje(texto:alcance) en @usuario"
    */
   @Override
   public String toString() {
