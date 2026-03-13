@@ -29,7 +29,7 @@ public class Mensaje {
   /**
    * actualiza el alcance del mensaje
    * 
-   * @param alcance
+   * @param alcance el nuevo alcance del mensaje
    */
   public void setAlcanceActual(int alcance) {
     this.alcance = alcance;
@@ -38,7 +38,7 @@ public class Mensaje {
   /**
    * devuelve el usuario en el que se encuentra el mensaje
    * 
-   * @return
+   * @return devuelve el usuario donde está actualmente el mensaje
    */
   public Usuario getUsuarioActual() {
     return this.actual;
@@ -47,7 +47,7 @@ public class Mensaje {
   /**
    * devuelve el autor del mensaje
    * 
-   * @return
+   * @return String con el mensaje, en la practica se llama autor pero se refiere al contenido
    */
   public String getUsuarioAutor() {
     return this.autor;
@@ -56,7 +56,7 @@ public class Mensaje {
   /**
    * devuelve el alcance del mensaje
    * 
-   * @return
+   * @return el alcance del mensaje
    */
   public int getAlcanceActual() {
     return this.alcance;
@@ -66,8 +66,8 @@ public class Mensaje {
    * Intenta difundir el mensaje por el enlace e, actualizando el usuario actual
    * y el alcance del mensaje en caso de éxito.
    * 
-   * @param e
-   * @return
+   * @param e enlace
+   * @return devuelve true si todo ha ido bien
    */
   public boolean difunde(Enlace e) {
     // Control errores
@@ -97,8 +97,8 @@ public class Mensaje {
    * intenta difundir el mensaje por la ruta dada, devolviendo true si se ha
    * difundido con éxito por toda la ruta o false en caso contrario
    * 
-   * @param ruta
-   * @return
+   * @param ruta la ruta es un numero variable de usuarios, por eso los 3 puntos
+   * @return true si todo ha ido correctamente, false en caso de error
    */
   public boolean difunde(Usuario... ruta) {
     Boolean exito = true;
@@ -117,8 +117,8 @@ public class Mensaje {
    * comprueba si el mensaje puede difundirse por el enlace e, es decir,
    * si el coste del enlace es menor o igual que el alcance actual del mensaje.
    * 
-   * @param e
-   * @return
+   * @param e enlace
+   * @return devuelve true si se puede difundir
    */
   protected boolean puedeDifundirPor(Enlace e) {
     if (e.getCoste() <= this.alcance) {
@@ -129,15 +129,18 @@ public class Mensaje {
 
   /**
    * comprueba si el usuario u ha aceptado el mensaje
-   * 
-   * @param u
-   * @return
+   * como se sobre escribe en el mensaje controlado usamos protected ya que solo se utiliza dentro de esta herencia
+   * @param u usuario
+   * @return en este caso siempre true
    */
   protected boolean aceptadoPor(Usuario u) {
     return true;
   }
 
-
+  /**
+   * La composicion del mensaje
+   * @return String con el formato del mensaje
+   */
   @Override
   public String toString() {
     return "Mensaje(" +
