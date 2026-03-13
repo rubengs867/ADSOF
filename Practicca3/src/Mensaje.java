@@ -92,7 +92,7 @@ public class Mensaje {
     }
     return false;
   }
-  
+
   /**
    * intenta difundir el mensaje por la ruta dada, devolviendo true si se ha
    * difundido con éxito por toda la ruta o false en caso contrario
@@ -101,6 +101,10 @@ public class Mensaje {
    * @return
    */
   public boolean difunde(Usuario... ruta) {
+    // Control de errores
+    if (ruta == null)
+      return false;
+
     Boolean exito = true;
     // Recorremos la lista de usuarios que es la ruta del mensaje
     for (Usuario siguiente : ruta) {
@@ -112,7 +116,7 @@ public class Mensaje {
     }
     return exito;
   }
-  
+
   /**
    * comprueba si el mensaje puede difundirse por el enlace e, es decir,
    * si el coste del enlace es menor o igual que el alcance actual del mensaje.
@@ -136,7 +140,6 @@ public class Mensaje {
   protected boolean aceptadoPor(Usuario u) {
     return true;
   }
-
 
   @Override
   public String toString() {

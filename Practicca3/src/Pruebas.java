@@ -25,10 +25,10 @@ public class Pruebas {
    * @param args argumentos de línea de comandos (no utilizados)
    */
   public static void main(String[] args) {
-    
+
     // Variable auxiliar para comprobar el resultado de métodos booleanos
     boolean ret;
-    
+
     // Creación de usuarios con distinta capacidad de amplificación
     Usuario ana = new Usuario("ana", 31);
     Usuario luis = new Usuario("luis", 85);
@@ -58,7 +58,7 @@ public class Pruebas {
     // Impresión del enlace mediante toString()
     System.out.println(e1.toString() + "\n");
 
-    // Creación de más enlaces
+    // Creación e impresión de más enlaces
     Enlace e2 = new Enlace(carmen, luis, 4);
     System.out.println(e2.toString());
 
@@ -88,9 +88,9 @@ public class Pruebas {
     e3.cambiarDestino(carmen, 10);
     System.out.println("Nuevo destino: " + e3.getUsuarioDestino().getNombre());
     System.out.println(e3.toString());
-    
+
     // Comprobar actualización del coste acumulado
-    System.out.println("Coste acumulado: " + Enlace.getCosteTotalAcumulado() + "\n");
+    System.out.println("Coste acumulado actualizado: " + Enlace.getCosteTotalAcumulado() + "\n");
 
     System.out.println("\n============== Pruebas Usuarios ===================\n");
 
@@ -180,6 +180,8 @@ public class Pruebas {
 
     System.out.println("\nUsuario con 0 enlaces: ");
     System.out.println(jose.toString());
+    System.out.println(mario.toString());
+    System.out.println(estrella.toString());
 
     System.out.println("\n============== Pruebas Mensajes ===================\n");
 
@@ -205,14 +207,17 @@ public class Pruebas {
 
     ret = m.difunde(e3);
     System.out.println("\nDifundir luis -> Carmen: " + ret + " - " + m);
+    // alcance 25 = 33 - 10 + 2
 
     ret = m.difunde(luis, carmen, ana, luis);
     System.out.println("Difundir Carmen -> Luis -> Carmen -> Ana -> luis: " +
         ret + " - " + m);
+    // alcance 205 = 25 - 4 + 85 - 10 + 2 - 8 + 31 - 1 + 85
 
     ret = m.difunde(carmen, jose, ana, carmen);
     System.out.println("Difundir Luis -> Carmen -> Jose -> Ana -> Carmen " +
         "(ERROR, no hay enlace para jose): " + ret + " - " + m);
+    // alcance 220 = 205 - 10 + 2 - 8 + 31 - 2 + 2
 
     // Nuevo mensaje con menor alcance
     Mensaje m2 = new Mensaje("Bien", 2, ana);
@@ -233,7 +238,7 @@ public class Pruebas {
 
     ret = m2.difunde((Enlace) null);
     System.out.println("Difunde carmen -> (Enlace) null (ERROR): " + ret);
-    
+
     ret = m2.difunde((Usuario[]) null);
     System.out.println("Difunde carmen -> (Lista Usuarios) null: " + ret);
 
