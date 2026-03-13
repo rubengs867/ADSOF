@@ -1,6 +1,6 @@
 public class EjemploUsoMensaje {
-  public static void main (String [] args){
-    Usuario ana = new Usuario ("ana", 1);
+  public static void main(String[] args) {
+    Usuario ana = new Usuario("ana", 1);
     Usuario luis = new Usuario("luis", 5);
     Usuario carmen = new Usuario("carmen");
 

@@ -140,7 +140,8 @@ public class Usuario {
    *         {@code false} en caso contrario.
    */
   public boolean addMensaje(Mensaje mensaje) {
-    if(mensaje == null) return false;
+    if (mensaje == null)
+      return false;
 
     int n = this.historialMensajes.size();
     int alcance = mensaje.getAlcanceActual();

@@ -154,11 +154,10 @@ public class RedSocial {
         mensaje = partes[0].split("\"")[1]; // Texto mensaje
         alcance = Integer.parseInt(partes[1]); // Alcance
         usuarioOrigen = partes[2]; // Nombre usuario inicial
-        
+
         // Agrego el mensaje a la Red Social
         addMensaje(mensaje, alcance, usuarioOrigen);
       }
-
 
       // Añado los usuarios que el mensaje intentará visitar
       while ((line = buffer.readLine()) != null) {
