@@ -94,8 +94,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1131</x>
-      <y>1144</y>
+      <x>1495</x>
+      <y>858</y>
       <w>169</w>
       <h>169</h>
     </coordinates>
@@ -195,14 +195,14 @@ r2=destino</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1196</x>
-      <y>1027</y>
-      <w>130</w>
-      <h>143</h>
+      <x>1430</x>
+      <y>806</y>
+      <w>260</w>
+      <h>78</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 m2=exposicion</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+    <additional_attributes>10.0;10.0;110.0;10.0;110.0;40.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -256,5 +256,29 @@ m2=0..1</panel_attributes>
 r2=usuariosMensaje
 m2=*</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;150.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>988</x>
+      <y>1105</y>
+      <w>455</w>
+      <h>78</h>
+    </coordinates>
+    <panel_attributes>UsuarioInteresado
+--
++ getEnlace(destino: Usuario): Enlace</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1196</x>
+      <y>1027</y>
+      <w>39</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
   </element>
 </diagram>
