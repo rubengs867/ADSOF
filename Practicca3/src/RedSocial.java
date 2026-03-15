@@ -63,24 +63,18 @@ public class RedSocial {
    * del mensaje se imprime por pantalla.
    */
   public void difundirMensaje() {
-    // Recorremos la ruta de difusión del mensaje usando el índice i
-    for (int i = 0; i < rutaDifusion.size(); i++) {
-
-      Usuario u = rutaDifusion.get(i);
+    // Recorremos la ruta de difusión
+    for(Usuario u : rutaDifusion) {
       // Obtengo el enlace que conecta el usuario actual con el siguiente usuario
       Enlace e = mensaje.getUsuarioActual().getEnlace(u);
 
       // Intento difundir el mensaje
       if (e != null && mensaje.difunde(e)) {
-        rutaDifusion.remove(i); // Eliminamos la posición actual
-        
-        //Al borrar, el usuario que estaba en i+1 pasa a estar en i.
-        i--;
-
         // Imprimo el mensaje por la terminal
         System.out.println(mensaje);
       }
     }
+    limpiarRutaMensaje(); // Limpio la ruta de difusión
   }
 
   // =========================
