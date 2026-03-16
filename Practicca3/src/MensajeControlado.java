@@ -1,15 +1,19 @@
+/**
+ * Representa un mensaje con restricciones de difusión avanzadas.
+ */
 public class MensajeControlado extends Mensaje {
 
+  /** Nivel de restricción de difusión */
   private int rigidez;
 
   /**
    * Constructor del mensaje constrolado
    * la diferencia con un mensaje normal esta en la rigidez
    * 
-   * @param autor
-   * @param alcance
-   * @param usuario
-   * @param rigidez
+   * @param autor   el contenido textual del mensaje
+   * @param alcance el alcance inicial del mensaje
+   * @param usuario el usuario en el que se origina o encuentra el mensaje
+   * @param rigidez el nivel de restricción de difusión
    */
   public MensajeControlado(String autor, int alcance, Usuario usuario, int rigidez) {
     super(autor, alcance, usuario);
@@ -22,14 +26,14 @@ public class MensajeControlado extends Mensaje {
    * @param enlace se mira de que tipo es el enlace
    */
   @Override
-  protected boolean puedeDifundirPor(Enlace e) {
+  protected boolean puedeDifundirPor(Enlace enlace) {
     // Si el enlace es un señuelo, no puede difundir
-    if (e instanceof EnlaceSenuelo) {
+    if (enlace instanceof EnlaceSenuelo) {
       return false;
     }
     // Si no es un señuelo, comprobamos si tiene alcance suficiente (lógica de la
     // clase padre)
-    return super.puedeDifundirPor(e);
+    return super.puedeDifundirPor(enlace);
   }
 
   /**
@@ -39,13 +43,13 @@ public class MensajeControlado extends Mensaje {
    * @param usuario recibe un usuario
    */
   @Override
-  protected boolean aceptadoPor(Usuario u) {
+  protected boolean aceptadoPor(Usuario usuario) {
     // Obtenemos la exposición del usuario destino
-    Exposicion exp = u.getExposicion();
+    Exposicion exp = usuario.getExposicion();
 
     switch (exp) {
       case OCULTA:
-        return true;
+        return true; // Siempre aceptado en modo oculto
       case BAJA:
         return this.rigidez >= 5;
       case MEDIA:

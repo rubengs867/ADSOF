@@ -1,5 +1,13 @@
+/**
+ * Clase de prueba para validar la lógica de {@link UsuarioInteresado}.
+ */
 public class EjemploPruebaUsuario {
 
+  /**
+   * Ejecuta el escenario de pruebas.
+   * 
+   * @param args Argumentos de línea de comandos (no utilizados).
+   */
   public static void main(String[] args) {
 
     // Creamos usuarios normales con distintas exposiciones

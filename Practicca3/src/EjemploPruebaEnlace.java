@@ -1,5 +1,13 @@
+/**
+ * Clase de prueba para validar la lógica de {@link EnlaceSenuelo},
+ */
 public class EjemploPruebaEnlace {
 
+  /**
+   * Ejecuta el escenario de pruebas.
+   * 
+   * @param args Argumentos de línea de comandos (no utilizados).
+   */
   public static void main(String[] args) {
 
     Usuario madrid = new Usuario("madrid", 5);

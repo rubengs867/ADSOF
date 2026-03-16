@@ -1,5 +1,13 @@
+/**
+ * Clase de prueba para validar la lógica de {@link MensajeControlado}.
+ */
 public class EjemploPruebaMensaje {
 
+  /**
+   * Ejecuta el escenario de pruebas.
+   * 
+   * @param args Argumentos de línea de comandos (no utilizados).
+   */
   public static void main(String[] args) {
     // 1. PREPARAMOS EL ESCENARIO (Usuarios con diferentes exposiciones)
     Usuario juan = new Usuario("juan", 2, Exposicion.BAJA);

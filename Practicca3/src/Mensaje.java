@@ -4,8 +4,13 @@
  * actualmente y el alcance restante para poder seguir difundiéndose.
  */
 public class Mensaje {
-  private String autor; // Funciona como el contenido textual del mensaje
+  /** Funciona como el contenido textual del mensaje */
+  private String autor;
+
+  /** Usuario actual donde se encuenta el mensaje */
   private Usuario actual;
+
+  /** Alcance del mensaje */
   private int alcance;
 
   /**
@@ -60,7 +65,8 @@ public class Mensaje {
 
   /**
    * Obtiene el alcance actual disponible para difundir el mensaje.
-   * * @return el alcance del mensaje
+   * 
+   * @return el alcance del mensaje
    */
   public int getAlcanceActual() {
     return this.alcance;

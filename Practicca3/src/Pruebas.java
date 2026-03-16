@@ -12,12 +12,12 @@ public class Pruebas {
    *
    * En este método se realizan pruebas sobre:
    *
-   * <li>La clase {@link Enlace}: creación, coste, coste acumulado y modificación
-   * del destino.</li>
-   * <li>La clase {@link Usuario}: creación de usuarios, inserción de enlaces,
-   * obtención de enlaces y representación textual.</li>
-   * <li>La clase {@link Mensaje}: creación de mensajes, modificación de estado
-   * y difusión a través de enlaces o rutas de usuarios.</li>
+   * La clase {@link Enlace}: creación, coste, coste acumulado y modificación
+   * del destino.
+   * La clase {@link Usuario}: creación de usuarios, inserción de enlaces,
+   * obtención de enlaces y representación textual.
+   * La clase {@link Mensaje}: creación de mensajes, modificación de estado
+   * y difusión a través de enlaces o rutas de usuarios.
    *
    * Las pruebas incluyen tanto casos correctos como situaciones de error
    * para comprobar que los métodos devuelven los valores esperados.
