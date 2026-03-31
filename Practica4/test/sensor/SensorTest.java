@@ -109,7 +109,7 @@ public class SensorTest {
 
   // B) realizarMedicion(): Se invoca estrategia, aplica offset y actualiza datos
   @Test
-  public void testRealizarMedicion_AplicaOffsetYActualizaEstado() {
+  public void testRealizarMedicion_AplicaOffsetYActualizaEstado() throws Exception {
     // La estrategia genera 10.0, el offset del sensor en @Before es 2.0
     // valorFinal esperado = 10.0 - 2.0 = 8.0
     sensor.realizarMedicion();
@@ -125,7 +125,7 @@ public class SensorTest {
 
   // C) primeraLectura(): Comportamiento antes y después de medir
   @Test
-  public void testPrimeraLectura_CambiaEstadoCorrectamente() {
+  public void testPrimeraLectura_CambiaEstadoCorrectamente() throws Exception {
     assertTrue("Debe ser true si no se han hecho lecturas", sensor.primeraLectura());
 
     sensor.realizarMedicion();
@@ -135,7 +135,7 @@ public class SensorTest {
 
   // D) getHistoricoLecturas(): Es inmutable
   @Test(expected = UnsupportedOperationException.class)
-  public void testHistoricoLecturas_EsInmutable() {
+  public void testHistoricoLecturas_EsInmutable() throws Exception {
     sensor.realizarMedicion();
     List<Double> historico = sensor.getHistoricoLecturas();
 
@@ -173,7 +173,7 @@ public class SensorTest {
 
   // G) Comportamiento acumulativo: Histórico crece
   @Test
-  public void testRealizarMedicion_ComportamientoAcumulativo() {
+  public void testRealizarMedicion_ComportamientoAcumulativo() throws Exception {
     // Primera lectura: Genera 15.0 - Offset 2.0 = 13.0
     estrategiaFija.setValorFijo(15.0);
     sensor.realizarMedicion();

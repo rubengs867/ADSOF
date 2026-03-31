@@ -126,7 +126,7 @@ public abstract class Sensor {
    * Realiza la medición del sensor, actualizando su estado y registrando la nueva
    * lectura en el histórico.
    */
-  public void realizarMedicion() {
+  public void realizarMedicion() throws SensorDescalibradoException, CambioBruscoException {
 
     // miramos cuando caduca la medicion
     // recordemos que calibracion dias es un int, se podria cambiar a fecha
@@ -152,7 +152,7 @@ public abstract class Sensor {
     if (!primeraLectura()) {
       double diferencia = Math.abs(valorFinal - this.valorUltimaLectura);
 
-      //nos protegemos con la division por cero
+      // nos protegemos con la division por cero
       double porcentajeCambio = 0.0;
       if (this.valorUltimaLectura != 0) {
         porcentajeCambio = diferencia / Math.abs(this.valorUltimaLectura);

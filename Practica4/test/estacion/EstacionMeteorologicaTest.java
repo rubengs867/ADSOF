@@ -97,7 +97,7 @@ public class EstacionMeteorologicaTest {
   // PRUEBAS DE realizarLecturaPuntual()
 
   @Test
-  public void testLecturaPuntual_TodosConMenosUno() throws SensorDuplicadoException {
+  public void testLecturaPuntual_TodosConMenosUno() throws Exception {
     SensorStub s1 = new SensorStub("T1", "T");
     SensorStub s2 = new SensorStub("T2", "T");
     estacion.addSensor(s1);
@@ -110,7 +110,7 @@ public class EstacionMeteorologicaTest {
   }
 
   @Test
-  public void testLecturaPuntual_NumeroLimitado() throws SensorDuplicadoException {
+  public void testLecturaPuntual_NumeroLimitado() throws Exception {
     SensorStub s1 = new SensorStub("T1", "T");
     SensorStub s2 = new SensorStub("T2", "T");
     estacion.addSensor(s1);
@@ -124,7 +124,7 @@ public class EstacionMeteorologicaTest {
   }
 
   @Test
-  public void testLecturaPuntual_ExcesoSensores_MideTodos() throws SensorDuplicadoException {
+  public void testLecturaPuntual_ExcesoSensores_MideTodos() throws Exception {
     SensorStub s1 = new SensorStub("T1", "T");
     estacion.addSensor(s1);
 
@@ -136,13 +136,13 @@ public class EstacionMeteorologicaTest {
   // PRUEBAS DE realizarLecturasPeriodicas()
 
   @Test
-  public void testLecturaPeriodica_PrimeraVez_SiempreEjecuta() throws SensorDuplicadoException {
+  public void testLecturaPeriodica_PrimeraVez_SiempreEjecuta() throws Exception {
     estacion.addSensor(new SensorStub("T1", "T"));
     assertTrue(estacion.realizarLecturasPeriodicas());
   }
 
   @Test
-  public void testLecturaPeriodica_SinTiempo_NoEjecuta() throws SensorDuplicadoException {
+  public void testLecturaPeriodica_SinTiempo_NoEjecuta() throws Exception {
     estacion.addSensor(new SensorStub("T1", "T"));
 
     estacion.realizarLecturasPeriodicas(); // Primera vez
@@ -152,7 +152,7 @@ public class EstacionMeteorologicaTest {
   }
 
   @Test
-  public void testLecturaPeriodica_PasadoPeriodo_Ejecuta() throws SensorDuplicadoException, InterruptedException {
+  public void testLecturaPeriodica_PasadoPeriodo_Ejecuta() throws Exception {
     estacion.addSensor(new SensorStub("T1", "T"));
 
     estacion.realizarLecturasPeriodicas();
@@ -164,7 +164,7 @@ public class EstacionMeteorologicaTest {
   }
 
   @Test
-  public void testLecturaPeriodica_RespetaMaxLecturas() throws SensorDuplicadoException {
+  public void testLecturaPeriodica_RespetaMaxLecturas() throws Exception {
     // Configuramos maxLecturas a 1
     estacion.setMaxLecturas(1);
     SensorStub s1 = new SensorStub("T1", "T");
@@ -179,7 +179,7 @@ public class EstacionMeteorologicaTest {
   }
 
   @Test
-  public void testLectura_SinSensores_NoFalla() {
+  public void testLectura_SinSensores_NoFalla() throws Exception {
     // Estación vacía
     estacion.realizarLecturaPuntual(-1);
     boolean res = estacion.realizarLecturasPeriodicas();
@@ -201,7 +201,7 @@ public class EstacionMeteorologicaTest {
   // PRUEBAS DE toString()
 
   @Test
-  public void testToString_FormatoCorrecto() throws SensorDuplicadoException {
+  public void testToString_FormatoCorrecto() throws Exception {
     estacion.addSensor(new SensorTemperatura(0.05));
     estacion.addSensor(new SensorHumedad(0.05));
     estacion.addSensor(new SensorPresion(0.05));

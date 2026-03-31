@@ -92,7 +92,7 @@ public class EstacionMeteorologica {
    * @param numSensores Número de sensores a medir.
    *                    Si es -1, se miden todos los sensores registrados.
    */
-  public void realizarLecturaPuntual(int numSensores) {
+  public void realizarLecturaPuntual(int numSensores) throws Exception {
     List<Sensor> lista = new ArrayList<>(sensores.values());
     int total = 0;
 
@@ -115,7 +115,7 @@ public class EstacionMeteorologica {
    * @return {@code true} si se ha realizado una medición en esta llamada;
    *         {@code false} en caso constrario.
    */
-  public boolean realizarLecturasPeriodicas() {
+  public boolean realizarLecturasPeriodicas() throws Exception {
 
     LocalDateTime ahora = LocalDateTime.now();
 
