@@ -1,4 +1,4 @@
-package Practica4.sensor;
+package Practica4.src.sensor;
 
 /**
  * Enumerado que representa las distintas unidades de medida
@@ -17,13 +17,13 @@ public enum Unidad {
   FAHRENHEIT("ºF"),
 
   /** Kelvin (unidad del Sistema Internacional). */
-  KELVIN("K"),
+  KELVIN(" K"),
 
   /** Porcentaje (usado para humedad relativa). */
   PORCENTAJE("%"),
 
   /** Hectopascales (unidad de presión atmosférica). */
-  HPA("hPa");
+  HPA(" hPa");
 
   /** Representación textual de la unidad. */
   private String texto;

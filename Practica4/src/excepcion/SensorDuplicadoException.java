@@ -1,6 +1,6 @@
-package Practica4.excepcion;
+package Practica4.src.excepcion;
 
-import Practica4.sensor.Sensor;
+import Practica4.src.sensor.Sensor;
 
 /**
  * Excepción que se lanza cuando se intenta registrar un sensor

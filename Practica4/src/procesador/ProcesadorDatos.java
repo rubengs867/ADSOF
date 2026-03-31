@@ -1,7 +1,7 @@
-package Practica4.Procesador;
+package Practica4.src.procesador;
 
-import Practica4.Conversor.*;
-import Practica4.sensor.Unidad;
+import Practica4.src.conversor.*;
+import Practica4.src.sensor.Unidad;
 import java.time.LocalDateTime;
 import java.util.*;
 
