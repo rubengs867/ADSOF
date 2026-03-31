@@ -1,7 +1,7 @@
-package Practica4.Conversor;
+package Practica4.src.conversor;
 
-import Practica4.excepcion.ConversionErronea;
-import Practica4.sensor.Unidad;
+import Practica4.src.excepcion.ConversionErroneaException;
+import Practica4.src.sensor.Unidad;
 
 public interface Conversor {
   
@@ -29,7 +29,7 @@ public interface Conversor {
       
 
     if(this.getUnidadDestino() != siguiente.getUnidadOrigen()){
-      throw new ConversionErronea(this.getUnidadDestino(), siguiente.getUnidadOrigen()); 
+      throw new ConversionErroneaException(this.getUnidadDestino(), siguiente.getUnidadOrigen()); 
     }
     
 

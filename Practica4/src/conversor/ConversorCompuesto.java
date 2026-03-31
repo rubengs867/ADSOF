@@ -1,6 +1,6 @@
-package Practica4.Conversor;
+package Practica4.src.conversor;
 
-import Practica4.sensor.Unidad;
+import Practica4.src.sensor.Unidad;
 
 public class ConversorCompuesto implements Conversor {
 

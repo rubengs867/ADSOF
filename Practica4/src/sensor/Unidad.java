@@ -1,4 +1,4 @@
-package Practica4.sensor;
+package Practica4.src.sensor;
 
 /**
  * Enumerado que representa las distintas unidades de medida

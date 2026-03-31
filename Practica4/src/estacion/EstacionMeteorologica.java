@@ -1,4 +1,4 @@
-package Practica4.estacion;
+package Practica4.src.estacion;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import Practica4.excepcion.SensorDuplicadoException;
-import Practica4.sensor.Sensor;
+import Practica4.src.excepcion.SensorDuplicadoException;
+import Practica4.src.sensor.Sensor;
 
 /**
  * Clase que representa una estación meteorológica.

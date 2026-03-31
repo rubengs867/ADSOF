@@ -1,4 +1,4 @@
-package Practica4.sensor;
+package Practica4.src.sensor;
 
 import java.time.LocalDate;
 import java.util.HashMap;

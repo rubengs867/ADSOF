@@ -1,4 +1,4 @@
-package Practica4.sensor;
+package Practica4.src.sensor;
 
 /**
  * Clase concreta que representa un sensor de temperatura.
