@@ -1,8 +1,12 @@
 package Practica4.src.sensor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import Practica4.src.estrategia.EstrategiaLectura;
 
 /**
  * Clase abstracta que representa el comportamiento base de cualquier tipo de
@@ -34,6 +38,12 @@ public abstract class Sensor {
   /** Límite superior del rango operativo del sensor. */
   private double maxRango;
 
+  /** Estrategia usada para realizar lecturas */
+  private EstrategiaLectura estrategia;
+
+  /** Historial de lecturas del sensor */
+  private List<Double> historicoLecturas = new ArrayList<>();
+
   /**
    * Mapa que mantiene un contador independiente por cada tipo de sensor.
    * <p>
@@ -60,7 +70,8 @@ public abstract class Sensor {
    * @throws IllegalArgumentException si {@code minRango} es mayor que
    *                                  {@code maxRango}.
    */
-  protected Sensor(String tipo, double offset, Unidad unidad, double minRango, double maxRango) {
+  protected Sensor(String tipo, double offset, Unidad unidad, double minRango, double maxRango,
+      EstrategiaLectura estrategia) {
     if (minRango > maxRango) {
       throw new IllegalArgumentException("El rango mínimo no puede ser mayor que el máximo");
     }
@@ -70,15 +81,56 @@ public abstract class Sensor {
     this.unidad = unidad;
     this.minRango = minRango;
     this.maxRango = maxRango;
+    this.estrategia = estrategia;
+    generarValorID(tipo);
+    this.fechaUltimaLectura = null;
+  }
 
+  private void generarValorID(String tipo) {
     // Generación de ID por tipo
     int valorID = contadoresTipo.getOrDefault(tipo, 0) + 1;
     contadoresTipo.put(tipo, valorID);
 
     // Formato TIPO-NNNN: relleno con ceros a la izquierda hasta 4 dígitos
     this.id = String.format("%s-%04d", tipo, valorID);
+  }
 
-    this.fechaUltimaLectura = null;
+  /**
+   * Realiza la medición del sensor, actualizando su estado y registrando la nueva
+   * lectura en el histórico.
+   */
+  public void realizarMedicion() {
+    // Obtenemos el valor de la estrategia
+    double valor = estrategia.generarValor(this);
+
+    // Aplicamos el offset
+    double valorFinal = valor - this.offset;
+
+    // Registramos la lectura
+    this.valorUltimaLectura = valorFinal;
+    this.fechaUltimaLectura = LocalDate.now();
+
+    // Guardamos en el histórico
+    this.historicoLecturas.add(valorFinal);
+  }
+
+  /**
+   * Comprueba si el sensor ha realizado alguna lectura.
+   * 
+   * @return {@code true} si NO ha realizado lecturas;
+   *         {@code false} en caso contrario.
+   */
+  public boolean primeraLectura() {
+    return historicoLecturas.isEmpty();
+  }
+
+  /**
+   * Devuelve una lista inmutable del historial de lecturas del sensor.
+   * 
+   * @return lista con los valores de las lecturas.
+   */
+  public List<Double> getHistoricoLecturas() {
+    return List.copyOf(this.historicoLecturas);
   }
 
   /**
@@ -127,25 +179,77 @@ public abstract class Sensor {
   }
 
   /**
+   * Devuelve el valor de la última lectura del sensor.
+   * 
+   * @return valor guardado de la última lectura.
+   */
+  public double getValorUltimaLectura() {
+    return valorUltimaLectura;
+  }
+
+  /**
+   * Devuelve la fecha de la última lectura del sensor.
+   * 
+   * @return fecha de la última lectura
+   */
+  public LocalDate getFechaUltimaLectura() {
+    return fechaUltimaLectura;
+  }
+
+  /**
+   * Devuelve la unidad de medida que usa el sensor.
+   * 
+   * @return objeto {@link Unidad}
+   */
+  public Unidad getUnidad() {
+    return unidad;
+  }
+
+  /**
+   * Establece la unidad de medida que usa el sensor.
+   * 
+   * @param u unidad de medida a establecer
+   */
+  public abstract void setUnidad(Unidad u);
+
+  /**
    * Reprsentación textual de un sensor. Formato:
    * <p>
    * (< VALOR >< UNIDAD >) útlima lectura: < FECHA >
    * </p>
    */
   @Override
-  public String toString() {
-    return "(" + this.valorUltimaLectura + this.unidad.getTexto() + ") útlima lectura: " + this.fechaUltimaLectura;
-  }
+  public abstract String toString();
 
   /**
-   * Dos sensores son iguales si tienen el mismo identificador.
+   * Compara este sensor con otro objeto para determinar su igualdad.
+   * <p>
+   * Dos sensores se consideran iguales si y solo si tienen el mismo
+   * identificador (ID).
+   * </p>
+   * 
+   * @param obj Objeto con el que se desea comparar.
+   * @return {@code true} si los IDs coinciden o si es la misma instancia de
+   *         memoria;
+   *         {@code false} en caso contrario o si el objeto es nulo/de otra clase.
    */
   @Override
   public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
     if (obj == null || !(obj instanceof Sensor))
       return false;
+    Sensor other = (Sensor) obj;
+    return this.getId().equals(other.getId());
+  }
 
-    Sensor s = (Sensor) obj;
-    return this.id.equals(s.getId());
+  /**
+   * Genera un código hash para el sensor basado en su identificador único.
+   * 
+   * @return Un valor entero que representa el código hash del ID del sensor.
+   */
+  @Override
+  public int hashCode() {
+    return this.getId().hashCode();
   }
 }
