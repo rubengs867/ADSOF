@@ -5,8 +5,10 @@ import Practica4.src.sensor.Unidad;
 
 public interface Conversor {
   
+  /**Unidad origen */
   Unidad getUnidadOrigen();
 
+  /**Unidad destino */
   Unidad getUnidadDestino();
 
   /**

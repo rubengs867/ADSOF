@@ -4,8 +4,7 @@ import Practica4.src.sensor.Unidad;
 
 public class ConversorIdentidad implements Conversor {
 
-  // Guardamos la unidad para saber en qué estamos midiendo, aunque no la
-  // cambiemos
+  /**Guardamos la unidad aunque devolvamos la misma unidad */
   private Unidad unidad;
 
   /**
@@ -17,16 +16,29 @@ public class ConversorIdentidad implements Conversor {
     this.unidad = unidad;
   }
 
+  /**
+   * Como es la identidad devuelve su propia unidad
+   * @return unidad del conversor
+   */
   @Override
   public Unidad getUnidadOrigen() {
     return this.unidad;
   }
 
+  /**
+   * Como es la identidad devuelve su propia unidad
+   * @return unidad del conversor
+   */
   @Override
   public Unidad getUnidadDestino() {
     return this.unidad;
   }
 
+  /**
+   * Devuelve el mismo valor, es como multiplicar por la matriz identidad
+   * @param valor valor de entrada
+   * @return double el mismo valor que entra
+   */
   @Override
   public double convertir(double valor) {
     return valor;
