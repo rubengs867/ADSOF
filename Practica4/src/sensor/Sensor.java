@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 import Practica4.src.estrategia.EstrategiaLectura;
+import Practica4.src.excepcion.CambioBruscoException;
+import Practica4.src.excepcion.SensorDescalibradoException;
+import Practica4.src.procesador.ProcesadorDatos;
 
 /**
  * Clase abstracta que representa el comportamiento base de cualquier tipo de
@@ -40,6 +43,18 @@ public abstract class Sensor {
 
   /** Estrategia usada para realizar lecturas */
   private EstrategiaLectura estrategia;
+
+  /** Procesador asociado al sensor (Apartado 3) */
+  private ProcesadorDatos procesador;
+
+  /** Fecha de la última vez que se calibró el sensor */
+  private LocalDate fechaCalibracion;
+
+  /** Duración de la calibración en días (por defecto 365) */
+  private int duracionCalibracionDias;
+
+  /** Porcentaje máximo de cambio permitido entre lecturas (por defecto 50%) */
+  private double umbralCambio;
 
   /** Historial de lecturas del sensor */
   private List<Double> historicoLecturas = new ArrayList<>();
@@ -84,6 +99,18 @@ public abstract class Sensor {
     this.estrategia = estrategia;
     generarValorID(tipo);
     this.fechaUltimaLectura = null;
+
+    this.procesador = new ProcesadorDatos(unidad);
+    this.fechaCalibracion = LocalDate.now();
+    this.duracionCalibracionDias = 365;
+    this.umbralCambio = 0.5;
+  }
+
+  protected Sensor(String tipo, double offset, Unidad unidad, double minRango, double maxRango,
+      EstrategiaLectura estrategia, int duracionCalibracionDias, double umbralCambio) {
+    this(tipo, offset, unidad, minRango, maxRango, estrategia);
+    this.duracionCalibracionDias = duracionCalibracionDias;
+    this.umbralCambio = umbralCambio;
   }
 
   private void generarValorID(String tipo) {
@@ -100,11 +127,45 @@ public abstract class Sensor {
    * lectura en el histórico.
    */
   public void realizarMedicion() {
+
+    // miramos cuando caduca la medicion
+    // recordemos que calibracion dias es un int, se podria cambiar a fecha
+    LocalDate fechaCaducidad = this.fechaCalibracion.plusDays(this.duracionCalibracionDias);
+
+    // primera excepcion
+    if (LocalDate.now().isAfter(fechaCaducidad)) {
+      throw new SensorDescalibradoException(this, "la fecha de hoy excede la fecha de calibracion");
+    }
     // Obtenemos el valor de la estrategia
     double valor = estrategia.generarValor(this);
 
     // Aplicamos el offset
     double valorFinal = valor - this.offset;
+
+    // segunda excepcion
+    if (valorFinal < minRango || valorFinal > maxRango) {
+      throw new SensorDescalibradoException(this, "el valor final excede los valores permitidos");
+    }
+
+    // tercera excepcion
+    boolean cambioBrusco = false;
+    if (!primeraLectura()) {
+      double diferencia = Math.abs(valorFinal - this.valorUltimaLectura);
+
+      //nos protegemos con la division por cero
+      double porcentajeCambio = 0.0;
+      if (this.valorUltimaLectura != 0) {
+        porcentajeCambio = diferencia / Math.abs(this.valorUltimaLectura);
+      }
+      if (porcentajeCambio > this.umbralCambio) {
+        cambioBrusco = true;
+      }
+
+    }
+
+    if (cambioBrusco) {
+      throw new CambioBruscoException(this, this.valorUltimaLectura, valorFinal);
+    }
 
     // Registramos la lectura
     this.valorUltimaLectura = valorFinal;
@@ -112,6 +173,7 @@ public abstract class Sensor {
 
     // Guardamos en el histórico
     this.historicoLecturas.add(valorFinal);
+
   }
 
   /**
