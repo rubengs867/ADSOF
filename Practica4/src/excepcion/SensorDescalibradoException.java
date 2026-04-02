@@ -4,12 +4,9 @@ import Practica4.src.sensor.Sensor;
 
 /**
  * Excepción que se lanza cuando se intenta realizar una medición con un sensor
- * que no está correctamente calibrado (ya sea por calibración caducada o por
- * registrar una lectura fuera de su rango permitido).
- * <p>
+ * que no está correctamente calibrado 
  * Esta excepción proporciona acceso al sensor afectado para su posterior
  * gestión o recalibración por parte de la estación meteorológica.
- * </p>
  */
 public class SensorDescalibradoException extends Exception {
 

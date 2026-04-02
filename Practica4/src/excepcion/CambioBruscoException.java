@@ -4,12 +4,7 @@ import Practica4.src.sensor.Sensor;
 
 /**
  * Excepción que se lanza cuando un sensor registra una lectura válida, pero
- * que presenta una variación porcentual excesiva respecto a la lectura inmediatamente
- * anterior (cambio brusco).
- * <p>
- * Contiene información detallada sobre el salto de valores para facilitar
- * el registro de alertas en el sistema.
- * </p>
+ * que presenta un cambio muy brusco, un aumento del X% respecto a la lectura anterior
  */
 public class CambioBruscoException extends Exception {
 

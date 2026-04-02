@@ -19,6 +19,7 @@ public class ConversorKelvinFahrenheitTest {
 
     @Test
     public void testConvertirMatematicas() {
+        //el delta es el error permtido
         ConversorKelvinFahrenheit c = new ConversorKelvinFahrenheit();
         assertEquals("273.15K deben ser 32ºF", 32.0, c.convertir(273.15), DELTA);
         assertEquals("373.15K deben ser 212ºF", 212.0, c.convertir(373.15), DELTA);
