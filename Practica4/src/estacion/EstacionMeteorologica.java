@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import Practica4.src.documento.IDocumento;
 import Practica4.src.excepcion.SensorDuplicadoException;
 import Practica4.src.sensor.Sensor;
 
@@ -17,7 +18,7 @@ import Practica4.src.sensor.Sensor;
  * Esta clase gestiona un conjunto de sensores y realizar búsquedas sobre ellos.
  * </p>
  */
-public class EstacionMeteorologica {
+public class EstacionMeteorologica implements IDocumento {
 
   /** Nombre de la estación. */
   private String nombre;
@@ -45,6 +46,9 @@ public class EstacionMeteorologica {
   /** Fecha de la última lectura periódica */
   private LocalDateTime ultimaLectura;
 
+  /** Lista historica de las alertas que salten */
+  private Map<LocalDate, String> registroAlertas;
+
   /**
    * Constructor que crea una nueva estación meteorológica.
    * <p>
@@ -69,6 +73,7 @@ public class EstacionMeteorologica {
     this.periodo = periodo;
     this.maxLecturas = maxLecturas;
     this.ultimaLectura = null;
+    this.registroAlertas = new HashMap<>();
   }
 
   /**
@@ -103,7 +108,16 @@ public class EstacionMeteorologica {
       total = numSensores;
 
     for (int i = 0; i < total; i++) {
-      lista.get(i).realizarMedicion();
+      try {
+        lista.get(i).realizarMedicion();
+      } catch (Practica4.src.excepcion.SensorDescalibradoException e) {
+        // El sensor no mide, pero guardamos la alerta
+        registroAlertas.put(LocalDate.now(), e.getMessage());
+      } catch (Practica4.src.excepcion.CambioBruscoException e) {
+        // El sensor SÍ ha medido, y guardamos la alerta
+        registroAlertas.put(LocalDate.now(), e.getMessage());
+      }
+      //la propia excepcion guarda que sensor ha dado la excepcion
     }
   }
 
@@ -234,6 +248,44 @@ public class EstacionMeteorologica {
   public void setMaxLecturas(int maxLecturas) {
     if (maxLecturas >= -1)
       this.maxLecturas = maxLecturas;
+  }
+
+  // IDocumento
+
+  @Override
+  public String getTitulo() {
+    return nombre;
+  }
+
+  @Override
+  public String getCuerpo() {
+    return "Ubicación: " + ubicacion.toString() + "\n" +
+        "Número de sensores: " + sensores.size() + "\n" +
+        "Periodo de lecturas periódicas: " + periodo + " ms\n" +
+        "Número máximo de lecturas periódicas: " + maxLecturas + "\n";
+  }
+
+  @Override
+  public List<String> getParrafos() {
+    List<String> parrafos = new ArrayList<>();
+    parrafos.add("Ubicación: " + ubicacion.toString());
+    parrafos.add("Número de sensores: " + sensores.size());
+    parrafos.add("Periodo de lecturas periódicas: " + periodo + " ms");
+    parrafos.add("Número máximo de lecturas periódicas: " + maxLecturas);
+    return parrafos;
+  }
+
+  @Override
+  public Map<String, List<String>> getListas() {
+    Map<String, List<String>> listas = new HashMap<>();
+    for (String tipo : sensoresPorTipo.keySet()) {
+      List<String> ids = new ArrayList<>();
+      for (Sensor sensor : sensoresPorTipo.get(tipo)) {
+        ids.add(sensor.getId());
+      }
+      listas.put(tipo, ids);
+    }
+    return listas;
   }
 
   /**

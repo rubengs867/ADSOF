@@ -32,4 +32,8 @@ public class SensorDescalibradoException extends Exception {
   public Sensor getSensor() {
     return sensor;
   }
+
+  public String getMessage(){
+    return this.sensor.getId() + "error de calibracion";
+  }
 }
