@@ -18,7 +18,6 @@
 -valorUltimaLectura: double
 -minRango: double
 -maxRango: double
--estrategia: EstrategiaLectura
 -procesador: ProcesadorDatos
 -fechaCalibracion: LocalDate
 -duracionCalibracionDias: int
@@ -165,5 +164,29 @@ m1=unidad</panel_attributes>
 bg=PINK
 layer=-1</panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1781</x>
+      <y>533</y>
+      <w>273</w>
+      <h>65</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;from estrategia&gt;&gt;
+EstrategiaLectura</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1586</x>
+      <y>546</y>
+      <w>221</w>
+      <h>52</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=estragegia</panel_attributes>
+    <additional_attributes>150.0;10.0;10.0;10.0</additional_attributes>
   </element>
 </diagram>
