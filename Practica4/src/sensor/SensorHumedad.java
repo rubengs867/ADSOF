@@ -2,6 +2,8 @@ package Practica4.src.sensor;
 
 import Practica4.src.estrategia.EstrategiaAleatoria;
 import Practica4.src.estrategia.EstrategiaLectura;
+import Practica4.src.unidad.Unidad;
+import Practica4.src.unidad.UnidadHumedad;
 
 /**
  * Clase concreta que representa un sensor de humedad relativa.
@@ -50,17 +52,22 @@ public class SensorHumedad extends Sensor {
    * @param offset Ajuste de calibración.
    */
   public SensorHumedad(double offset, EstrategiaLectura estrategia) {
-    super(TIPO, offset, Unidad.PORCENTAJE, MIN_VALOR, MAX_VALOR, estrategia);
+    super(TIPO, offset, UnidadHumedad.PORCENTAJE, MIN_VALOR, MAX_VALOR, estrategia);
   }
 
   /**
-   * Solo puede usar la unidad {@code PORCENTAJE} que se establece en el
-   * constructor.
+   * Modifica la unidad de medida.
+   * Solo puede sor modificada por otra unidad que mida la humedad, en caso
+   * contrario se lanzará una excepción {@link IllegalArgumentException}
    * 
    * @param u Unidad de medida a establecer
    */
   @Override
   public void setUnidad(Unidad u) {
+    if (!u.isHumedad()) {
+      throw new IllegalArgumentException(
+          "La unidad " + u + " no es válida para temperatura.");
+    }
   }
 
   /**

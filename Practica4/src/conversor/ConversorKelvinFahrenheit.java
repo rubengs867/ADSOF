@@ -1,6 +1,7 @@
 package Practica4.src.conversor;
 
-import Practica4.src.sensor.Unidad;
+import Practica4.src.unidad.Unidad;
+import Practica4.src.unidad.UnidadTemperatura;
 
 /**
  * Clase que convierte de kelvin a Fahrenheit
@@ -12,7 +13,7 @@ public class ConversorKelvinFahrenheit implements Conversor {
      */
     @Override
     public Unidad getUnidadOrigen() {
-        return Unidad.KELVIN;
+        return UnidadTemperatura.KELVIN;
     }
     /**
      * Implementa la funcion de la interfaz
@@ -20,7 +21,7 @@ public class ConversorKelvinFahrenheit implements Conversor {
      */
     @Override
     public Unidad getUnidadDestino() {
-        return Unidad.FAHRENHEIT;
+        return UnidadTemperatura.FAHRENHEIT;
     }
 
     /**

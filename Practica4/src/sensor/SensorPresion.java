@@ -1,6 +1,8 @@
 package Practica4.src.sensor;
 
 import Practica4.src.estrategia.EstrategiaLectura;
+import Practica4.src.unidad.Unidad;
+import Practica4.src.unidad.UnidadPresion;
 import Practica4.src.estrategia.EstrategiaAleatoria;
 
 /**
@@ -34,7 +36,7 @@ public class SensorPresion extends Sensor {
    * @param offset Ajuste de calibración.
    */
   public SensorPresion(double offset, EstrategiaLectura estrategia) {
-    super(TIPO, offset, Unidad.HPA, MIN_VALOR, MAX_VALOR, estrategia);
+    super(TIPO, offset, UnidadPresion.HPA, MIN_VALOR, MAX_VALOR, estrategia);
   }
 
   /**
@@ -54,13 +56,18 @@ public class SensorPresion extends Sensor {
   }
 
   /**
-   * Solo puede usar la unidad {@code HPA} (hectopascales) que se establece en el
-   * constructor.
+   * Modifica la unidad de medida.
+   * Solo puede sor modificada por otra unidad que mida la presión, en caso
+   * contrario se lanzará una excepción {@link IllegalArgumentException}
    * 
    * @param u Unidad de medida a establecer
    */
   @Override
   public void setUnidad(Unidad u) {
+    if (!u.isPresion()) {
+      throw new IllegalArgumentException(
+          "La unidad " + u + " no es válida para presión.");
+    }
   }
 
   /**

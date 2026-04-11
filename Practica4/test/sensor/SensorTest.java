@@ -14,7 +14,7 @@ import org.junit.Test;
 
 import Practica4.src.estrategia.EstrategiaLectura;
 import Practica4.src.sensor.Sensor;
-import Practica4.src.sensor.Unidad;
+import Practica4.src.unidad.Unidad;
 
 public class SensorTest {
 

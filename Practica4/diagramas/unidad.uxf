@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>15</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>960</x>
+      <y>390</y>
+      <w>465</w>
+      <h>195</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+Unidad
+--
+--
++getTexto(): String
++isTemperatura(): boolean
++isPresion(): boolean
++isHumedad(): boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>450</x>
+      <y>330</y>
+      <w>1380</w>
+      <h>765</h>
+    </coordinates>
+    <panel_attributes>unidad
+bg=ORANGE
+layer=-1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>975</x>
+      <y>780</y>
+      <w>405</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enumeration&gt;&gt;
+UnidadHumedad
+--
+PORCENTAJE
+--
+-texto: String
+--
+-UnidadHumedad(texto: String)
++getTexto(): String
++isHumedad(): boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>480</x>
+      <y>780</y>
+      <w>405</w>
+      <h>270</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enumeration&gt;&gt;
+UnidadTemperatura
+--
+CELSIUS
+FAHRENHEIT
+KELVIN
+--
+-texto: String
+--
+-UnidadTemperatura(texto: String)
++getTexto(): String
++isTemperatura(): boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1440</x>
+      <y>780</y>
+      <w>345</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enumeration&gt;&gt;
+UnidadPresion
+--
+HPA
+--
+-texto: String
+--
+-UnidadPresion(texto: String)
++getTexto(): String
++isPresion(): boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1170</x>
+      <y>570</y>
+      <w>45</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;140.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1350</x>
+      <y>570</y>
+      <w>285</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0;170.0;60.0;170.0;140.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>705</x>
+      <y>570</y>
+      <w>375</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>230.0;10.0;230.0;60.0;10.0;60.0;10.0;140.0</additional_attributes>
+  </element>
+</diagram>

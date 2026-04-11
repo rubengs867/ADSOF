@@ -1,6 +1,6 @@
 package Practica4.src.excepcion;
 
-import Practica4.src.sensor.Unidad;
+import Practica4.src.unidad.Unidad;
 
 /**
  * Esta excepcion salta cuando se intentan transformar unidades que no pueden

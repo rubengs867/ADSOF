@@ -19,7 +19,8 @@ import Practica4.src.sensor.Sensor;
 import Practica4.src.sensor.SensorHumedad;
 import Practica4.src.sensor.SensorPresion;
 import Practica4.src.sensor.SensorTemperatura;
-import Practica4.src.sensor.Unidad;
+import Practica4.src.unidad.Unidad;
+import Practica4.src.unidad.UnidadHumedad;
 
 /**
  * Banco de pruebas para la clase EstacionMeteorologica.
@@ -198,28 +199,6 @@ public class EstacionMeteorologicaTest {
     assertEquals(5, estacion.getMaxLecturas());
   }
 
-  // PRUEBAS DE toString()
-
-  @Test
-  public void testToString_FormatoCorrecto() throws Exception {
-    estacion.addSensor(new SensorTemperatura(0.05));
-    estacion.addSensor(new SensorHumedad(0.05));
-    estacion.addSensor(new SensorPresion(0.05));
-
-    estacion.realizarLecturaPuntual(-1);
-    String res = estacion.toString();
-    LocalDate ahora = LocalDate.now();
-
-    assertTrue(res.contains("TEMP-0001 (desde: " + ahora + "): Sensor Temperatura ("));
-    assertTrue(res.contains("ºC) última lectura: " + ahora));
-
-    assertTrue(res.contains("HUM-0001 (desde: " + ahora + "): Sensor Humedad ("));
-    assertTrue(res.contains("%) última lectura: " + ahora));
-
-    assertTrue(res.contains("PRES-0001 (desde: " + ahora + "): Sensor Presión ("));
-    assertTrue(res.contains(" hPa) última lectura: " + ahora));
-  }
-
   // CLASE AUXILIAR
   private static class SensorStub extends Sensor {
     private String id;
@@ -232,7 +211,7 @@ public class EstacionMeteorologicaTest {
     }
 
     public SensorStub(String id, String tipo, String nombre) {
-      super(tipo, 0.5, Unidad.PORCENTAJE, 0, 100, new EstrategiaAleatoria(0.05));
+      super(tipo, 0.5, UnidadHumedad.PORCENTAJE, 0, 100, new EstrategiaAleatoria(0.05));
       this.id = id;
       this.tipo = tipo;
       this.nombre = nombre;

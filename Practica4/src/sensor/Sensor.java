@@ -10,6 +10,7 @@ import Practica4.src.estrategia.EstrategiaLectura;
 import Practica4.src.excepcion.CambioBruscoException;
 import Practica4.src.excepcion.SensorDescalibradoException;
 import Practica4.src.procesador.ProcesadorDatos;
+import Practica4.src.unidad.Unidad;
 
 /**
  * Clase abstracta que representa el comportamiento base de cualquier tipo de
@@ -113,6 +114,15 @@ public abstract class Sensor {
     this.umbralCambio = umbralCambio;
   }
 
+  /**
+   * Genera el valor del ID en función del tipo de sensor que sea y el número de
+   * sensores de ese tipo que se hayan creado.
+   * <p>
+   * Formato: TIPO-NNNN (ej. TEMP-0001)
+   * </p>
+   * 
+   * @param tipo
+   */
   private void generarValorID(String tipo) {
     // Generación de ID por tipo
     int valorID = contadoresTipo.getOrDefault(tipo, 0) + 1;
@@ -128,12 +138,8 @@ public abstract class Sensor {
    */
   public void realizarMedicion() throws SensorDescalibradoException, CambioBruscoException {
 
-    // miramos cuando caduca la medicion
-    // recordemos que calibracion dias es un int, se podria cambiar a fecha
-    LocalDate fechaCaducidad = this.fechaCalibracion.plusDays(this.duracionCalibracionDias);
-
     // primera excepcion
-    if (LocalDate.now().isAfter(fechaCaducidad)) {
+    if (estaCaducadaCalibracion()) {
       throw new SensorDescalibradoException(this, "la fecha de hoy excede la fecha de calibracion");
     }
     // Obtenemos el valor de la estrategia
@@ -273,6 +279,40 @@ public abstract class Sensor {
    * @param u unidad de medida a establecer
    */
   public abstract void setUnidad(Unidad u);
+
+  /**
+   * Establece el offset que va a usar el sensor para calibrar el sensor.
+   * Establece el sensor como calibrado y actualiza la última fecha de
+   * calibración.
+   * 
+   * @param offset nuevo offset de calibración
+   */
+  public void calibrar(double offset) {
+    fechaCalibracion = LocalDate.now();
+    this.offset = offset;
+  }
+
+  /**
+   * Establece el número de días que deben pasar para que caduque la calibración
+   * 
+   * @param duracionCalibracionDias nueva duración de la calibración en días
+   */
+  public void setCaducacionCalibracion(int duracionCalibracionDias) {
+    this.duracionCalibracionDias = duracionCalibracionDias;
+  }
+
+  /**
+   * Comprueba si la calibración del sensor ha caducado
+   * 
+   * @return {@code true} si ha caducado;
+   *         {@code false} en caso contrario
+   */
+  public boolean estaCaducadaCalibracion() {
+    LocalDate fechaCaducidad = this.fechaCalibracion.plusDays(this.duracionCalibracionDias);
+    if (LocalDate.now().isAfter(fechaCaducidad))
+      return true;
+    return false;
+  }
 
   /**
    * Reprsentación textual de un sensor. Formato:

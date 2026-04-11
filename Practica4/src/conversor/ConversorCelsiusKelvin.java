@@ -1,6 +1,7 @@
 package Practica4.src.conversor;
 
-import Practica4.src.sensor.Unidad;
+import Practica4.src.unidad.Unidad;
+import Practica4.src.unidad.UnidadTemperatura;
 
 /**
  * Conversor de Celsius a Kelvin.
@@ -13,7 +14,7 @@ public class ConversorCelsiusKelvin implements Conversor {
    */
   @Override
   public Unidad getUnidadOrigen() {
-    return Unidad.CELSIUS;
+    return UnidadTemperatura.CELSIUS;
   }
   /**
    * Implementa la funcion de la interfaz
@@ -21,7 +22,7 @@ public class ConversorCelsiusKelvin implements Conversor {
    */
   @Override
   public Unidad getUnidadDestino() {
-    return Unidad.KELVIN;
+    return UnidadTemperatura.KELVIN;
   }
 
   /**

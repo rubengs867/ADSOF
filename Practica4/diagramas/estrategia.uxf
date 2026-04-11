@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>16</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>896</x>
+      <y>496</y>
+      <w>480</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+EstrategiaLectura
+--
+--
++generarValor(s: Sensor): double</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>304</x>
+      <y>400</y>
+      <w>1712</w>
+      <h>576</h>
+    </coordinates>
+    <panel_attributes>estrategia
+bg=LIGHT_GRAY
+layer=-1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>352</x>
+      <y>784</y>
+      <w>480</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>EstrategiaAleatoria
+--
+-probFueraRango: double
+--
++EstrategiaAleatoria(prob: double)
++generarValor(s: Sensor): double</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>880</x>
+      <y>784</y>
+      <w>496</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>EstrategiaHistorica
+--
+-variacionPermitida: double
+--
++EstrategiaHistorica(variacion: double)
++generarValor(s: Sensor): double</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1424</x>
+      <y>784</y>
+      <w>544</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>EstrategiaValorCercano
+--
+-variacionPermitida: double
+--
++EstrategiaValorCercano(variacion: double)
++generarValor(s: Sensor): double</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1120</x>
+      <y>592</y>
+      <w>48</w>
+      <h>224</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1264</x>
+      <y>592</y>
+      <w>416</w>
+      <h>224</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0;240.0;70.0;240.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>608</x>
+      <y>592</y>
+      <w>416</w>
+      <h>224</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>240.0;10.0;240.0;70.0;10.0;70.0;10.0;120.0</additional_attributes>
+  </element>
+</diagram>

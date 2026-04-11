@@ -1,7 +1,9 @@
 package Practica4.src.sensor;
 
-import Practica4.src.estrategia.EstrategiaLectura;
 import Practica4.src.estrategia.EstrategiaAleatoria;
+import Practica4.src.estrategia.EstrategiaLectura;
+import Practica4.src.unidad.Unidad;
+import Practica4.src.unidad.UnidadTemperatura;
 
 /**
  * Clase concreta que representa un sensor de temperatura.
@@ -76,7 +78,7 @@ public class SensorTemperatura extends Sensor {
    * @param offset Ajuste de calibración.
    */
   public SensorTemperatura(double offset) {
-    this(offset, Unidad.CELSIUS);
+    this(offset, UnidadTemperatura.CELSIUS);
   }
 
   /**

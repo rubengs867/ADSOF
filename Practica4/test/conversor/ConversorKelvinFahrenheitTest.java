@@ -1,10 +1,11 @@
 package Practica4.test.conversor;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 import Practica4.src.conversor.ConversorKelvinFahrenheit;
-import Practica4.src.sensor.Unidad;
+import Practica4.src.unidad.UnidadTemperatura;
 
 public class ConversorKelvinFahrenheitTest {
 
@@ -13,8 +14,8 @@ public class ConversorKelvinFahrenheitTest {
     @Test
     public void testUnidades() {
         ConversorKelvinFahrenheit c = new ConversorKelvinFahrenheit();
-        assertEquals("El origen debe ser KELVIN", Unidad.KELVIN, c.getUnidadOrigen());
-        assertEquals("El destino debe ser FAHRENHEIT", Unidad.FAHRENHEIT, c.getUnidadDestino());
+        assertEquals("El origen debe ser KELVIN", UnidadTemperatura.KELVIN, c.getUnidadOrigen());
+        assertEquals("El destino debe ser FAHRENHEIT", UnidadTemperatura.FAHRENHEIT, c.getUnidadDestino());
     }
 
     @Test

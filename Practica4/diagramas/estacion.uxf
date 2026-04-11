@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>13</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>442</x>
+      <y>338</y>
+      <w>806</w>
+      <h>585</h>
+    </coordinates>
+    <panel_attributes>EstacionMeteorologica
+--
+-nombre: String
+-sensoresPorTipo: Map&lt;String, List&lt;Sensor&gt; &gt;
+-fechasPorID: Map&lt;String, LocalDate&gt;
+-periodo: long
+-maxLecturas: int
+-ultimaLectura: LocalDateTime
+-registroAlertas: Map&lt;LocalDate, String&gt;
+--
++EstacionMeteorologica(nombre, ubicacion, periodo, maxLecturas)
++EstacionMeteorologica(nombre, ubicacion)
++realizarLecturaPuntual(numSensores: int)
++realizarLecturasPeriodicas(): boolean
++addSensor(nuevoSensor: Sensor)
++getSensor(id: String): Sensor
++getSensoresPorTipo(tipoClase: String): List&lt;Sensor&gt;
++getFechaInstalacion(id: String): LocalDate
++setPeriodo(periodo: long)
++setMaxLecturas(maxLecturas: int)
+--
+/+getTitulo(): String/
+/+getCuerpo(): String/
+/+getParrafos(): List&lt;String&gt;/
+/+getListas(): Map&lt;String, List&lt;String&gt;&gt;/</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>416</x>
+      <y>273</y>
+      <w>1495</w>
+      <h>689</h>
+    </coordinates>
+    <panel_attributes>estacion
+layer=-1
+bg=YELLOW</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1456</x>
+      <y>377</y>
+      <w>182</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>Ubicacion
+--
+-latitud: double
+-longitud: double</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1235</x>
+      <y>403</y>
+      <w>247</w>
+      <h>52</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=ubicacion</panel_attributes>
+    <additional_attributes>170.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1456</x>
+      <y>559</y>
+      <w>169</w>
+      <h>52</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;from sensor&gt;&gt;
+Sensor</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1235</x>
+      <y>559</y>
+      <w>247</w>
+      <h>65</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;
+m2=sensores
+r2=*</panel_attributes>
+    <additional_attributes>10.0;20.0;170.0;20.0</additional_attributes>
+  </element>
+</diagram>

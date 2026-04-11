@@ -50,4 +50,14 @@ public class Ubicacion {
   public double getLongitud() {
     return longitud;
   }
+
+  /** 
+   * Representación textual de una Ubicación.
+   */
+  @Override
+  public String toString() {
+    return latitud + ", " + longitud;
+  }
+
+  
 }
