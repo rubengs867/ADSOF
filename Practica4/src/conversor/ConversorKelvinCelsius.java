@@ -1,7 +1,7 @@
-package Practica4.src.conversor;
+package src.conversor;
 
-import Practica4.src.unidad.Unidad;
-import Practica4.src.unidad.UnidadTemperatura;
+import src.unidad.Unidad;
+import src.unidad.UnidadTemperatura;
 
 public class ConversorKelvinCelsius implements Conversor {
   @Override

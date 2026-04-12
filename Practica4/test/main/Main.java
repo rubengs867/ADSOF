@@ -1,14 +1,14 @@
-package Practica4.test.main;
+package test.main;
 
-import Practica4.src.estacion.EstacionMeteorologica;
-import Practica4.src.estacion.Ubicacion;
-import Practica4.src.sensor.Sensor;
-import Practica4.src.unidad.Unidad;
-import Practica4.src.unidad.UnidadTemperatura;
-import Practica4.src.estrategia.EstrategiaLectura;
-import Practica4.src.formateador.FormateadorHTML;
-import Practica4.src.formateador.FormateadorMarkdown;
-import Practica4.src.documento.IFormateador;
+import src.estacion.EstacionMeteorologica;
+import src.estacion.Ubicacion;
+import src.sensor.Sensor;
+import src.unidad.Unidad;
+import src.unidad.UnidadTemperatura;
+import src.estrategia.EstrategiaLectura;
+import src.formateador.FormateadorHTML;
+import src.formateador.FormateadorMarkdown;
+import src.documento.IFormateador;
 
 public class Main {
 

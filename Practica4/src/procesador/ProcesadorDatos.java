@@ -1,8 +1,8 @@
-package Practica4.src.procesador;
+package src.procesador;
 
-import Practica4.src.conversor.*;
-import Practica4.src.excepcion.ConversionErroneaException;
-import Practica4.src.unidad.Unidad;
+import src.conversor.*;
+import src.excepcion.ConversionErroneaException;
+import src.unidad.Unidad;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -134,5 +134,24 @@ public class ProcesadorDatos {
   public Collection<Double> getValores() {
     // Devuelve una vista protegida de los valores del mapa
     return Collections.unmodifiableCollection(this.historial.values());
+  }
+
+  /**
+   * Representación textual de un procesador de datos siguiendo el formato:
+   * [val1, val2, ...] -- MIN: x.xx MAX: x.xx AVG: x.xx
+   */
+  @Override
+  public String toString() {
+    // Obtenemos los valores del historial y los formateamos a 2 decimales
+    List<String> valoresFormateados = this.historial.values().stream()
+        .map(v -> String.format("%.2f", v))
+        .toList();
+
+    // Construimos la cadena final
+    return String.format("%s -- MIN: %.2f MAX: %.2f AVG: %.2f",
+        valoresFormateados.toString(), // Esto genera el formato [20.50, 20.50, ...]
+        getMinimo(),
+        getMaximo(),
+        getMedia());
   }
 }

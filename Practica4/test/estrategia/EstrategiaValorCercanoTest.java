@@ -1,4 +1,4 @@
-package Practica4.test.estrategia;
+package test.estrategia;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -6,9 +6,9 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import Practica4.src.estrategia.EstrategiaValorCercano;
-import Practica4.src.sensor.Sensor;
-import Practica4.src.unidad.Unidad;
+import src.estrategia.EstrategiaValorCercano;
+import src.sensor.Sensor;
+import src.unidad.Unidad;
 
 public class EstrategiaValorCercanoTest {
 

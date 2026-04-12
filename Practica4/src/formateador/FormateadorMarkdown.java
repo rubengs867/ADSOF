@@ -1,10 +1,10 @@
-package Practica4.src.formateador;
+package src.formateador;
 
 import java.util.List;
 import java.util.Map;
 
-import Practica4.src.documento.IDocumento;
-import Practica4.src.documento.IFormateador;
+import src.documento.IDocumento;
+import src.documento.IFormateador;
 
 /**
  * Seguimos guia del pdf

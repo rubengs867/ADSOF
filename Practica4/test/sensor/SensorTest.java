@@ -1,4 +1,4 @@
-package Practica4.test.sensor;
+package test.sensor;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -12,16 +12,16 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import Practica4.src.estrategia.EstrategiaLectura;
-import Practica4.src.excepcion.CambioBruscoException;
-import Practica4.src.excepcion.SensorDescalibradoException;
-import Practica4.src.excepcion.SensorDescalibradoPorCaducidadException;
-import Practica4.src.excepcion.SensorDescalibradoPorRangoException;
-import Practica4.src.sensor.Sensor;
-import Practica4.src.sensor.SensorHumedad;
-import Practica4.src.sensor.SensorTemperatura;
-import Practica4.src.unidad.Unidad;
-import Practica4.src.unidad.UnidadTemperatura;
+import src.estrategia.EstrategiaLectura;
+import src.excepcion.CambioBruscoException;
+import src.excepcion.SensorDescalibradoException;
+import src.excepcion.SensorDescalibradoPorCaducidadException;
+import src.excepcion.SensorDescalibradoPorRangoException;
+import src.sensor.Sensor;
+import src.sensor.SensorHumedad;
+import src.sensor.SensorTemperatura;
+import src.unidad.Unidad;
+import src.unidad.UnidadTemperatura;
 
 public class SensorTest {
 
@@ -145,7 +145,6 @@ public class SensorTest {
     sensor.calibrar(2.0);
     // Devuelve true (provocando la excepción) cuando los días son negativos.
     sensor.setCaducacionCalibracion(-1);
-
     sensor.realizarMedicion();
   }
 

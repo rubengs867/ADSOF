@@ -1,13 +1,13 @@
-package Practica4.test.conversor;
+package test.conversor;
 
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
-import Practica4.src.conversor.Conversor;
-import Practica4.src.conversor.ConversorIdentidad;
-import Practica4.src.excepcion.ConversionErroneaException;
-import Practica4.src.unidad.UnidadTemperatura;
+import src.conversor.Conversor;
+import src.conversor.ConversorIdentidad;
+import src.excepcion.ConversionErroneaException;
+import src.unidad.UnidadTemperatura;
 
 public class ConversorTest {
 

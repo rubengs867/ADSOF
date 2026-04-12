@@ -1,4 +1,4 @@
-package Practica4.src.documento;
+package src.documento;
 
 public interface IFormateador {
   /**

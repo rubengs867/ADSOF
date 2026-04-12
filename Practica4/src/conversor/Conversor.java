@@ -1,7 +1,7 @@
-package Practica4.src.conversor;
+package src.conversor;
 
-import Practica4.src.excepcion.ConversionErroneaException;
-import Practica4.src.unidad.Unidad;
+import src.excepcion.ConversionErroneaException;
+import src.unidad.Unidad;
 
 public interface Conversor {
   

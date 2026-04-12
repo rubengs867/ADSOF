@@ -1,6 +1,6 @@
-package Practica4.src.estrategia;
+package src.estrategia;
 
-import Practica4.src.sensor.Sensor;
+import src.sensor.Sensor;
 
 /**
  * Interfaz que define el método para las estrategias de lectura.

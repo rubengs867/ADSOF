@@ -1,6 +1,6 @@
-package Practica4.src.conversor;
+package src.conversor;
 
-import Practica4.src.unidad.Unidad;
+import src.unidad.Unidad;
 
 public class ConversorCompuesto implements Conversor {
 

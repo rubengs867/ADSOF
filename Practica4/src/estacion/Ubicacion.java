@@ -1,4 +1,4 @@
-package Practica4.src.estacion;
+package src.estacion;
 
 /**
  * Clase que representa una ubicación geográfica mediante coordenadas.

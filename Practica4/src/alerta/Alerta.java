@@ -1,4 +1,4 @@
-package Practica4.src.alerta;
+package src.alerta;
 
 import java.time.LocalDateTime;
 

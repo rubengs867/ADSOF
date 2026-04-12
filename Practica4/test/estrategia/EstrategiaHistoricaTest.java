@@ -1,4 +1,4 @@
-package Practica4.test.estrategia;
+package test.estrategia;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -9,9 +9,9 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import Practica4.src.estrategia.EstrategiaHistorica;
-import Practica4.src.sensor.Sensor;
-import Practica4.src.unidad.Unidad;
+import src.estrategia.EstrategiaHistorica;
+import src.sensor.Sensor;
+import src.unidad.Unidad;
 
 public class EstrategiaHistoricaTest {
 

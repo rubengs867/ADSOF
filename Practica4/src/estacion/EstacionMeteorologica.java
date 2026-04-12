@@ -1,4 +1,4 @@
-package Practica4.src.estacion;
+package src.estacion;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -8,15 +8,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import Practica4.src.alerta.Alerta;
-import Practica4.src.conversor.Conversor;
-import Practica4.src.conversor.ConversorIdentidad;
-import Practica4.src.documento.IDocumento;
-import Practica4.src.excepcion.CambioBruscoException;
-import Practica4.src.excepcion.ConversionErroneaException;
-import Practica4.src.excepcion.SensorDescalibradoException;
-import Practica4.src.excepcion.SensorDuplicadoException;
-import Practica4.src.sensor.Sensor;
+import src.alerta.Alerta;
+import src.conversor.Conversor;
+import src.conversor.ConversorIdentidad;
+import src.documento.IDocumento;
+import src.excepcion.CambioBruscoException;
+import src.excepcion.ConversionErroneaException;
+import src.excepcion.SensorDescalibradoException;
+import src.excepcion.SensorDuplicadoException;
+import src.sensor.Sensor;
 
 /**
  * Clase que representa una estación meteorológica.

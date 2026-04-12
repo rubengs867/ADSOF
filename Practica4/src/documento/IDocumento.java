@@ -1,4 +1,4 @@
-package Practica4.src.documento;
+package src.documento;
 
 import java.util.*;
 public interface IDocumento {

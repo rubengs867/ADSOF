@@ -1,6 +1,6 @@
-package Practica4.src.excepcion;
+package src.excepcion;
 
-import Practica4.src.unidad.Unidad;
+import src.unidad.Unidad;
 
 /**
  * Esta excepcion salta cuando se intentan establecer un conversor; sin embargo,

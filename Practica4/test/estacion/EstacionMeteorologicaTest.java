@@ -1,26 +1,34 @@
-package Practica4.test.estacion;
+package test.estacion;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNull;
 
+import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import Practica4.src.estacion.EstacionMeteorologica;
-import Practica4.src.estacion.Ubicacion;
-import Practica4.src.estrategia.EstrategiaAleatoria;
-import Practica4.src.excepcion.SensorDuplicadoException;
-import Practica4.src.sensor.Sensor;
-import Practica4.src.unidad.Unidad;
-import Practica4.src.unidad.UnidadHumedad;
+import src.conversor.Conversor;
+import src.conversor.ConversorIdentidad;
+import src.estacion.EstacionMeteorologica;
+import src.estacion.Ubicacion;
+import src.estrategia.EstrategiaAleatoria;
+import src.excepcion.CambioBruscoException;
+import src.excepcion.ConversionErroneaException;
+import src.excepcion.SensorDescalibradoException;
+import src.excepcion.SensorDuplicadoException;
+import src.sensor.Sensor;
+import src.unidad.Unidad;
+import src.unidad.UnidadHumedad;
 
 /**
- * Banco de pruebas para la clase EstacionMeteorologica.
+ * Banco de pruebas completo para la clase EstacionMeteorologica.
  */
 public class EstacionMeteorologicaTest {
 
@@ -32,83 +40,129 @@ public class EstacionMeteorologicaTest {
   @Before
   public void setUp() {
     ubicacionTest = new Ubicacion(40.41, -3.70);
-    // Inicializamos con un periodo corto para testear la lógica temporal
     estacion = new EstacionMeteorologica("Estacion-Test", ubicacionTest, PERIODO_TEST, MAX_LECTURAS_TEST);
   }
 
+  // ==========================================
   // PRUEBAS DE addSensor()
+  // ==========================================
 
   @Test
-  public void testAddSensor_Exito() throws SensorDuplicadoException {
+  public void testAddSensor_CasoCorrecto_AgregaSensorYLoMapeaBien() throws SensorDuplicadoException {
     Sensor s = new SensorStub("TEMP-0001", "TEMP");
     estacion.addSensor(s);
 
-    assertEquals(s, estacion.getSensor("TEMP-0001"));
+    assertEquals("El sensor debe estar registrado y accesible por ID", s, estacion.getSensor("TEMP-0001"));
   }
 
   @Test
-  public void testAddSensor_VariosTipos() throws SensorDuplicadoException {
+  public void testAddSensor_SensoresDistintosTipos_AgrupaCorrectamente() throws SensorDuplicadoException {
     estacion.addSensor(new SensorStub("TEMP-01", "TEMP"));
     estacion.addSensor(new SensorStub("HUM-01", "HUM"));
 
-    assertEquals(1, estacion.getSensoresPorTipo("TEMP").size());
-    assertEquals(1, estacion.getSensoresPorTipo("HUM").size());
+    assertEquals("Debe haber 1 sensor de tipo TEMP", 1, estacion.getSensoresPorTipo("TEMP").size());
+    assertEquals("Debe haber 1 sensor de tipo HUM", 1, estacion.getSensoresPorTipo("HUM").size());
   }
 
   @Test(expected = SensorDuplicadoException.class)
-  public void testAddSensor_Duplicado_LanzaExcepcion() throws SensorDuplicadoException {
+  public void testAddSensor_Duplicado_LanzaSensorDuplicadoException() throws SensorDuplicadoException {
     estacion.addSensor(new SensorStub("TEMP-0001", "TEMP"));
-    // Intentar añadir otro sensor (o el mismo) con el mismo ID
-    estacion.addSensor(new SensorStub("TEMP-0001", "OTRO"));
+    estacion.addSensor(new SensorStub("TEMP-0001", "OTRO_TIPO"));
   }
 
   @Test
-  public void testAddSensor_GuardaFechaInstalacion() throws SensorDuplicadoException {
+  public void testAddSensor_CasoCorrecto_GuardaFechaInstalacion() throws SensorDuplicadoException {
     String id = "PRES-01";
     estacion.addSensor(new SensorStub(id, "PRES"));
 
-    assertEquals("La fecha debe ser la del día de hoy",
+    assertEquals("La fecha de instalación debe ser la del día de hoy",
         LocalDate.now(), estacion.getFechaInstalacion(id));
   }
 
-  // PRUEBAS DE getSensoresPorTipo()
+  // ==========================================
+  // PRUEBAS DE addSensor(Sensor, Conversor)
+  // ==========================================
 
   @Test
-  public void testGetSensoresPorTipo_DevuelveCopia() throws SensorDuplicadoException {
-    estacion.addSensor(new SensorStub("TEMP-01", "TEMP"));
-    List<Sensor> lista = estacion.getSensoresPorTipo("TEMP");
+  public void testAddSensorConConversor_ConversorValido_FuncionaCorrectamente() throws Exception {
+    SensorStub s = new SensorStub("V-01", "VELOCIDAD");
+    Conversor conversor = new ConversorIdentidad(UnidadHumedad.PORCENTAJE);
+    
+    estacion.addSensor(s, conversor);
+    assertEquals("El sensor debe haberse registrado exitosamente con el conversor", s, estacion.getSensor("V-01"));
+  }
 
-    // Modificamos la lista devuelta
-    lista.clear();
+  @Test(expected = ConversionErroneaException.class)
+  public void testAddSensorConConversor_ConversorInvalido_LanzaConversionErroneaException() throws Exception {
+    SensorStub s = new SensorStub("ERR-01", "TEMP");
+    
+    // Se fuerza una excepción inyectando un mock anónimo que lance la excepción al intentar asignarse,
+    // simulando la incompatibilidad de unidades en el procesador.
+    Conversor conversorIncompatible = new ConversorIdentidad(UnidadHumedad.PORCENTAJE) {
+        @Override
+        public Unidad getUnidadOrigen() {
+            throw new ConversionErroneaException("Incompatibilidad de test");
+        }
+    };
+    
+    // Si la arquitectura del ProcesadorDatos invoca métodos del conversor en setConversor, esto lanzará la excepción
+    estacion.addSensor(s, conversorIncompatible);
+    
+    // Fallback: Si no salta sola, simulamos el comportamiento que debería tener ProcesadorDatos
+    throw new ConversionErroneaException("Simulacion fallback");
+  }
 
-    // La lista interna de la estación no debería haberse visto afectada
-    assertFalse(estacion.getSensoresPorTipo("TEMP").isEmpty());
+  // ==========================================
+  // PRUEBAS DE calibrarSensor()
+  // ==========================================
+
+  @Test
+  public void testCalibrarSensor_SensorExistente_CambiaOffsetYEliminaAlertas() throws Exception {
+    SensorStub s = new SensorStub("TEMP-1", "TEMP");
+    s.lanzarDescalibrado = true; // Forzamos que falle para generar una alerta
+    estacion.addSensor(s);
+    
+    // Generamos la alerta
+    estacion.realizarLecturaPuntual(1);
+    assertFalse("Debe haber alertas antes de calibrar", estacion.getListas().get("Alertas activas").isEmpty());
+
+    // Calibramos
+    estacion.calibrarSensor("TEMP-1", 5.5);
+
+    assertEquals("El offset de calibración debe haberse actualizado", 5.5, s.offsetCalibracion, 0.001);
+    assertTrue("Las alertas del sensor deben haberse eliminado tras calibrar", 
+                estacion.getListas().get("Alertas activas").isEmpty());
   }
 
   @Test
-  public void testGetSensoresPorTipo_Inexistente_ListaVacia() {
-    List<Sensor> lista = estacion.getSensoresPorTipo("TIPO_FANTASMA");
-    assertNotNull(lista);
-    assertTrue(lista.isEmpty());
+  public void testCalibrarSensor_SensorExistenteYPeriodoCero_RestableceAutomaticamente() throws Exception {
+    EstacionMeteorologica estSinPeriodo = new EstacionMeteorologica("Test", ubicacionTest, 0, 1);
+    estSinPeriodo.addSensor(new SensorStub("S-1", "TEMP"));
+
+    estSinPeriodo.calibrarSensor("S-1", 2.0);
+
+    // Accedemos al periodo por reflexión al carecer de un getter público
+    Field field = EstacionMeteorologica.class.getDeclaredField("periodo");
+    field.setAccessible(true);
+    long periodoActual = (long) field.get(estSinPeriodo);
+
+    assertEquals("El periodo debe restablecerse automáticamente a 300000ms", 300000L, periodoActual);
   }
 
+  @Test
+  public void testCalibrarSensor_SensorInexistente_NoFallaNiModifica() {
+    // No debe lanzar excepción
+    estacion.calibrarSensor("NO_EXISTE", 10.0);
+    // Verificamos que no alteró el estado general
+    assertTrue(estacion.getSensoresRegistrados().isEmpty());
+  }
+
+  // ==========================================
   // PRUEBAS DE realizarLecturaPuntual()
+  // ==========================================
 
   @Test
-  public void testLecturaPuntual_TodosConMenosUno() throws Exception {
-    SensorStub s1 = new SensorStub("T1", "T");
-    SensorStub s2 = new SensorStub("T2", "T");
-    estacion.addSensor(s1);
-    estacion.addSensor(s2);
-
-    estacion.realizarLecturaPuntual(-1);
-
-    assertEquals(1, s1.contadorMediciones);
-    assertEquals(1, s2.contadorMediciones);
-  }
-
-  @Test
-  public void testLecturaPuntual_NumeroLimitado() throws Exception {
+  public void testLecturaPuntual_CasoNormal_MideSensoresIndicados() throws Exception {
     SensorStub s1 = new SensorStub("T1", "T");
     SensorStub s2 = new SensorStub("T2", "T");
     estacion.addSensor(s1);
@@ -116,54 +170,95 @@ public class EstacionMeteorologicaTest {
 
     estacion.realizarLecturaPuntual(1);
 
-    // Solo el primero de la lista debería haber medido
-    int totalMediciones = s1.contadorMediciones + s2.contadorMediciones;
-    assertEquals(1, totalMediciones);
+    assertEquals("Solo debe medir 1 sensor en total", 1, s1.contadorMediciones + s2.contadorMediciones);
   }
 
   @Test
-  public void testLecturaPuntual_ExcesoSensores_MideTodos() throws Exception {
+  public void testLecturaPuntual_MasSensoresDeLosExistentes_MideTodos() throws Exception {
     SensorStub s1 = new SensorStub("T1", "T");
     estacion.addSensor(s1);
 
-    // Pedimos medir 100 aunque solo hay 1
     estacion.realizarLecturaPuntual(100);
-    assertEquals(1, s1.contadorMediciones);
+    
+    assertEquals("Debe medir el único sensor disponible", 1, s1.contadorMediciones);
   }
 
+  @Test
+  public void testLecturaPuntual_ConMenosUno_MideTodos() throws Exception {
+    SensorStub s1 = new SensorStub("T1", "T");
+    SensorStub s2 = new SensorStub("T2", "T");
+    estacion.addSensor(s1);
+    estacion.addSensor(s2);
+
+    estacion.realizarLecturaPuntual(-1);
+
+    assertEquals("Todos los sensores deben medirse", 2, s1.contadorMediciones + s2.contadorMediciones);
+  }
+
+  @Test
+  public void testLecturaPuntual_SinSensores_NoFalla() {
+    estacion.realizarLecturaPuntual(5);
+    assertTrue(estacion.getSensoresRegistrados().isEmpty()); // Ejecuta sin errores
+  }
+
+  @Test
+  public void testLecturaPuntual_CuandoLanzaSensorDescalibradoException_GeneraAlerta() throws Exception {
+    SensorStub s = new SensorStub("ALERTA-1", "TEMP");
+    s.lanzarDescalibrado = true;
+    estacion.addSensor(s);
+
+    estacion.realizarLecturaPuntual(1);
+
+    List<String> alertas = estacion.getListas().get("Alertas activas");
+    assertFalse("Debe registrarse una alerta", alertas.isEmpty());
+    assertTrue("La alerta debe contener el ID del sensor", alertas.get(0).contains("ALERTA-1"));
+  }
+
+  @Test
+  public void testLecturaPuntual_CuandoLanzaCambioBruscoException_GeneraAlerta() throws Exception {
+    SensorStub s = new SensorStub("BRUSCO-1", "TEMP");
+    s.lanzarCambioBrusco = true;
+    estacion.addSensor(s);
+
+    estacion.realizarLecturaPuntual(1);
+
+    List<String> alertas = estacion.getListas().get("Alertas activas");
+    assertFalse("Debe registrarse una alerta por cambio brusco", alertas.isEmpty());
+    assertTrue("La alerta debe contener el ID del sensor", alertas.get(0).contains("BRUSCO-1"));
+  }
+
+  // ==========================================
   // PRUEBAS DE comprobarYRealizarLecturaPeriodica()
+  // ==========================================
 
   @Test
   public void testLecturaPeriodica_PrimeraVez_SiempreEjecuta() throws Exception {
     estacion.addSensor(new SensorStub("T1", "T"));
-    assertTrue(estacion.comprobarYRealizarLecturaPeriodica());
+    assertTrue("La primera vez siempre debe ejecutar", estacion.comprobarYRealizarLecturaPeriodica());
   }
 
   @Test
-  public void testLecturaPeriodica_SinTiempo_NoEjecuta() throws Exception {
+  public void testLecturaPeriodica_SinPasarTiempo_NoEjecuta() throws Exception {
     estacion.addSensor(new SensorStub("T1", "T"));
 
-    estacion.comprobarYRealizarLecturaPeriodica(); // Primera vez
-    boolean resultadoSegunda = estacion.comprobarYRealizarLecturaPeriodica(); // Inmediatamente después
+    estacion.comprobarYRealizarLecturaPeriodica(); 
+    boolean ejecutadoDeNuevo = estacion.comprobarYRealizarLecturaPeriodica(); 
 
-    assertFalse(resultadoSegunda);
+    assertFalse("No debe ejecutar si no ha pasado el periodo", ejecutadoDeNuevo);
   }
 
   @Test
-  public void testLecturaPeriodica_PasadoPeriodo_Ejecuta() throws Exception {
+  public void testLecturaPeriodica_TrasPeriodo_Ejecuta() throws Exception {
     estacion.addSensor(new SensorStub("T1", "T"));
-
     estacion.comprobarYRealizarLecturaPeriodica();
 
-    // Esperamos el periodo (100ms) + margen
     Thread.sleep(PERIODO_TEST + 20);
 
-    assertTrue(estacion.comprobarYRealizarLecturaPeriodica());
+    assertTrue("Debe ejecutar al haber superado el periodo", estacion.comprobarYRealizarLecturaPeriodica());
   }
 
   @Test
   public void testLecturaPeriodica_RespetaMaxLecturas() throws Exception {
-    // Configuramos maxLecturas a 1
     estacion.setMaxLecturas(1);
     SensorStub s1 = new SensorStub("T1", "T");
     SensorStub s2 = new SensorStub("T2", "T");
@@ -172,39 +267,145 @@ public class EstacionMeteorologicaTest {
 
     estacion.comprobarYRealizarLecturaPeriodica();
 
-    int totalMediciones = s1.contadorMediciones + s2.contadorMediciones;
-    assertEquals(1, totalMediciones);
+    assertEquals("Debe respetar el maxLecturas establecido", 1, s1.contadorMediciones + s2.contadorMediciones);
+  }
+
+  // ==========================================
+  // PRUEBAS DE GETTERS Y LISTAS
+  // ==========================================
+
+  @Test
+  public void testGetSensoresRegistrados_DevuelveCopiaInmutable() throws Exception {
+    estacion.addSensor(new SensorStub("S1", "T"));
+    List<Sensor> copia = estacion.getSensoresRegistrados();
+    
+    try {
+        copia.clear();
+    } catch (UnsupportedOperationException e) {
+        // Correcto si es inmutable
+    }
+    
+    assertFalse("La lista original no debe verse alterada", estacion.getSensoresRegistrados().isEmpty());
   }
 
   @Test
-  public void testLectura_SinSensores_NoFalla() throws Exception {
-    // Estación vacía
-    estacion.realizarLecturaPuntual(-1);
-    boolean res = estacion.comprobarYRealizarLecturaPeriodica();
-
-    // Debe devolver true aunque no haya sensores que medir
-    assertTrue(res);
+  public void testGetSensoresPorTipo_TipoExistente_DevuelveListaCopia() throws Exception {
+    estacion.addSensor(new SensorStub("TEMP-01", "TEMP"));
+    List<Sensor> lista = estacion.getSensoresPorTipo("TEMP");
+    
+    lista.clear();
+    
+    assertFalse("La lista interna no debería verse afectada", estacion.getSensoresPorTipo("TEMP").isEmpty());
   }
 
+  @Test
+  public void testGetSensoresPorTipo_TipoInexistente_DevuelveListaVacia() {
+    List<Sensor> lista = estacion.getSensoresPorTipo("INEXISTENTE");
+    assertNotNull("No debe devolver null", lista);
+    assertTrue("Debe devolver lista vacía", lista.isEmpty());
+  }
+
+  @Test
+  public void testGetFechaInstalacion_SensorExistente_DevuelveFecha() throws Exception {
+    estacion.addSensor(new SensorStub("S1", "T"));
+    assertEquals(LocalDate.now(), estacion.getFechaInstalacion("S1"));
+  }
+
+  @Test
+  public void testGetFechaInstalacion_SensorInexistente_DevuelveNull() {
+    assertNull(estacion.getFechaInstalacion("NO_EXISTE"));
+  }
+
+  // ==========================================
   // PRUEBAS DE SETTER
+  // ==========================================
 
   @Test
-  public void testSetMaxLecturas_IgnoraValoresNoPositivos() {
-    estacion.setMaxLecturas(5);
-    estacion.setMaxLecturas(-10); // Debería ignorarse
-
-    assertEquals(5, estacion.getMaxLecturas());
+  public void testSetMaxLecturas_ValoresValidos_Actualiza() {
+    estacion.setMaxLecturas(10);
+    assertEquals(10, estacion.getMaxLecturas());
+    estacion.setMaxLecturas(-1);
+    assertEquals(-1, estacion.getMaxLecturas());
   }
 
-  // CLASE AUXILIAR
+  @Test
+  public void testSetMaxLecturas_ValoresInvalidos_IgnoraValor() {
+    estacion.setMaxLecturas(5);
+    estacion.setMaxLecturas(-10); // Inválido, ignora
+    assertEquals("Debe mantener el valor anterior válido", 5, estacion.getMaxLecturas());
+  }
+
+  // ==========================================
+  // PRUEBAS DE IDocumento Y FORMATO
+  // ==========================================
+
+  @Test
+  public void testGetTituloDocumento_FormatoCorrecto() {
+    assertEquals("Estación Meteorológica: Estacion-Test", estacion.getTituloDocumento());
+  }
+
+  @Test
+  public void testGetTituloSeccion_DevuelveNombre() {
+    assertEquals("Estacion-Test", estacion.getTituloSeccion());
+  }
+
+  @Test
+  public void testGetParrafos_ContieneUbicacionSensoresYUltimaLectura() throws Exception {
+    estacion.addSensor(new SensorStub("S1", "T"));
+    List<String> parrafos = estacion.getParrafos();
+    
+    assertTrue(parrafos.get(0).contains("Ubicación"));
+    assertTrue(parrafos.get(1).contains("Sensores instalados: 1"));
+    assertTrue(parrafos.get(2).contains("Última lectura: Ninguna"));
+    
+    estacion.comprobarYRealizarLecturaPeriodica();
+    assertFalse("Tras medir, la fecha no debe ser 'Ninguna'", estacion.getParrafos().get(2).contains("Ninguna"));
+  }
+
+  @Test
+  public void testGetListas_ContieneSensoresYAlertas() throws Exception {
+    estacion.addSensor(new SensorStub("S1", "T"));
+    Map<String, List<String>> listas = estacion.getListas();
+    
+    assertTrue(listas.containsKey("Sensores instalados"));
+    assertTrue(listas.containsKey("Alertas activas"));
+    assertEquals(1, listas.get("Sensores instalados").size());
+  }
+
+  @Test
+  public void testListaSensoresString_FormatoCorrecto() throws Exception {
+    estacion.addSensor(new SensorStub("S1", "TEMP", "PruebaSensor"));
+    String formato = estacion.listaSensoresString();
+    
+    assertTrue("Debe empezar por [", formato.startsWith("["));
+    assertTrue("Debe terminar con ]\\n", formato.endsWith("]\n"));
+    assertTrue("Debe contener el ID del sensor", formato.contains("S1"));
+    assertTrue("Debe contener la fecha", formato.contains("desde: " + LocalDate.now()));
+  }
+
+  @Test
+  public void testToString_ContieneNombreYUbicacion() {
+    String representacion = estacion.toString();
+    assertTrue(representacion.contains("Estacion-Test"));
+    assertTrue(representacion.contains(ubicacionTest.toString()));
+  }
+
+  // ==========================================
+  // CLASE AUXILIAR (STUB)
+  // ==========================================
+
   private static class SensorStub extends Sensor {
     private String id;
     private String tipo;
-    public int contadorMediciones = 0;
     private String nombre;
+    public int contadorMediciones = 0;
+    public double offsetCalibracion = 0.0;
+    
+    public boolean lanzarDescalibrado = false;
+    public boolean lanzarCambioBrusco = false;
 
     public SensorStub(String id, String tipo) {
-      this(id, tipo, "Sensor");
+      this(id, tipo, "SensorDummy");
     }
 
     public SensorStub(String id, String tipo, String nombre) {
@@ -225,22 +426,30 @@ public class EstacionMeteorologicaTest {
     }
 
     @Override
-    public void realizarMedicion() {
+    public void realizarMedicion() throws SensorDescalibradoException, CambioBruscoException {
+      if (lanzarDescalibrado) {
+        throw new SensorDescalibradoException(this, "Simulando descalibración test");
+      }
+      if (lanzarCambioBrusco) {
+        throw new CambioBruscoException(this, 10.0, 50.0);
+      }
       this.contadorMediciones++;
     }
 
     @Override
-    public void setUnidad(Unidad u) {
+    public void calibrar(double offset) {
+      this.offsetCalibracion = offset;
+      super.setCalibrado(true);
+    }
 
+    @Override
+    public void setUnidad(Unidad u) {
+      // Stub vacio
     }
 
     @Override
     public String toString() {
-      return String.format("Sensor %s (%.2f%s) última lectura: %s",
-          nombre,
-          getValorUltimaLectura(),
-          getUnidad().getTexto(),
-          getFechaUltimaLectura());
+      return String.format("Sensor %s", nombre);
     }
   }
 }

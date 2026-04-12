@@ -1,9 +1,9 @@
-package Practica4.src.sensor;
+package src.sensor;
 
-import Practica4.src.estrategia.EstrategiaLectura;
-import Practica4.src.unidad.Unidad;
-import Practica4.src.unidad.UnidadPresion;
-import Practica4.src.estrategia.EstrategiaAleatoria;
+import src.estrategia.EstrategiaLectura;
+import src.unidad.Unidad;
+import src.unidad.UnidadPresion;
+import src.estrategia.EstrategiaAleatoria;
 
 /**
  * Clase concreta que representa un sensor de temperatura.

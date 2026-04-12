@@ -1,7 +1,7 @@
-package Practica4.src.estrategia;
+package src.estrategia;
 
 import java.util.Collection; 
-import Practica4.src.sensor.Sensor;
+import src.sensor.Sensor;
 
 /**
  * Estrategia que genera un valor aleatorio cercano a la media histórica

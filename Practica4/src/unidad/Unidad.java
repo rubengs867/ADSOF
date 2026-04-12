@@ -1,4 +1,4 @@
-package Practica4.src.unidad;
+package src.unidad;
 
 /**
  * Interfaz que define la base para cualquier unidad de medida

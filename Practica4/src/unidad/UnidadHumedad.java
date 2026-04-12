@@ -1,4 +1,4 @@
-package Practica4.src.unidad;
+package src.unidad;
 
 /**
  * Enumerado que representa las distintas unidades de medida
