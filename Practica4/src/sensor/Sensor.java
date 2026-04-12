@@ -69,7 +69,7 @@ public abstract class Sensor {
    * instancias de ese tipo se han creado.
    * </p>
    */
-  private static Map<String, Integer> contadoresTipo = new HashMap<>();
+  private static Map<Class<? extends Sensor>, Integer> contadoresTipo = new HashMap<>();
 
   /**
    * Constructor protegido para ser utilizado por las clases hijas.
@@ -126,11 +126,13 @@ public abstract class Sensor {
    * @param tipo
    */
   private void generarValorID(String tipo) {
-    // Generación de ID por tipo
-    int valorID = contadoresTipo.getOrDefault(tipo, 0) + 1;
-    contadoresTipo.put(tipo, valorID);
+    // Obtenemos la clase que se está instanciando 
+    Class<? extends Sensor> claseHija = this.getClass();
 
-    // Formato TIPO-NNNN: relleno con ceros a la izquierda hasta 4 dígitos
+    // Buscamos en el mapa usando la clase
+    int valorID = contadoresTipo.getOrDefault(claseHija, 0) + 1;
+    contadoresTipo.put(claseHija, valorID);
+
     this.id = String.format("%s-%04d", tipo, valorID);
   }
 
@@ -316,6 +318,14 @@ public abstract class Sensor {
     if (LocalDate.now().isAfter(fechaCaducidad))
       return true;
     return false;
+  }
+
+  /**
+   * Establece el umbral de cambio permitido entre lecturas para detectar cambios
+   * @param umbralCambio
+   */
+  public void setUmbralCambio(double umbralCambio) {
+    this.umbralCambio = umbralCambio;
   }
 
   /**

@@ -7,8 +7,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.Field;
 import java.time.LocalDate;
-import java.util.ArrayList; // Añadido
-import java.util.Collection; // Añadido
+import java.util.ArrayList; 
+import java.util.Collection; 
 import java.util.List;
 
 import org.junit.Before;
@@ -16,7 +16,10 @@ import org.junit.Test;
 
 import Practica4.src.estrategia.EstrategiaLectura;
 import Practica4.src.sensor.Sensor;
+import Practica4.src.sensor.SensorHumedad;
+import Practica4.src.sensor.SensorTemperatura;
 import Practica4.src.unidad.Unidad;
+import Practica4.src.unidad.UnidadTemperatura;
 
 public class SensorTest {
 
@@ -69,6 +72,7 @@ public class SensorTest {
   public void setUp() {
     estrategiaFija = new EstrategiaFija(10.0);
     sensor = new SensorStub("TEST", 2.0, 0.0, 100.0, estrategiaFija);
+    sensor.setUmbralCambio(2.0);
   }
 
   // F) Constructor: Rango inválido lanza excepción
@@ -93,18 +97,21 @@ public class SensorTest {
     assertEquals("Los IDs del mismo tipo deben ser consecutivos", num1 + 1, num2);
   }
 
-  // A) Generación de ID: Distintos tipos contadores independientes
+
   @Test
   public void testGeneracionId_DistintosTipos_ContadoresIndependientes() {
-    SensorStub sA = new SensorStub("TIPA", 0.0, 0.0, 100.0, estrategiaFija);
-    SensorStub sB = new SensorStub("TIPB", 0.0, 0.0, 100.0, estrategiaFija);
+    
+    // Usamos vuestras subclases reales en lugar de "cosas raras"
+    Sensor sTemp = new SensorTemperatura(0.0, UnidadTemperatura.CELSIUS, estrategiaFija);
+    Sensor sHum = new SensorHumedad(0.0, estrategiaFija); 
 
-    assertTrue(sA.getId().startsWith("TIPA-"));
-    assertTrue(sB.getId().startsWith("TIPB-"));
+    // Comprobamos que pillan bien su prefijo
+    assertTrue(sTemp.getId().startsWith("TEMP-"));
+    assertTrue(sHum.getId().startsWith("HUM-"));
 
-    // Al ser tipos nuevos en este test, el contador de ambos debe empezar en 1 (0001)
-    assertTrue("El primer ID del tipo A debe acabar en 0001", sA.getId().endsWith("0001"));
-    assertTrue("El primer ID del tipo B debe acabar en 0001", sB.getId().endsWith("0001"));
+
+    assertTrue("El primer ID de Temperatura debe acabar en 0001", sTemp.getId().endsWith("0001"));
+    assertTrue("El primer ID de Humedad debe acabar en 0001", sHum.getId().endsWith("0001"));
   }
 
   // B) realizarMedicion(): Se invoca estrategia, aplica offset y actualiza datos
