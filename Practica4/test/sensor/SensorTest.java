@@ -72,6 +72,10 @@ public class SensorTest {
     // Inicializa un sensor genérico de rango 0.0 a 100.0, con offset inicial de 2.0
     sensor = new SensorStub("TEST", 2.0, 0.0, 100.0, estrategiaFija);
     sensor.setUmbralCambio(0.5);
+    // Reiniciamos contadores para que cada test sea independiente
+    Sensor.resetContador();
+    SensorTemperatura.resetContador();
+    SensorHumedad.resetContador();
   }
 
   // =======================

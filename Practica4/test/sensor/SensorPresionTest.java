@@ -12,8 +12,6 @@ import org.junit.Test;
 
 import estrategia.EstrategiaAleatoria;
 import estrategia.EstrategiaLectura;
-import sensor.Sensor;
-import sensor.SensorPresion;
 import unidad.Unidad;
 import unidad.UnidadHumedad;
 import unidad.UnidadPresion;

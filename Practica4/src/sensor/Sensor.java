@@ -377,6 +377,13 @@ public abstract class Sensor {
   public abstract void setUnidad(Unidad u);
 
   /**
+   * Resetea el contador de tipos de sensores que se usa en la generación del ID
+   */
+  public static void resetContador() {
+    contadoresTipo.clear();
+  }
+
+  /**
    * Calibra el sensor estableciendo un nuevo offset y reiniciando el periodo de
    * validez.
    * <p>
