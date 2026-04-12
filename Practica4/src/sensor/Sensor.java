@@ -56,6 +56,11 @@ public abstract class Sensor {
   /** Duración de la calibración en días (por defecto 365) */
   private int duracionCalibracionDias;
 
+  /**
+   * Indica si el offset del sensor no está calibrado.
+   */
+  private boolean calibrado;
+
   /** Porcentaje máximo de cambio permitido entre lecturas (por defecto 50%) */
   private double umbralCambio;
 
@@ -141,10 +146,10 @@ public abstract class Sensor {
   public void realizarMedicion() throws SensorDescalibradoException, CambioBruscoException {
 
     // Comprobación de caducación de la calibración del sensor
-    if (estaCaducadaCalibracion()) {
+    if (estaCalibrado()) {
       throw new SensorDescalibradoException(this, "la fecha de hoy excede la fecha de calibracion");
     }
-    
+
     // Obtenemos el valor de la estrategia
     double valor = estrategia.generarValor(this);
 
@@ -153,12 +158,13 @@ public abstract class Sensor {
 
     // ¿Medición dentro del rango del sensor?
     if (valorFinal < minRango || valorFinal > maxRango) {
+      setCalibrado(false);
       throw new SensorDescalibradoException(this, "el valor final excede los valores permitidos");
     }
 
     // Comprobación de un cambio brusco en la medición
     boolean cambioBrusco = false;
-    double valorAnteriorTemporal = this.valorUltimaLectura; 
+    double valorAnteriorTemporal = this.valorUltimaLectura;
 
     if (!primeraLectura()) {
       double diferencia = Math.abs(valorFinal - valorAnteriorTemporal);
@@ -182,18 +188,19 @@ public abstract class Sensor {
     this.historial.add(valorFinal);
     this.procesador.procesarLectura(this.fechaUltimaLectura.atStartOfDay(), valorFinal);
 
-    //lanzamos excecpion
+    // lanzamos excecpion
     if (cambioBrusco) {
       throw new CambioBruscoException(this, valorAnteriorTemporal, valorFinal);
     }
   }
+
   /**
    * Comprueba si el sensor ha realizado alguna lectura mirando su historial
    * * @return {@code true} si NO ha realizado lecturas;
    * {@code false} en caso contrario.
    */
   public boolean primeraLectura() {
-    return this.historial.isEmpty(); 
+    return this.historial.isEmpty();
   }
 
   /**
@@ -202,7 +209,7 @@ public abstract class Sensor {
    */
   public Collection<Double> getHistoricoLecturas() {
     // Devuelve su propia lista, protegida contra modificaciones externas
-    return Collections.unmodifiableList(this.historial); 
+    return Collections.unmodifiableList(this.historial);
   }
 
   /**
@@ -294,6 +301,7 @@ public abstract class Sensor {
   public void calibrar(double offset) {
     fechaCalibracion = LocalDate.now();
     this.offset = offset;
+    calibrado = true;
   }
 
   /**
@@ -306,16 +314,50 @@ public abstract class Sensor {
   }
 
   /**
-   * Comprueba si la calibración del sensor ha caducado
+   * Comprueba si la calibración del sensor está caducada o si directamente no
+   * está calibrado.
    * 
-   * @return {@code true} si ha caducado;
-   *         {@code false} en caso contrario
+   * @return {@code true} si está calibrado;
+   *         {@code false} si la fecha de caducación ya ha pasado o ha realizado
+   *         una medición fuera del rango.
    */
-  public boolean estaCaducadaCalibracion() {
+  public boolean estaCalibrado() {
+    return calibrado && estaCalibracionCaducada();
+  }
+
+  /**
+   * Comprueba si la fecha de caducación de la calibración ya ha pasado.
+   * 
+   * @return {@code true} si está calibrado;
+   *         {@code false} si la fecha de caducación ya ha pasado
+   */
+  public boolean estaCalibracionCaducada() {
+    // Comprueba si ha pasado la fecha de caducidad
     LocalDate fechaCaducidad = this.fechaCalibracion.plusDays(this.duracionCalibracionDias);
     if (LocalDate.now().isAfter(fechaCaducidad))
-      return true;
-    return false;
+      return false;
+
+    return true;
+  }
+
+  /**
+   * Establece el estado de la calibración de un sensor. Si el offset está
+   * caducado o no.
+   * 
+   * @param estado
+   */
+  public void setCalibrado(boolean estado) {
+    this.calibrado = estado;
+  }
+
+  /**
+   * Indica si el offset del sensor está descalibrado.
+   * 
+   * @return {@code true} si está calibrado;
+   *         {@code false} en caso contrario
+   */
+  public boolean getCalibrado() {
+    return this.calibrado;
   }
 
   /**
