@@ -2,8 +2,6 @@ package Practica4.src.sensor;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +9,8 @@ import java.util.Map;
 import Practica4.src.estrategia.EstrategiaLectura;
 import Practica4.src.excepcion.CambioBruscoException;
 import Practica4.src.excepcion.SensorDescalibradoException;
+import Practica4.src.excepcion.SensorDescalibradoPorCaducidadException;
+import Practica4.src.excepcion.SensorDescalibradoPorRangoException;
 import Practica4.src.procesador.ProcesadorDatos;
 import Practica4.src.unidad.Unidad;
 
@@ -148,8 +148,8 @@ public abstract class Sensor {
   public void realizarMedicion() throws SensorDescalibradoException, CambioBruscoException {
 
     // Comprobación de caducación de la calibración del sensor
-    if (estaCalibrado()) {
-      throw new SensorDescalibradoException(this, "la fecha de hoy excede la fecha de calibracion");
+    if (estaCalibracionCaducada()) {
+      throw new SensorDescalibradoPorCaducidadException(this);
     }
 
     // Obtenemos el valor de la estrategia
@@ -160,8 +160,7 @@ public abstract class Sensor {
 
     // ¿Medición dentro del rango del sensor?
     if (valorFinal < minRango || valorFinal > maxRango) {
-      setCalibrado(false);
-      throw new SensorDescalibradoException(this, "el valor final excede los valores permitidos");
+      throw new SensorDescalibradoPorRangoException(this);
     }
 
     // Comprobación de un cambio brusco en la medición

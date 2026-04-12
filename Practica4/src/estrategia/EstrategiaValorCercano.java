@@ -1,9 +1,5 @@
 package Practica4.src.estrategia;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import Practica4.src.sensor.Sensor;
 
 public class EstrategiaValorCercano implements EstrategiaLectura {

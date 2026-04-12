@@ -16,9 +16,6 @@ import Practica4.src.estacion.Ubicacion;
 import Practica4.src.estrategia.EstrategiaAleatoria;
 import Practica4.src.excepcion.SensorDuplicadoException;
 import Practica4.src.sensor.Sensor;
-import Practica4.src.sensor.SensorHumedad;
-import Practica4.src.sensor.SensorPresion;
-import Practica4.src.sensor.SensorTemperatura;
 import Practica4.src.unidad.Unidad;
 import Practica4.src.unidad.UnidadHumedad;
 

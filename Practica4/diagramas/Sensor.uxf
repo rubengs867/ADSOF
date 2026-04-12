@@ -21,6 +21,7 @@
 -maxRango: double
 -fechaCalibracion: LocalDate
 -duracionCalibracionDias: int
+-calibrado:boolean
 -umbralCambio: double
 -historicoLecturas: List&lt;Double&gt;
 _-contadoresTipo: Map&lt;String, Integer&gt;_
