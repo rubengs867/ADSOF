@@ -7,6 +7,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.Field;
 import java.time.LocalDate;
+import java.util.ArrayList; // Añadido
+import java.util.Collection; // Añadido
 import java.util.List;
 
 import org.junit.Before;
@@ -78,8 +80,7 @@ public class SensorTest {
   // A) Generación de ID: Mismos tipos incrementan
   @Test
   public void testGeneracionId_MismoTipo_IncrementaSecuencialmente() {
-    // Se usa un prefijo único para evitar interferencias del estado estático entre
-    // tests
+    // Se usa un prefijo único para evitar interferencias del estado estático entre tests
     SensorStub s1 = new SensorStub("INC", 0.0, 0.0, 100.0, estrategiaFija);
     SensorStub s2 = new SensorStub("INC", 0.0, 0.0, 100.0, estrategiaFija);
 
@@ -101,8 +102,7 @@ public class SensorTest {
     assertTrue(sA.getId().startsWith("TIPA-"));
     assertTrue(sB.getId().startsWith("TIPB-"));
 
-    // Al ser tipos nuevos en este test, el contador de ambos debe empezar en 1
-    // (0001)
+    // Al ser tipos nuevos en este test, el contador de ambos debe empezar en 1 (0001)
     assertTrue("El primer ID del tipo A debe acabar en 0001", sA.getId().endsWith("0001"));
     assertTrue("El primer ID del tipo B debe acabar en 0001", sB.getId().endsWith("0001"));
   }
@@ -118,9 +118,12 @@ public class SensorTest {
     assertNotNull(sensor.getFechaUltimaLectura());
     assertEquals(LocalDate.now(), sensor.getFechaUltimaLectura());
 
-    List<Double> historico = sensor.getHistoricoLecturas();
+    // Modificado para recibir Collection
+    Collection<Double> historico = sensor.getHistoricoLecturas();
     assertFalse(historico.isEmpty());
-    assertEquals(8.0, historico.get(0), 0.001);
+    
+    // Transformamos temporalmente a Lista en el test para comprobar la posición 0
+    assertEquals(8.0, new ArrayList<>(historico).get(0), 0.001);
   }
 
   // C) primeraLectura(): Comportamiento antes y después de medir
@@ -137,10 +140,12 @@ public class SensorTest {
   @Test(expected = UnsupportedOperationException.class)
   public void testHistoricoLecturas_EsInmutable() throws Exception {
     sensor.realizarMedicion();
-    List<Double> historico = sensor.getHistoricoLecturas();
+    
+    // Modificado para recibir Collection
+    Collection<Double> historico = sensor.getHistoricoLecturas();
 
-    // Intentar modificar la lista devuelta debe lanzar
-    // UnsupportedOperationException (List.copyOf)
+    // Intentar modificar la colección devuelta debe lanzar
+    // UnsupportedOperationException
     historico.add(99.9);
   }
 
@@ -160,8 +165,7 @@ public class SensorTest {
     // 2. Reflexividad
     assertTrue(s1.equals(s1));
 
-    // 3. Forzamos el mismo ID usando Reflection para probar la lógica base del
-    // equals
+    // 3. Forzamos el mismo ID usando Reflection para probar la lógica base del equals
     Field idField = Sensor.class.getDeclaredField("id");
     idField.setAccessible(true);
     idField.set(s2, s1.getId());
@@ -182,10 +186,14 @@ public class SensorTest {
     estrategiaFija.setValorFijo(25.0);
     sensor.realizarMedicion();
 
-    List<Double> historico = sensor.getHistoricoLecturas();
+    // Modificado para recibir Collection
+    Collection<Double> historico = sensor.getHistoricoLecturas();
 
     assertEquals("El histórico debe tener 2 elementos", 2, historico.size());
-    assertEquals(13.0, historico.get(0), 0.001);
-    assertEquals(23.0, historico.get(1), 0.001);
+    
+    // Lo pasamos a Lista para comprobar las posiciones
+    List<Double> listaValores = new ArrayList<>(historico);
+    assertEquals(13.0, listaValores.get(0), 0.001);
+    assertEquals(23.0, listaValores.get(1), 0.001);
   }
 }
