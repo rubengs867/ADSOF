@@ -140,7 +140,7 @@ public abstract class Sensor {
    */
   public void realizarMedicion() throws SensorDescalibradoException, CambioBruscoException {
 
-    // primera excepcion
+    // Comprobación de caducación de la calibración del sensor
     if (estaCaducadaCalibracion()) {
       throw new SensorDescalibradoException(this, "la fecha de hoy excede la fecha de calibracion");
     }
@@ -151,19 +151,19 @@ public abstract class Sensor {
     // Aplicamos el offset
     double valorFinal = valor - this.offset;
 
-    // segunda excepcion
+    // ¿Medición dentro del rango del sensor?
     if (valorFinal < minRango || valorFinal > maxRango) {
       throw new SensorDescalibradoException(this, "el valor final excede los valores permitidos");
     }
 
-    // tercera excepcion
+    // Comprobación de un cambio brusco en la medición
     boolean cambioBrusco = false;
     double valorAnteriorTemporal = this.valorUltimaLectura; 
 
     if (!primeraLectura()) {
       double diferencia = Math.abs(valorFinal - valorAnteriorTemporal);
 
-      // nos protegemos con la division por cero
+      // Nos protegemos con la division por cero
       double porcentajeCambio = 0.0;
       if (valorAnteriorTemporal != 0) {
         porcentajeCambio = diferencia / Math.abs(valorAnteriorTemporal);
@@ -172,8 +172,11 @@ public abstract class Sensor {
         cambioBrusco = true;
       }
     }
+    if (cambioBrusco) {
+      throw new CambioBruscoException(this, this.valorUltimaLectura, valorFinal);
+    }
 
-    //se registra antes de lanzar la excepcion
+    // Registramos la lectura
     this.valorUltimaLectura = valorFinal;
     this.fechaUltimaLectura = LocalDate.now();
     this.historial.add(valorFinal);

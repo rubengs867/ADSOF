@@ -9,7 +9,8 @@
       <w>715</w>
       <h>572</h>
     </coordinates>
-    <panel_attributes>/Sensor/
+    <panel_attributes>&lt;&lt;abstract&gt;&gt;
+/Sensor/
 --
 -id: String
 -tipo: String
@@ -155,9 +156,9 @@ m1=unidad</panel_attributes>
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>65</x>
+      <x>39</x>
       <y>182</y>
-      <w>2197</w>
+      <w>2223</w>
       <h>1066</h>
     </coordinates>
     <panel_attributes>sensor

@@ -25,10 +25,12 @@
 +realizarLecturasPeriodicas(): boolean
 +addSensor(nuevoSensor: Sensor)
 +getSensor(id: String): Sensor
++getSensoresRegistrados(): List&lt;Sensor&gt;
 +getSensoresPorTipo(tipoClase: String): List&lt;Sensor&gt;
 +getFechaInstalacion(id: String): LocalDate
 +setPeriodo(periodo: long)
 +setMaxLecturas(maxLecturas: int)
++listaSensoresString(): String
 --
 /+getTitulo(): String/
 /+getCuerpo(): String/
@@ -84,7 +86,7 @@ m1=ubicacion</panel_attributes>
       <h>52</h>
     </coordinates>
     <panel_attributes>&lt;&lt;from sensor&gt;&gt;
-Sensor</panel_attributes>
+/Sensor/</panel_attributes>
     <additional_attributes/>
   </element>
   <element>

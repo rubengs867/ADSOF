@@ -126,7 +126,7 @@ public class EstacionMeteorologica implements IDocumento {
    * @return {@code true} si se ha realizado una medición en esta llamada;
    *         {@code false} en caso constrario.
    */
-  public boolean realizarLecturasPeriodicas() throws Exception {
+  public boolean comprobarYRealizarLecturaPeriodica() throws Exception {
 
     LocalDateTime ahora = LocalDateTime.now();
 
@@ -186,6 +186,14 @@ public class EstacionMeteorologica implements IDocumento {
    */
   public Sensor getSensor(String id) {
     return sensores.get(id);
+  }
+
+  /**
+   * Devuelve una lista inmutable con los sensores registrados en la estación.
+   * @return lista de sensores
+   */
+  public List<Sensor> getSensoresRegistrados() {
+    return List.copyOf(sensores.values());
   }
 
   /**
@@ -297,8 +305,7 @@ public class EstacionMeteorologica implements IDocumento {
    * 
    * @return lista de todos los sensores.
    */
-  @Override
-  public String toString() {
+  public String listaSensoresString() {
     StringBuilder sb = new StringBuilder();
     sb.append("[");
 
@@ -324,5 +331,13 @@ public class EstacionMeteorologica implements IDocumento {
     sb.append("]\n");
 
     return sb.toString();
+  }
+
+  /**
+   * Representación textual de una estación meteorológica
+   */
+  @Override
+  public String toString() {
+    return "Estación meteorológica: " + nombre + "\n Ubicación: " + ubicacion;
   }
 }

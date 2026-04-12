@@ -134,20 +134,20 @@ public class EstacionMeteorologicaTest {
     assertEquals(1, s1.contadorMediciones);
   }
 
-  // PRUEBAS DE realizarLecturasPeriodicas()
+  // PRUEBAS DE comprobarYRealizarLecturaPeriodica()
 
   @Test
   public void testLecturaPeriodica_PrimeraVez_SiempreEjecuta() throws Exception {
     estacion.addSensor(new SensorStub("T1", "T"));
-    assertTrue(estacion.realizarLecturasPeriodicas());
+    assertTrue(estacion.comprobarYRealizarLecturaPeriodica());
   }
 
   @Test
   public void testLecturaPeriodica_SinTiempo_NoEjecuta() throws Exception {
     estacion.addSensor(new SensorStub("T1", "T"));
 
-    estacion.realizarLecturasPeriodicas(); // Primera vez
-    boolean resultadoSegunda = estacion.realizarLecturasPeriodicas(); // Inmediatamente después
+    estacion.comprobarYRealizarLecturaPeriodica(); // Primera vez
+    boolean resultadoSegunda = estacion.comprobarYRealizarLecturaPeriodica(); // Inmediatamente después
 
     assertFalse(resultadoSegunda);
   }
@@ -156,12 +156,12 @@ public class EstacionMeteorologicaTest {
   public void testLecturaPeriodica_PasadoPeriodo_Ejecuta() throws Exception {
     estacion.addSensor(new SensorStub("T1", "T"));
 
-    estacion.realizarLecturasPeriodicas();
+    estacion.comprobarYRealizarLecturaPeriodica();
 
     // Esperamos el periodo (100ms) + margen
     Thread.sleep(PERIODO_TEST + 20);
 
-    assertTrue(estacion.realizarLecturasPeriodicas());
+    assertTrue(estacion.comprobarYRealizarLecturaPeriodica());
   }
 
   @Test
@@ -173,7 +173,7 @@ public class EstacionMeteorologicaTest {
     estacion.addSensor(s1);
     estacion.addSensor(s2);
 
-    estacion.realizarLecturasPeriodicas();
+    estacion.comprobarYRealizarLecturaPeriodica();
 
     int totalMediciones = s1.contadorMediciones + s2.contadorMediciones;
     assertEquals(1, totalMediciones);
@@ -183,7 +183,7 @@ public class EstacionMeteorologicaTest {
   public void testLectura_SinSensores_NoFalla() throws Exception {
     // Estación vacía
     estacion.realizarLecturaPuntual(-1);
-    boolean res = estacion.realizarLecturasPeriodicas();
+    boolean res = estacion.comprobarYRealizarLecturaPeriodica();
 
     // Debe devolver true aunque no haya sensores que medir
     assertTrue(res);
