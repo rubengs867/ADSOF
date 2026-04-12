@@ -2,6 +2,7 @@ package Practica4.src.sensor;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,8 +58,7 @@ public abstract class Sensor {
   /** Porcentaje máximo de cambio permitido entre lecturas (por defecto 50%) */
   private double umbralCambio;
 
-  /** Historial de lecturas del sensor */
-  private List<Double> historicoLecturas = new ArrayList<>();
+  /** El Historial de lecturas del sensor va a pasar al procesador de datos */
 
   /**
    * Mapa que mantiene un contador independiente por cada tipo de sensor.
@@ -142,6 +142,7 @@ public abstract class Sensor {
     if (estaCaducadaCalibracion()) {
       throw new SensorDescalibradoException(this, "la fecha de hoy excede la fecha de calibracion");
     }
+    
     // Obtenemos el valor de la estrategia
     double valor = estrategia.generarValor(this);
 
@@ -155,33 +156,31 @@ public abstract class Sensor {
 
     // tercera excepcion
     boolean cambioBrusco = false;
+    double valorAnteriorTemporal = this.valorUltimaLectura; 
+
     if (!primeraLectura()) {
-      double diferencia = Math.abs(valorFinal - this.valorUltimaLectura);
+      double diferencia = Math.abs(valorFinal - valorAnteriorTemporal);
 
       // nos protegemos con la division por cero
       double porcentajeCambio = 0.0;
-      if (this.valorUltimaLectura != 0) {
-        porcentajeCambio = diferencia / Math.abs(this.valorUltimaLectura);
+      if (valorAnteriorTemporal != 0) {
+        porcentajeCambio = diferencia / Math.abs(valorAnteriorTemporal);
       }
       if (porcentajeCambio > this.umbralCambio) {
         cambioBrusco = true;
       }
-
     }
 
-    if (cambioBrusco) {
-      throw new CambioBruscoException(this, this.valorUltimaLectura, valorFinal);
-    }
-
-    // Registramos la lectura
+    //se registra antes de lanzar la excepcion
     this.valorUltimaLectura = valorFinal;
     this.fechaUltimaLectura = LocalDate.now();
+    this.procesador.procesarLectura(this.fechaUltimaLectura.atStartOfDay(), valorFinal);
 
-    // Guardamos en el histórico
-    this.historicoLecturas.add(valorFinal);
-
+    //lanzamos excecpion
+    if (cambioBrusco) {
+      throw new CambioBruscoException(this, valorAnteriorTemporal, valorFinal);
+    }
   }
-
   /**
    * Comprueba si el sensor ha realizado alguna lectura.
    * 
@@ -189,7 +188,7 @@ public abstract class Sensor {
    *         {@code false} en caso contrario.
    */
   public boolean primeraLectura() {
-    return historicoLecturas.isEmpty();
+    return this.procesador.estaVacio();
   }
 
   /**
@@ -197,8 +196,8 @@ public abstract class Sensor {
    * 
    * @return lista con los valores de las lecturas.
    */
-  public List<Double> getHistoricoLecturas() {
-    return List.copyOf(this.historicoLecturas);
+  public Collection<Double> getHistoricoLecturas() {
+    return this.procesador.getValores();
   }
 
   /**

@@ -9,14 +9,17 @@ import Practica4.src.unidad.UnidadTemperatura;
 public class ConversorKelvinFahrenheit implements Conversor {
     /**
      * Implementa la funcion de la interfaz
+     * 
      * @return Unidad de origen, Kelvin
      */
     @Override
     public Unidad getUnidadOrigen() {
         return UnidadTemperatura.KELVIN;
     }
+
     /**
      * Implementa la funcion de la interfaz
+     * 
      * @return Unidad de destino, Fahrenheit
      */
     @Override
@@ -27,6 +30,7 @@ public class ConversorKelvinFahrenheit implements Conversor {
     /**
      * Dado un valor el kelvin, te lo devuelve en fahrenheit
      * Formula mirada en internet
+     * 
      * @return double el valor en fahrenheit
      */
     @Override

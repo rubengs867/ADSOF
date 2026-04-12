@@ -2,9 +2,9 @@ package Practica4.src.documento;
 
 import java.util.*;
 public interface IDocumento {
-  String getTitulo();
+  String getTituloDocumento();
 
-  String getCuerpo();
+  String getTituloSeccion();
 
   List<String> getParrafos();
 
