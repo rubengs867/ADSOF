@@ -3,6 +3,7 @@ package Practica4.src.sensor;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,6 +60,7 @@ public abstract class Sensor {
   private double umbralCambio;
 
   /** El Historial de lecturas del sensor va a pasar al procesador de datos */
+  private List<Double> historial;
 
   /**
    * Mapa que mantiene un contador independiente por cada tipo de sensor.
@@ -100,7 +102,7 @@ public abstract class Sensor {
     this.estrategia = estrategia;
     generarValorID(tipo);
     this.fechaUltimaLectura = null;
-
+    this.historial = new ArrayList<>();
     this.procesador = new ProcesadorDatos(unidad);
     this.fechaCalibracion = LocalDate.now();
     this.duracionCalibracionDias = 365;
@@ -174,6 +176,7 @@ public abstract class Sensor {
     //se registra antes de lanzar la excepcion
     this.valorUltimaLectura = valorFinal;
     this.fechaUltimaLectura = LocalDate.now();
+    this.historial.add(valorFinal);
     this.procesador.procesarLectura(this.fechaUltimaLectura.atStartOfDay(), valorFinal);
 
     //lanzamos excecpion
@@ -182,22 +185,21 @@ public abstract class Sensor {
     }
   }
   /**
-   * Comprueba si el sensor ha realizado alguna lectura.
-   * 
-   * @return {@code true} si NO ha realizado lecturas;
-   *         {@code false} en caso contrario.
+   * Comprueba si el sensor ha realizado alguna lectura mirando su historial
+   * * @return {@code true} si NO ha realizado lecturas;
+   * {@code false} en caso contrario.
    */
   public boolean primeraLectura() {
-    return this.procesador.estaVacio();
+    return this.historial.isEmpty(); 
   }
 
   /**
-   * Devuelve una lista inmutable del historial de lecturas del sensor.
-   * 
-   * @return lista con los valores de las lecturas.
+   * Devuelve una vista inmutable del historial de lecturas del sensor.
+   * * @return colección con los valores en bruto registrados por el sensor.
    */
   public Collection<Double> getHistoricoLecturas() {
-    return this.procesador.getValores();
+    // Devuelve su propia lista, protegida contra modificaciones externas
+    return Collections.unmodifiableList(this.historial); 
   }
 
   /**
