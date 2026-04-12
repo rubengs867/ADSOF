@@ -14,7 +14,8 @@ public class SensorDescalibradoPorCaducidadException extends SensorDescalibradoE
    * @param sensor Sensor que ha alcanzado la fecha límite de calibración.
    */
   public SensorDescalibradoPorCaducidadException(Sensor sensor) {
-    super(sensor, "Fecha de caducidad de calibracion alcanzada");
+    super(sensor, "Sensor " + sensor.getId() + " sin calibrar (calibración caducada desde " +
+        sensor.getFechaUltimaLectura().plusDays(sensor.getDuracionCalibracionDias()) + ")");
   }
 
 }

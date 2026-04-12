@@ -25,8 +25,9 @@ public class CambioBruscoException extends Exception {
    * @param valorActual   Lectura actual que excede el umbral permitido.
    */
   public CambioBruscoException(Sensor sensor, double valorAnterior, double valorActual) {
-    super("Cambio brusco en sensor " + sensor.getId() + ": la lectura salto de " + 
-          String.format("%.2f", valorAnterior) + " a " + String.format("%.2f", valorActual));
+    super("Cambio brusco en " + sensor.getId() + ": " + 
+          String.format("%.2f", valorActual) + sensor.getUnidad().getTexto() + 
+          " (anterior: " + String.format("%.2f", valorAnterior));
     this.sensor = sensor;
     this.valorAnterior = valorAnterior;
     this.valorActual = valorActual;

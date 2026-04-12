@@ -12,6 +12,9 @@ import Practica4.src.sensor.Sensor;
  */
 public class SensorDescalibradoPorRangoException extends SensorDescalibradoException {
 
+  /** Porcentaje de desviación con respecto al intervalo */
+  private double desviacion;
+
   /**
    * Constructor que crea una nueva excepción por exceso de rango.
    * <p>
@@ -21,9 +24,22 @@ public class SensorDescalibradoPorRangoException extends SensorDescalibradoExcep
    * 
    * @param sensor Sensor que ha generado un valor fuera de rango.
    */
-  public SensorDescalibradoPorRangoException(Sensor sensor) {
-    super(sensor, "Valor final medido excede los valores permitidos");
+  public SensorDescalibradoPorRangoException(Sensor sensor, double desviacion) {
+    super(sensor, "Lectura fuera de rango en " + sensor.getId() + ": " + String.format("%.2f", desviacion) + "%");
     sensor.setCalibrado(false);
+    this.desviacion = desviacion;
+  }
+
+  /**
+   * Devuelve el pordentaje de desviación con respecto al intervalo.
+   * Ejemplo: Si el rango es [10, 20] y el valor es 30: El exceso es 10. La
+   * desviación es 10/10 = 100$ (se ha alejado una distancia igual a todo el
+   * rango).
+   * 
+   * @return porcentaje de desviación
+   */
+  public double getDesviacion() {
+    return desviacion;
   }
 
 }

@@ -11,7 +11,9 @@ import java.util.Map;
 import Practica4.src.conversor.Conversor;
 import Practica4.src.conversor.ConversorIdentidad;
 import Practica4.src.documento.IDocumento;
+import Practica4.src.excepcion.CambioBruscoException;
 import Practica4.src.excepcion.ConversionErroneaException;
+import Practica4.src.excepcion.SensorDescalibradoException;
 import Practica4.src.excepcion.SensorDuplicadoException;
 import Practica4.src.sensor.Sensor;
 
@@ -50,7 +52,7 @@ public class EstacionMeteorologica implements IDocumento {
   private LocalDateTime ultimaLectura;
 
   /** Lista historica de las alertas que salten */
-  private List<String> registroAlertas;
+  private List<Alerta> registroAlertas;
 
   /**
    * Constructor que crea una nueva estación meteorológica.
@@ -95,28 +97,74 @@ public class EstacionMeteorologica implements IDocumento {
   }
 
   /**
+   * Realiza la calibración de un sensor específico mediante su identificador.
+   * <p>
+   * Este proceso realiza las siguientes acciones:
+   * 1. Actualiza el offset de lectura del sensor (marcándolo como calibrado).
+   * 2. Elimina todas las alertas previas asociadas a este sensor del registro
+   * histórico.
+   * 3. Si la toma de datos periódica estaba detenida (periodo en 0), la reanuda
+   * automáticamente con un valor por defecto.
+   * </p>
+   *
+   * @param id     Identificador único del sensor a calibrar.
+   * @param offset Nuevo valor de ajuste de lectura para el sensor.
+   */
+  public void calibrarSensor(String id, double offset) {
+    Sensor s = sensores.get(id);
+
+    // Verificamos que el sensor exista antes de proceder
+    if (s != null) {
+      // Establecer el offset (el método del sensor actualiza su estado interno)
+      s.calibrar(offset);
+
+      // Eliminar alertas asociadas con dicho sensor
+      registroAlertas.removeIf(alerta -> alerta.getIdSensor().equals(id));
+
+      // Retomar la toma de datos si estaba detenida (periodo = 0)
+      if (this.periodo <= 0) {
+        // Reanudamos con un periodo estándar de 5 minutos (300.000 ms)
+        this.setPeriodo(300000);
+      }
+    }
+  }
+
+  /**
    * Realiza una lectura puntual en un número determinado de sensores.
-   * 
+   * <p>
+   * Si un sensor lanza una excepción de descalibración o cambio brusco,
+   * se genera un objeto Alerta con el ID del sensor, la fecha actual y el
+   * mensaje, añadiéndose al registro histórico respetando el orden de llegada.
+   * </p>
+   *
    * @param numSensores Número de sensores a medir.
    *                    Si es -1, se miden todos los sensores registrados.
    */
-  public void realizarLecturaPuntual(int numSensores) throws Exception {
+  public void realizarLecturaPuntual(int numSensores) {
     List<Sensor> lista = new ArrayList<>(sensores.values());
-    int total = 0;
+    int total;
 
     // Determinamos cuántos sensores van a realizar la medición
-    if (numSensores == -1 || numSensores > lista.size())
+    if (numSensores == -1 || numSensores > lista.size()) {
       total = lista.size();
-    else
+    } else {
       total = numSensores;
+    }
 
     for (int i = 0; i < total; i++) {
+      Sensor s = lista.get(i);
       try {
-        lista.get(i).realizarMedicion();
-      } catch (Practica4.src.excepcion.SensorDescalibradoException e) {
-        registroAlertas.add("[" + LocalDateTime.now() + "] " + e.getMessage());
-      } catch (Practica4.src.excepcion.CambioBruscoException e) {
-        registroAlertas.add("[" + LocalDateTime.now() + "] " + e.getMessage());
+        s.realizarMedicion();
+      } catch (SensorDescalibradoException | CambioBruscoException e) {
+
+        // Creamos la instancia de la clase Alerta con los datos requeridos
+        Alerta nuevaAlerta = new Alerta(
+            LocalDateTime.now(),
+            s.getId(),
+            e.getMessage());
+
+        // El ArrayList garantiza el orden de llegada (inserción al final)
+        registroAlertas.add(nuevaAlerta);
       }
     }
   }
@@ -338,7 +386,7 @@ public class EstacionMeteorologica implements IDocumento {
     listas.put("Sensores instalados", infoSensores);
 
     // Lista 2: Alertas
-    listas.put("Alertas activas", new ArrayList<>(this.registroAlertas));
+    listas.put("Alertas activas", new ArrayList<Alerta>(this.registroAlertas));
 
     return listas;
   }

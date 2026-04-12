@@ -29,7 +29,10 @@ public abstract class Sensor {
   /** Valor de calibración. */
   private double offset;
 
-  /** Unidad de medida del sensor. Protegido para poder ser accedido desde las clases hijas */
+  /**
+   * Unidad de medida del sensor. Protegido para poder ser accedido desde las
+   * clases hijas
+   */
   protected Unidad unidad;
 
   /** Fecha en la que se realizó la última lectura. */
@@ -197,7 +200,8 @@ public abstract class Sensor {
 
     // ¿Medición dentro del rango del sensor?
     if (valorFinal < minRango || valorFinal > maxRango) {
-      throw new SensorDescalibradoPorRangoException(this);
+      double desviacion = calcularPorcentajeDesviacion(valorFinal, minRango, maxRango);
+      throw new SensorDescalibradoPorRangoException(this, desviacion);
     }
 
     // Comprobación de un cambio brusco en la medición
@@ -226,6 +230,34 @@ public abstract class Sensor {
     if (cambioBrusco) {
       throw new CambioBruscoException(this, valorAnteriorTemporal, valorFinal);
     }
+  }
+
+  /**
+   * Calcula el porcentaje de desviación de un valor respecto al rango permitido.
+   * El porcentaje representa qué parte de la amplitud total del rango supone el
+   * exceso.
+   * 
+   * @param valor El valor medido.
+   * @param min   El límite inferior.
+   * @param max   El límite superior.
+   * @return Porcentaje de desviación (0.0 si está dentro del rango).
+   */
+  private double calcularPorcentajeDesviacion(double valor, double min, double max) {
+    // Si está dentro del rango, la desviación es cero
+    if (valor >= min && valor <= max) {
+      return 0.0;
+    }
+
+    double amplitud = max - min;
+
+    // Evitamos división por cero si el rango es un punto único
+    if (amplitud == 0) {
+      return 100.0;
+    }
+
+    double exceso = (valor < min) ? (min - valor) : (valor - max);
+
+    return (exceso / amplitud) * 100.0;
   }
 
   /**
@@ -316,6 +348,15 @@ public abstract class Sensor {
    */
   public LocalDate getFechaUltimaLectura() {
     return fechaUltimaLectura;
+  }
+
+  /**
+   * Devuelve la duración de la calibración en días.
+   * 
+   * @return número de días
+   */
+  public int getDuracionCalibracionDias() {
+    return duracionCalibracionDias;
   }
 
   /**
