@@ -4,10 +4,10 @@
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>150</x>
+      <x>320</x>
       <y>210</y>
-      <w>1060</w>
-      <h>660</h>
+      <w>680</w>
+      <h>280</h>
     </coordinates>
     <panel_attributes>Formateador
 --
@@ -19,9 +19,9 @@ layer=-1</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>520</x>
-      <y>270</y>
+      <y>260</y>
       <w>280</w>
-      <h>150</h>
+      <h>80</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
 IFormateador
@@ -32,10 +32,10 @@ IFormateador
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>230</x>
-      <y>500</y>
+      <x>340</x>
+      <y>400</y>
       <w>300</w>
-      <h>170</h>
+      <h>60</h>
     </coordinates>
     <panel_attributes>FormateadorHTML
 --
@@ -45,10 +45,10 @@ IFormateador
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>740</x>
-      <y>500</y>
+      <x>660</x>
+      <y>400</y>
       <w>300</w>
-      <h>170</h>
+      <h>60</h>
     </coordinates>
     <panel_attributes>FormateadorMarkdown
 --
@@ -58,23 +58,23 @@ IFormateador
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>470</x>
-      <y>410</y>
-      <w>170</w>
-      <h>110</h>
+      <x>580</x>
+      <y>330</y>
+      <w>30</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>150.0;10.0;10.0;90.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>710</x>
-      <y>410</y>
-      <w>210</w>
-      <h>110</h>
+      <x>700</x>
+      <y>330</y>
+      <w>30</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>10.0;10.0;190.0;90.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
   </element>
 </diagram>

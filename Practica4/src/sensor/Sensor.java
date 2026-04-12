@@ -204,12 +204,12 @@ public abstract class Sensor {
   }
 
   /**
-   * Devuelve una vista inmutable del historial de lecturas del sensor.
-   * * @return colección con los valores en bruto registrados por el sensor.
+   * Devuelve una lista inmutable del historial de lecturas del sensor.
+   * * @return lista con los valores en bruto registrados por el sensor.
    */
-  public Collection<Double> getHistoricoLecturas() {
+  public List<Double> getHistoricoLecturas() {
     // Devuelve su propia lista, protegida contra modificaciones externas
-    return Collections.unmodifiableList(this.historial);
+    return List.copyOf(this.historial);
   }
 
   /**
