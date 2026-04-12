@@ -68,6 +68,7 @@ public class SensorHumedad extends Sensor {
       throw new IllegalArgumentException(
           "La unidad " + u + " no es válida para temperatura.");
     }
+    this.unidad = u;
   }
 
   /**

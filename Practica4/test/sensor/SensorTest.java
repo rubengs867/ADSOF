@@ -7,14 +7,16 @@ import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.Field;
 import java.time.LocalDate;
-import java.util.ArrayList; 
-import java.util.Collection; 
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import Practica4.src.estrategia.EstrategiaLectura;
+import Practica4.src.excepcion.CambioBruscoException;
+import Practica4.src.excepcion.SensorDescalibradoException;
+import Practica4.src.excepcion.SensorDescalibradoPorCaducidadException;
+import Practica4.src.excepcion.SensorDescalibradoPorRangoException;
 import Practica4.src.sensor.Sensor;
 import Practica4.src.sensor.SensorHumedad;
 import Practica4.src.sensor.SensorTemperatura;
@@ -50,7 +52,6 @@ public class SensorTest {
    */
   private static class SensorStub extends Sensor {
     public SensorStub(String tipo, double offset, double minRango, double maxRango, EstrategiaLectura estrategia) {
-      // Se inyecta null en Unidad ya que la lógica probada no depende de ella
       super(tipo, offset, null, minRango, maxRango, estrategia);
     }
 
@@ -71,136 +72,224 @@ public class SensorTest {
   @Before
   public void setUp() {
     estrategiaFija = new EstrategiaFija(10.0);
+    // Inicializa un sensor genérico de rango 0.0 a 100.0, con offset inicial de 2.0
     sensor = new SensorStub("TEST", 2.0, 0.0, 100.0, estrategiaFija);
-    sensor.setUmbralCambio(2.0);
+    sensor.setUmbralCambio(0.5);
   }
 
-  // F) Constructor: Rango inválido lanza excepción
+  // =======================
+  // TESTS DEL CONSTRUCTOR
+  // =======================
+
   @Test(expected = IllegalArgumentException.class)
-  public void testConstructor_MinRangoMayorQueMaxRango_LanzaExcepcion() {
+  public void testConstructor_CuandoMinRangoMayorMaxRango_EntoncesLanzaExcepcion() {
     new SensorStub("ERR", 0.0, 50.0, 10.0, estrategiaFija);
   }
 
-  // A) Generación de ID: Mismos tipos incrementan
+  // ============================
+  // TESTS DE GENERACIÓN DE ID
+  // ============================
+
   @Test
-  public void testGeneracionId_MismoTipo_IncrementaSecuencialmente() {
-    // Se usa un prefijo único para evitar interferencias del estado estático entre tests
+  public void testGeneracionId_CuandoMismoTipo_EntoncesIncrementaSecuencialmente() {
     SensorStub s1 = new SensorStub("INC", 0.0, 0.0, 100.0, estrategiaFija);
     SensorStub s2 = new SensorStub("INC", 0.0, 0.0, 100.0, estrategiaFija);
 
-    String id1 = s1.getId();
-    String id2 = s2.getId();
+    int num1 = Integer.parseInt(s1.getId().split("-")[1]);
+    int num2 = Integer.parseInt(s2.getId().split("-")[1]);
 
-    int num1 = Integer.parseInt(id1.split("-")[1]);
-    int num2 = Integer.parseInt(id2.split("-")[1]);
-
-    assertEquals("Los IDs del mismo tipo deben ser consecutivos", num1 + 1, num2);
+    assertEquals(num1 + 1, num2);
   }
 
-
   @Test
-  public void testGeneracionId_DistintosTipos_ContadoresIndependientes() {
-    
-    // Usamos vuestras subclases reales en lugar de "cosas raras"
+  public void testGeneracionId_CuandoDistintosTipos_EntoncesContadoresIndependientes() {
     Sensor sTemp = new SensorTemperatura(0.0, UnidadTemperatura.CELSIUS, estrategiaFija);
-    Sensor sHum = new SensorHumedad(0.0, estrategiaFija); 
+    Sensor sHum = new SensorHumedad(0.0, estrategiaFija);
 
-    // Comprobamos que pillan bien su prefijo
-    assertTrue(sTemp.getId().startsWith("TEMP-"));
-    assertTrue(sHum.getId().startsWith("HUM-"));
-
+    assertTrue("El ID de Temperatura debe usar su prefijo", sTemp.getId().startsWith("TEMP-"));
+    assertTrue("El ID de Humedad debe usar su prefijo", sHum.getId().startsWith("HUM-"));
 
     assertTrue("El primer ID de Temperatura debe acabar en 0001", sTemp.getId().endsWith("0001"));
     assertTrue("El primer ID de Humedad debe acabar en 0001", sHum.getId().endsWith("0001"));
   }
 
-  // B) realizarMedicion(): Se invoca estrategia, aplica offset y actualiza datos
+  // ==========================================
+  // TESTS DE REALIZAR MEDICIÓN Y EXCEPCIONES
+  // ==========================================
+
   @Test
-  public void testRealizarMedicion_AplicaOffsetYActualizaEstado() throws Exception {
-    // La estrategia genera 10.0, el offset del sensor en @Before es 2.0
-    // valorFinal esperado = 10.0 - 2.0 = 8.0
+  public void testRealizarMedicion_AplicaOffsetYGestionaEstado() throws Exception {
+    sensor.calibrar(2.0);
+
+    // Estrategia da 10.0 -> Offset es 2.0 -> Valor final debe ser 8.0
     sensor.realizarMedicion();
 
     assertEquals(8.0, sensor.getValorUltimaLectura(), 0.001);
     assertNotNull(sensor.getFechaUltimaLectura());
     assertEquals(LocalDate.now(), sensor.getFechaUltimaLectura());
 
-    // Modificado para recibir Collection
-    Collection<Double> historico = sensor.getHistoricoLecturas();
+    List<Double> historico = sensor.getHistoricoLecturas();
     assertFalse(historico.isEmpty());
-    
-    // Transformamos temporalmente a Lista en el test para comprobar la posición 0
-    assertEquals(8.0, new ArrayList<>(historico).get(0), 0.001);
+    assertEquals(8.0, historico.get(0), 0.001);
   }
 
-  // C) primeraLectura(): Comportamiento antes y después de medir
+  @Test(expected = SensorDescalibradoException.class)
+  public void testRealizarMedicion_CuandoNoCalibrado_EntoncesLanzaExcepcion() throws Exception {
+    sensor.setCalibrado(false);
+
+    sensor.realizarMedicion();
+  }
+
+  @Test(expected = SensorDescalibradoPorCaducidadException.class)
+  public void testRealizarMedicion_CuandoCalibracionCaducada_EntoncesLanzaExcepcion() throws Exception {
+    sensor.calibrar(2.0);
+    // Devuelve true (provocando la excepción) cuando los días son negativos.
+    sensor.setCaducacionCalibracion(-1);
+
+    sensor.realizarMedicion();
+  }
+
+  @Test(expected = SensorDescalibradoPorRangoException.class)
+  public void testRealizarMedicion_CuandoFueraDeRango_EntoncesLanzaExcepcion() throws Exception {
+    sensor.calibrar(2.0);
+
+    // Max rango es 100.0. Forzamos 150.0 - 2.0(offset) = 148.0
+    estrategiaFija.setValorFijo(150.0);
+    sensor.realizarMedicion();
+  }
+
+  @Test(expected = CambioBruscoException.class)
+  public void testRealizarMedicion_CuandoCambioBrusco_EntoncesLanzaExcepcion() throws Exception {
+    sensor.calibrar(2.0);
+    sensor.setUmbralCambio(0.5); // 50% de umbral
+
+    // 1ª Lectura: 10.0 - 2.0 = 8.0
+    estrategiaFija.setValorFijo(10.0);
+    sensor.realizarMedicion();
+
+    // 2ª Lectura: 25.0 - 2.0 = 23.0
+    // Diferencia: 15.0 -> % Cambio: 15.0 / 8.0 = 1.875 (187.5% > 50%)
+    estrategiaFija.setValorFijo(25.0);
+    sensor.realizarMedicion();
+  }
+
+  // ==========================================
+  // TESTS DE PRIMERA LECTURA E HISTÓRICO
+  // ==========================================
+
   @Test
-  public void testPrimeraLectura_CambiaEstadoCorrectamente() throws Exception {
+  public void testPrimeraLectura_CuandoSinMedicionesYConMediciones_EntoncesActualizaEstado() throws Exception {
     assertTrue("Debe ser true si no se han hecho lecturas", sensor.primeraLectura());
 
+    sensor.calibrar(2.0);
     sensor.realizarMedicion();
 
     assertFalse("Debe ser false tras realizar al menos una medición", sensor.primeraLectura());
   }
 
-  // D) getHistoricoLecturas(): Es inmutable
-  @Test(expected = UnsupportedOperationException.class)
-  public void testHistoricoLecturas_EsInmutable() throws Exception {
-    sensor.realizarMedicion();
-    
-    // Modificado para recibir Collection
-    Collection<Double> historico = sensor.getHistoricoLecturas();
+  @Test
+  public void testHistoricoLecturas_CuandoNuevasMediciones_EntoncesCreceAcumulativo() throws Exception {
+    sensor.calibrar(2.0);
 
-    // Intentar modificar la colección devuelta debe lanzar
-    // UnsupportedOperationException
+    // Primera lectura
+    estrategiaFija.setValorFijo(12.0); // Final: 10.0
+    sensor.realizarMedicion();
+
+    // Segunda lectura (evitamos cambio brusco, < 50% de 10 es 5)
+    estrategiaFija.setValorFijo(16.0); // Final: 14.0si está calibrado;
+    sensor.realizarMedicion();
+
+    List<Double> historico = sensor.getHistoricoLecturas();
+
+    assertEquals("El histórico debe tener 2 elementos", 2, historico.size());
+    assertEquals(10.0, historico.get(0), 0.001);
+    assertEquals(14.0, historico.get(1), 0.001);
+  }
+
+  @Test(expected = UnsupportedOperationException.class)
+  public void testHistoricoLecturas_CuandoIntentaModificar_EntoncesLanzaUnsupportedOperationException()
+      throws Exception {
+    sensor.calibrar(2.0);
+    sensor.realizarMedicion();
+
+    List<Double> historico = sensor.getHistoricoLecturas();
     historico.add(99.9);
   }
 
-  // E) equals() y hashCode()
+  // =======================
+  // TESTS DE CALIBRACIÓN
+  // ======================
+
   @Test
-  public void testEqualsYHashCode_MismoIdEsTrue() throws Exception {
+  public void testCalibrar_CuandoSeInvoca_EntoncesActualizaEstadoYOffset() {
+    // Estado inicial de un sensor está descalibrado
+    sensor.setCalibrado(false);
+
+    // Calibramos con offset 5.5 y caducidad 30 días
+    sensor.calibrar(5.5, 30);
+
+    assertTrue("El sensor debe quedar marcado como calibrado", sensor.getCalibrado());
+    assertEquals(5.5, sensor.getOffset(), 0.001);
+
+    // Verificamos que la fecha se actualizó mediante comprobación de caducidad
+    assertFalse(sensor.estaCalibracionCaducada());
+  }
+
+  @Test
+  public void testEstaCalibrado_CuandoEstaCalibradoYNoHaCaducado_EntoncesDevuelveTrue() {
+    // Se calibra con 365 días de validez
+    sensor.calibrar(2.0, 365);
+
+    assertTrue("Debe devolver true si se ha calibrado y la fecha aún es válida", sensor.estaCalibrado());
+  }
+
+  @Test
+  public void testEstaCalibrado_CuandoNoEstaCalibrado_EntoncesDevuelveFalse() {
+    // Marcamos explícitamente como no calibrado
+    sensor.setCalibrado(false);
+    // La fecha de caducidad no se ha cumplido
+    sensor.setCaducacionCalibracion(365);
+
+    assertFalse("Debe devolver false porque la bandera de calibración es false", sensor.estaCalibrado());
+  }
+
+  @Test
+  public void testEstaCalibrado_CuandoEstaCalibradoPeroHaCaducado_EntoncesDevuelveFalse() {
+    // Lo calibramos para que la bandera 'calibrado' sea true
+    sensor.calibrar(2.0);
+
+    // Forzamos que la calibración esté caducada
+    sensor.setCaducacionCalibracion(-10);
+
+    assertFalse("Debe devolver false porque, aunque se calibró, la fecha ha caducado", sensor.estaCalibrado());
+  }
+
+  // ================================
+  // TESTS DE IGUALDAD Y HASHCODE
+  // ================================
+
+  @Test
+  public void testEqualsYHashCode_CuandoIdsCoinciden_EntoncesSonIguales() throws Exception {
     SensorStub s1 = new SensorStub("EQ", 0.0, 0.0, 100.0, estrategiaFija);
     SensorStub s2 = new SensorStub("EQ", 0.0, 0.0, 100.0, estrategiaFija);
     SensorStub s3 = new SensorStub("OTRO", 0.0, 0.0, 100.0, estrategiaFija);
 
-    // 1. Distintos sensores generados naturalmente tienen distinto ID -> false
+    // Distintos sensores generados naturalmente tienen distinto ID
     assertFalse(s1.equals(s2));
     assertFalse(s1.equals(s3));
     assertFalse(s1.equals(null));
     assertFalse(s1.equals(new Object()));
 
-    // 2. Reflexividad
+    // Reflexividad
     assertTrue(s1.equals(s1));
 
-    // 3. Forzamos el mismo ID usando Reflection para probar la lógica base del equals
+    // Forzamos el mismo ID usando Reflection para aislar y probar la lógica pura de
+    // equals()
     Field idField = Sensor.class.getDeclaredField("id");
     idField.setAccessible(true);
     idField.set(s2, s1.getId());
 
-    // Ahora s1 y s2 tienen exactamente el mismo ID
     assertTrue("equals debe ser true si los IDs coinciden", s1.equals(s2));
     assertEquals("hashCode debe ser igual si los IDs coinciden", s1.hashCode(), s2.hashCode());
-  }
-
-  // G) Comportamiento acumulativo: Histórico crece
-  @Test
-  public void testRealizarMedicion_ComportamientoAcumulativo() throws Exception {
-    // Primera lectura: Genera 15.0 - Offset 2.0 = 13.0
-    estrategiaFija.setValorFijo(15.0);
-    sensor.realizarMedicion();
-
-    // Segunda lectura: Genera 25.0 - Offset 2.0 = 23.0
-    estrategiaFija.setValorFijo(25.0);
-    sensor.realizarMedicion();
-
-    // Modificado para recibir Collection
-    Collection<Double> historico = sensor.getHistoricoLecturas();
-
-    assertEquals("El histórico debe tener 2 elementos", 2, historico.size());
-    
-    // Lo pasamos a Lista para comprobar las posiciones
-    List<Double> listaValores = new ArrayList<>(historico);
-    assertEquals(13.0, listaValores.get(0), 0.001);
-    assertEquals(23.0, listaValores.get(1), 0.001);
   }
 }

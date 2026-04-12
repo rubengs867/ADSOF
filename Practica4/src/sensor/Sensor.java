@@ -29,8 +29,8 @@ public abstract class Sensor {
   /** Valor de calibración. */
   private double offset;
 
-  /** Unidad de medida del sensor. */
-  private Unidad unidad;
+  /** Unidad de medida del sensor. Protegido para poder ser accedido desde las clases hijas */
+  protected Unidad unidad;
 
   /** Fecha en la que se realizó la última lectura. */
   private LocalDate fechaUltimaLectura;
@@ -382,22 +382,22 @@ public abstract class Sensor {
    *         una medición fuera del rango.
    */
   public boolean estaCalibrado() {
-    return calibrado && estaCalibracionCaducada();
+    return calibrado && !estaCalibracionCaducada();
   }
 
   /**
    * Comprueba si la fecha de caducación de la calibración ya ha pasado.
    * 
-   * @return {@code true} si está calibrado;
-   *         {@code false} si la fecha de caducación ya ha pasado
+   * @return {@code true} si la fecha de caducación ya ha pasado;
+   *         {@code false} en caso contrario
    */
   public boolean estaCalibracionCaducada() {
     // Comprueba si ha pasado la fecha de caducidad
     LocalDate fechaCaducidad = this.fechaCalibracion.plusDays(this.duracionCalibracionDias);
     if (LocalDate.now().isAfter(fechaCaducidad))
-      return false;
+      return true;
 
-    return true;
+    return false;
   }
 
   /**

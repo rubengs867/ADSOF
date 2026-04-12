@@ -94,6 +94,7 @@ public class SensorTemperatura extends Sensor {
       throw new IllegalArgumentException(
           "La unidad " + u + " no es válida para temperatura.");
     }
+    this.unidad = u;
   }
 
   /**
@@ -101,7 +102,7 @@ public class SensorTemperatura extends Sensor {
    */
   @Override
   public String toString() {
-    return String.format("Sensor Temperatura (%.2f %s) última lectura: %s",
+    return String.format("Sensor Temperatura (%.2f%s) última lectura: %s",
         getValorUltimaLectura(),
         getUnidad().getTexto(),
         getFechaUltimaLectura());

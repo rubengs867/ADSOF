@@ -68,6 +68,7 @@ public class SensorPresion extends Sensor {
       throw new IllegalArgumentException(
           "La unidad " + u + " no es válida para presión.");
     }
+    this.unidad = u;
   }
 
   /**
