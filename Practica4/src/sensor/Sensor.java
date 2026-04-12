@@ -143,14 +143,50 @@ public abstract class Sensor {
   }
 
   /**
-   * Realiza la medición del sensor, actualizando su estado y registrando la nueva
-   * lectura en el histórico.
+   * Ejecuta el proceso completo de medición del sensor, validando su estado de
+   * calibración y la integridad de los datos obtenidos.
+   * *
+   * <p>
+   * El método sigue esta secuencia lógica:
+   * 1. Verifica si la calibración ha expirado o si el sensor está marcado como
+   * descalibrado.
+   * 2. Obtiene un valor simulado a través de la {@link EstrategiaLectura}
+   * configurada.
+   * 3. Aplica el offset de calibración al valor obtenido.
+   * 4. Valida que el valor final esté dentro del rango operativo
+   * ({@code minRango} - {@code maxRango}).
+   * 5. Comprueba si existe un cambio brusco respecto a la última lectura (por
+   * defecto > 50%).
+   * 6. Si todas las validaciones pasan, actualiza el estado interno y notifica
+   * al {@link ProcesadorDatos}.
+   * </p>
+   *
+   * @throws SensorDescalibradoPorCaducidadException Si la fecha actual supera el
+   *                                                 periodo de validez
+   *                                                 de la última calibración.
+   * @throws SensorDescalibradoPorRangoException     Si el valor medido está fuera
+   *                                                 de los límites permitidos.
+   *                                                 Esta excepción marca
+   *                                                 automáticamente el sensor
+   *                                                 como no calibrado.
+   * @throws SensorDescalibradoException             Si el sensor no tiene un
+   *                                                 <i>offset</i> válido o ha
+   *                                                 sido
+   *                                                 invalidado manualmente.
+   * @throws CambioBruscoException                   Si la diferencia porcentual
+   *                                                 entre la lectura actual y la
+   *                                                 anterior
+   *                                                 supera el
+   *                                                 {@code umbralCambio}
+   *                                                 configurado.
    */
   public void realizarMedicion() throws SensorDescalibradoException, CambioBruscoException {
 
     // Comprobación de caducación de la calibración del sensor
     if (estaCalibracionCaducada()) {
       throw new SensorDescalibradoPorCaducidadException(this);
+    } else if (!this.calibrado) {
+      throw new SensorDescalibradoException(this, "Offset del sensor descalibrado");
     }
 
     // Obtenemos el valor de la estrategia
@@ -180,10 +216,6 @@ public abstract class Sensor {
         cambioBrusco = true;
       }
     }
-    if (cambioBrusco) {
-      throw new CambioBruscoException(this, this.valorUltimaLectura, valorFinal);
-    }
-
     // Registramos la lectura
     this.valorUltimaLectura = valorFinal;
     this.fechaUltimaLectura = LocalDate.now();
