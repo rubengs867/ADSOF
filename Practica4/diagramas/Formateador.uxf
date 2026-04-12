@@ -1,0 +1,10 @@
+<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLPackage</id><coordinates><x>150</x><y>210</y><w>1060</w><h>660</h></coordinates><panel_attributes>Formateador
+--
+bg=green</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>520</x><y>270</y><w>280</w><h>150</h></coordinates><panel_attributes>&lt;&lt;interface&gt;&gt;
+IFormateador
+--
++ formatear(doc: IDocumento): String</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>230</x><y>500</y><w>300</w><h>170</h></coordinates><panel_attributes>FormateadorHTML
+--
++ formatear(doc: IDocumento): String</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>740</x><y>500</y><w>300</w><h>170</h></coordinates><panel_attributes>FormateadorMarkdown
+--
++ formatear(doc: IDocumento): String</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>470</x><y>410</y><w>170</w><h>110</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>150;10;10;90</additional_attributes></element><element><id>Relation</id><coordinates><x>710</x><y>410</y><w>210</w><h>110</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;190;90</additional_attributes></element></diagram>
