@@ -1,4 +1,15 @@
-<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>880</x><y>290</y><w>550</w><h>440</h></coordinates><panel_attributes>&lt;&lt;abstract&gt;&gt;
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>880</x>
+      <y>290</y>
+      <w>550</w>
+      <h>440</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;abstract&gt;&gt;
 /Sensor/
 --
 -id: String
@@ -22,7 +33,18 @@ _-contadoresTipo: Map&lt;String, Integer&gt;_
 /+setUnidad(u: Unidad)/
 /+toString(): String/
 + getHistoricoLecturas(): Collection&lt;Double&gt;
-+ setCaducacionCalibracion(duracionCalibracionDias: int)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>250</x><y>850</y><w>600</w><h>180</h></coordinates><panel_attributes>SensorTemperatura
++ setCaducacionCalibracion(duracionCalibracionDias: int)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>250</x>
+      <y>850</y>
+      <w>600</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>SensorTemperatura
 --
 _-TIPO: String = "TEMP"_
 _-MIN_VALOR: double = -273.15_
@@ -32,7 +54,18 @@ _-MAX_VALOR: double = 1000.0_
 +SensorTemperatura(offset: double, unidad: Unidad)
 +SensorTemperatura(offset: double)
 +setUnidad(u: Unidad)
-+toString(): String</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>910</x><y>850</y><w>450</w><h>180</h></coordinates><panel_attributes>SensorPresion
++toString(): String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>910</x>
+      <y>850</y>
+      <w>450</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>SensorPresion
 --
 _-TIPO: String = "PRES"_
 _-MIN_VALOR: double = 300.0_
@@ -41,7 +74,18 @@ _-MAX_VALOR: double = 1100.0_
 +SensorPresion(offset: double, estrategia: EstrategiaLectura)
 +SensorPresion(offset: double)
 +setUnidad(u: Unidad)
-+toString(): String</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1420</x><y>850</y><w>470</w><h>180</h></coordinates><panel_attributes>SensorHumedad
++toString(): String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1420</x>
+      <y>850</y>
+      <w>470</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>SensorHumedad
 --
 _-TIPO: String = "HUM"_
 _-MIN_VALOR: double = 0.0_
@@ -50,12 +94,125 @@ _-MAX_VALOR: double = 100.0_
 +SensorHumedad(offset: double)
 +SensorHumedad(offset: double, estrategia: EstrategiaLectura)
 +setUnidad(u: Unidad)
-+toString(): String</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1570</x><y>440</y><w>210</w><h>50</h></coordinates><panel_attributes>&lt;&lt;from unidad&gt;&gt;
-Unidad</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1150</x><y>720</y><w>30</w><h>150</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;130</additional_attributes></element><element><id>Relation</id><coordinates><x>1380</x><y>720</y><w>220</w><h>150</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;70;200;70;200;130</additional_attributes></element><element><id>Relation</id><coordinates><x>680</x><y>720</y><w>280</w><h>150</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>260;10;260;70;10;70;10;130</additional_attributes></element><element><id>Relation</id><coordinates><x>1420</x><y>450</y><w>170</w><h>40</h></coordinates><panel_attributes>lt=&lt;-
-m1=unidad</panel_attributes><additional_attributes>150;10;10;10</additional_attributes></element><element><id>UMLPackage</id><coordinates><x>210</x><y>260</y><w>1710</w><h>820</h></coordinates><panel_attributes>sensor
++toString(): String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1570</x>
+      <y>440</y>
+      <w>210</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;from unidad&gt;&gt;
+Unidad</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1150</x>
+      <y>720</y>
+      <w>30</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;130.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1380</x>
+      <y>720</y>
+      <w>220</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0;200.0;70.0;200.0;130.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>680</x>
+      <y>720</y>
+      <w>280</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>260.0;10.0;260.0;70.0;10.0;70.0;10.0;130.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1420</x>
+      <y>450</y>
+      <w>170</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=unidad</panel_attributes>
+    <additional_attributes>150.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>210</x>
+      <y>260</y>
+      <w>1710</w>
+      <h>820</h>
+    </coordinates>
+    <panel_attributes>sensor
 bg=PINK
-layer=-1</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1570</x><y>530</y><w>210</w><h>50</h></coordinates><panel_attributes>&lt;&lt;from estrategia&gt;&gt;
-EstrategiaLectura</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1420</x><y>540</y><w>170</w><h>40</h></coordinates><panel_attributes>lt=&lt;-
-m1=estragegia</panel_attributes><additional_attributes>150;10;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>540</x><y>460</y><w>210</w><h>50</h></coordinates><panel_attributes>&lt;&lt;from ProcesadorDatos&gt;&gt;
-ProcesadorDatos</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>740</x><y>470</y><w>160</w><h>40</h></coordinates><panel_attributes>lt=&lt;-
-m1=ProcesadorDatos</panel_attributes><additional_attributes>10;10;140;10</additional_attributes></element></diagram>
+layer=-1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1570</x>
+      <y>530</y>
+      <w>210</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;from estrategia&gt;&gt;
+EstrategiaLectura</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1420</x>
+      <y>540</y>
+      <w>170</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=estragegia</panel_attributes>
+    <additional_attributes>150.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>480</x>
+      <y>460</y>
+      <w>210</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;from ProcesadorDatos&gt;&gt;
+ProcesadorDatos</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>680</x>
+      <y>470</y>
+      <w>220</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=procesadorDatos</panel_attributes>
+    <additional_attributes>10.0;10.0;200.0;10.0</additional_attributes>
+  </element>
+</diagram>
