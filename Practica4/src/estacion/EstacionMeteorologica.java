@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import Practica4.src.alerta.Alerta;
 import Practica4.src.conversor.Conversor;
 import Practica4.src.conversor.ConversorIdentidad;
 import Practica4.src.documento.IDocumento;
@@ -374,8 +375,10 @@ public class EstacionMeteorologica implements IDocumento {
 
   @Override
   public Map<String, List<String>> getListas() {
-    // Usamos LinkedHashMap para que respete el orden al imprimir (primero sensores,
-    // luego alertas)
+    /*
+     * Usamos LinkedHashMap para que respete el orden al imprimir (primero sensores,
+     * luego alertas)
+     */
     Map<String, List<String>> listas = new java.util.LinkedHashMap<>();
 
     // Lista 1: Sensores
@@ -386,7 +389,11 @@ public class EstacionMeteorologica implements IDocumento {
     listas.put("Sensores instalados", infoSensores);
 
     // Lista 2: Alertas
-    listas.put("Alertas activas", new ArrayList<Alerta>(this.registroAlertas));
+    List<String> infoAlertas = new ArrayList<>();
+    for (Alerta a : registroAlertas) {
+      infoAlertas.add(a.toString());
+    }
+    listas.put("Alertas activas", infoAlertas);
 
     return listas;
   }
