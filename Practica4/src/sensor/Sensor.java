@@ -114,6 +114,7 @@ public abstract class Sensor {
     this.historial = new ArrayList<>();
     this.procesador = new ProcesadorDatos(unidad);
     this.fechaCalibracion = LocalDate.now();
+    this.fechaUltimaLectura = LocalDate.now();
     this.duracionCalibracionDias = 365;
     this.umbralCambio = 0.5;
   }

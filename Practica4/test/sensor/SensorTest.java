@@ -52,7 +52,7 @@ public class SensorTest {
    */
   private static class SensorStub extends Sensor {
     public SensorStub(String tipo, double offset, double minRango, double maxRango, EstrategiaLectura estrategia) {
-      super(tipo, offset, null, minRango, maxRango, estrategia);
+      super(tipo, offset, UnidadTemperatura.CELSIUS, minRango, maxRango, estrategia);
     }
 
     @Override
