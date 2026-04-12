@@ -8,7 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import Practica4.src.conversor.Conversor;
+import Practica4.src.conversor.ConversorIdentidad;
 import Practica4.src.documento.IDocumento;
+import Practica4.src.excepcion.ConversionErroneaException;
 import Practica4.src.excepcion.SensorDuplicadoException;
 import Practica4.src.sensor.Sensor;
 
@@ -146,8 +149,11 @@ public class EstacionMeteorologica implements IDocumento {
   }
 
   /**
-   * Añade un nuevo sensor a la estación meteorológica.
+   * Añade un nuevo sensor a la estación meteorológica con la configuración por
+   * defecto.
    * <p>
+   * Se asigna automáticamente un conversor identidad (sin conversión) al
+   * procesador del sensor.
    * 1. Mapa principal de sensores.
    * 2. Índice de sensores por tipo.
    * 3. Registro de fecha de instalación.
@@ -157,12 +163,50 @@ public class EstacionMeteorologica implements IDocumento {
    * @throws SensorDuplicadoException si ya existe un sensor con el mismo ID.
    */
   public void addSensor(Sensor nuevoSensor) throws SensorDuplicadoException {
+    try {
+      /*
+       * Delegamos toda la lógica al método sobrecargado, asignando un
+       * ConversorIdentidad con las unidades del sensor
+       */
+      this.addSensor(nuevoSensor, new ConversorIdentidad(nuevoSensor.getUnidad()));
+
+    } catch (ConversionErroneaException e) {
+      /*
+       * Un ConversorIdentidad es genérico y nunca debería lanzar un error de
+       * incompatibilidad,
+       */
+      System.err.println("Error interno: Fallo al asignar el conversor identidad al sensor "
+          + nuevoSensor.getId());
+    }
+  }
+
+  /**
+   * Añade un nuevo sensor a la estación meteorológica con un conversor
+   * específico.
+   * <p>
+   * 1. Asigna el conversor al procesador de datos del sensor.
+   * 2. Mapa principal de sensores.
+   * 3. Índice de sensores por tipo.
+   * 4. Registro de fecha de instalación.
+   * </p>
+   *
+   * @param nuevoSensor Sensor que se desea registrar.
+   * @param conversor   Conversor que se asignará al procesador del sensor.
+   * @throws SensorDuplicadoException   si ya existe un sensor con el mismo ID.
+   * @throws ConversionErroneaException si el conversor no es compatible con la
+   *                                    unidad del sensor.
+   */
+  public void addSensor(Sensor nuevoSensor, Conversor conversor)
+      throws SensorDuplicadoException, ConversionErroneaException {
     String id = nuevoSensor.getId();
     String tipoClase = nuevoSensor.getTipo();
 
     if (sensores.containsKey(id)) {
       throw new SensorDuplicadoException(sensores.get(id), nuevoSensor);
     }
+
+    // Asignamos el conversor explícitamente.
+    nuevoSensor.getProcesadorDatos().setConversor(conversor);
 
     // Guardar en el mapa principal
     sensores.put(id, nuevoSensor);
@@ -190,6 +234,7 @@ public class EstacionMeteorologica implements IDocumento {
 
   /**
    * Devuelve una lista inmutable con los sensores registrados en la estación.
+   * 
    * @return lista de sensores
    */
   public List<Sensor> getSensoresRegistrados() {
@@ -272,28 +317,29 @@ public class EstacionMeteorologica implements IDocumento {
     List<String> parrafos = new ArrayList<>();
     parrafos.add("Ubicación: " + ubicacion.toString());
     parrafos.add("Sensores instalados: " + sensores.size());
-    
+
     String strUltimaLectura = (ultimaLectura != null) ? ultimaLectura.toString() : "Ninguna";
     parrafos.add("Última lectura: " + strUltimaLectura);
-    
+
     return parrafos;
   }
 
   @Override
   public Map<String, List<String>> getListas() {
-    // Usamos LinkedHashMap para que respete el orden al imprimir (primero sensores, luego alertas)
+    // Usamos LinkedHashMap para que respete el orden al imprimir (primero sensores,
+    // luego alertas)
     Map<String, List<String>> listas = new java.util.LinkedHashMap<>();
-    
+
     // Lista 1: Sensores
     List<String> infoSensores = new ArrayList<>();
     for (Sensor s : sensores.values()) {
-        infoSensores.add(s.toString()); 
+      infoSensores.add(s.toString());
     }
     listas.put("Sensores instalados", infoSensores);
 
     // Lista 2: Alertas
     listas.put("Alertas activas", new ArrayList<>(this.registroAlertas));
-    
+
     return listas;
   }
 

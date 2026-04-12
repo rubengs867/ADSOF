@@ -1,6 +1,7 @@
 package Practica4.src.procesador;
 
 import Practica4.src.conversor.*;
+import Practica4.src.excepcion.ConversionErroneaException;
 import Practica4.src.unidad.Unidad;
 
 import java.time.LocalDateTime;
@@ -20,10 +21,11 @@ public class ProcesadorDatos {
   /** Conversor aplicado a los datos antes de almacenarlos. */
   private Conversor conversor;
 
+  /** Unidad base de lectura, debe corresponder con el sensor al que se asocia */
   private Unidad unidadBase;
 
   /**
-   * * Historial de lecturas almacenadas.
+   * Historial de lecturas almacenadas.
    * Utiliza un TreeMap para garantizar que las lecturas se mantengan ordenadas
    * por fecha y hora.
    */
@@ -50,11 +52,22 @@ public class ProcesadorDatos {
    * @param conversor El nuevo conversor a aplicar (puede ser simple, compuesto o
    *                  identidad).
    */
-  public void setConversor(Conversor conversor) {
-    if (conversor.getUnidadOrigen() != unidadBase) {
-      throw new Practica4.src.excepcion.ConversionErroneaException(this.unidadBase, conversor.getUnidadOrigen());
+  public void setConversor(Conversor conversor) throws ConversionErroneaException {
+    if (!conversorCompatible(conversor)) {
+      throw new ConversionErroneaException(this.unidadBase, conversor.getUnidadOrigen());
     }
     this.conversor = conversor;
+  }
+
+  /**
+   * Determina si un conversor es comptible con el procesador
+   * 
+   * @param conversor Conversor a evaluar
+   * @return {@code true} es comptible;
+   *         {@code false} en caso contrario.
+   */
+  private boolean conversorCompatible(Conversor conversor) {
+    return conversor.getUnidadOrigen() == unidadBase;
   }
 
   /**

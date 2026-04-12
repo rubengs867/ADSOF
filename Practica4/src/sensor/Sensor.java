@@ -82,6 +82,7 @@ public abstract class Sensor {
    * Este constructor inicializa los atributos comunes del sensor y genera
    * automáticamente un identificador único basado en el tipo.
    * </p>
+   * Se establece un procesador con el conversor Identidad por defecto
    *
    * @param tipo     Prefijo identificador del tipo de sensor.
    *                 Se utiliza para generar el ID único.
@@ -131,7 +132,7 @@ public abstract class Sensor {
    * @param tipo
    */
   private void generarValorID(String tipo) {
-    // Obtenemos la clase que se está instanciando 
+    // Obtenemos la clase que se está instanciando
     Class<? extends Sensor> claseHija = this.getClass();
 
     // Buscamos en el mapa usando la clase
@@ -214,6 +215,15 @@ public abstract class Sensor {
   }
 
   /**
+   * Devuelve el procesador de datos del sensor.
+   * 
+   * @return objeto {@link ProcesadorDatos}
+   */
+  public ProcesadorDatos getProcesadorDatos() {
+    return this.procesador;
+  }
+
+  /**
    * Devuelve el identificador único del sensor.
    *
    * @return ID del sensor en formato PREFIJO-XXXX.
@@ -293,16 +303,33 @@ public abstract class Sensor {
   public abstract void setUnidad(Unidad u);
 
   /**
-   * Establece el offset que va a usar el sensor para calibrar el sensor.
-   * Establece el sensor como calibrado y actualiza la última fecha de
-   * calibración.
+   * Calibra el sensor estableciendo un nuevo offset y reiniciando el periodo de
+   * validez.
+   * <p>
+   * Por defecto, la calibración tendrá una duración de 365 días.
+   * </p>
    * 
-   * @param offset nuevo offset de calibración
+   * @param offset Nuevo valor de ajuste para las mediciones.
    */
   public void calibrar(double offset) {
-    fechaCalibracion = LocalDate.now();
+    this.calibrar(offset, 365);
+  }
+
+  /**
+   * Calibra el sensor estableciendo un nuevo offset y una duración específica de
+   * validez.
+   * <p>
+   * Establece el sensor como calibrado y actualiza la fecha de referencia.
+   * </p>
+   * 
+   * @param offset      Nuevo offset de calibración.
+   * @param diasValidez Número de días que la calibración será considerada válida.
+   */
+  public void calibrar(double offset, int diasValidez) {
+    this.fechaCalibracion = LocalDate.now();
     this.offset = offset;
-    calibrado = true;
+    this.duracionCalibracionDias = diasValidez;
+    this.calibrado = true;
   }
 
   /**
@@ -363,6 +390,7 @@ public abstract class Sensor {
 
   /**
    * Establece el umbral de cambio permitido entre lecturas para detectar cambios
+   * 
    * @param umbralCambio
    */
   public void setUmbralCambio(double umbralCambio) {
