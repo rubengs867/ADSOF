@@ -1,4 +1,4 @@
-package src.sensor;
+package sensor;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -6,13 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import src.estrategia.EstrategiaLectura;
-import src.excepcion.CambioBruscoException;
-import src.excepcion.SensorDescalibradoException;
-import src.excepcion.SensorDescalibradoPorCaducidadException;
-import src.excepcion.SensorDescalibradoPorRangoException;
-import src.procesador.ProcesadorDatos;
-import src.unidad.Unidad;
+import estrategia.EstrategiaLectura;
+import excepcion.CambioBruscoException;
+import excepcion.SensorDescalibradoException;
+import excepcion.SensorDescalibradoPorCaducidadException;
+import excepcion.SensorDescalibradoPorRangoException;
+import procesador.ProcesadorDatos;
+import unidad.Unidad;
 
 /**
  * Clase abstracta que representa el comportamiento base de cualquier tipo de

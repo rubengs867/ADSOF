@@ -1,6 +1,6 @@
-package src.estrategia;
+package estrategia;
 
-import src.sensor.Sensor;
+import sensor.Sensor;
 
 public class EstrategiaAleatoria implements EstrategiaLectura {
   /** Probabilidad de generar un valor fuera del rango permitido por el sensor */

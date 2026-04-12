@@ -1,4 +1,4 @@
-package test.sensor;
+package sensor;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -12,16 +12,13 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import src.estrategia.EstrategiaLectura;
-import src.excepcion.CambioBruscoException;
-import src.excepcion.SensorDescalibradoException;
-import src.excepcion.SensorDescalibradoPorCaducidadException;
-import src.excepcion.SensorDescalibradoPorRangoException;
-import src.sensor.Sensor;
-import src.sensor.SensorHumedad;
-import src.sensor.SensorTemperatura;
-import src.unidad.Unidad;
-import src.unidad.UnidadTemperatura;
+import estrategia.EstrategiaLectura;
+import excepcion.CambioBruscoException;
+import excepcion.SensorDescalibradoException;
+import excepcion.SensorDescalibradoPorCaducidadException;
+import excepcion.SensorDescalibradoPorRangoException;
+import unidad.Unidad;
+import unidad.UnidadTemperatura;
 
 public class SensorTest {
 

@@ -1,7 +1,7 @@
-package src.conversor;
+package conversor;
 
-import src.excepcion.ConversionErroneaException;
-import src.unidad.Unidad;
+import excepcion.ConversionErroneaException;
+import unidad.Unidad;
 
 public interface Conversor {
   

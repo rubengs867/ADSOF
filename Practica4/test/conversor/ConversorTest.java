@@ -1,13 +1,11 @@
-package test.conversor;
+package conversor;
 
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
-import src.conversor.Conversor;
-import src.conversor.ConversorIdentidad;
-import src.excepcion.ConversionErroneaException;
-import src.unidad.UnidadTemperatura;
+import excepcion.ConversionErroneaException;
+import unidad.UnidadTemperatura;
 
 public class ConversorTest {
 

@@ -1,8 +1,8 @@
-package src.procesador;
+package procesador;
 
-import src.conversor.*;
-import src.excepcion.ConversionErroneaException;
-import src.unidad.Unidad;
+import conversor.*;
+import excepcion.ConversionErroneaException;
+import unidad.Unidad;
 
 import java.time.LocalDateTime;
 import java.util.*;

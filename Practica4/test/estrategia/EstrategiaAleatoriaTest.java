@@ -1,12 +1,11 @@
-package test.estrategia;
+package estrategia;
 
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import src.estrategia.EstrategiaAleatoria;
-import src.sensor.Sensor;
-import src.unidad.Unidad;
+import sensor.Sensor;
+import unidad.Unidad;
 
 public class EstrategiaAleatoriaTest {
 

@@ -1,4 +1,4 @@
-package test.sensor;
+package sensor;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -10,13 +10,13 @@ import java.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 
-import src.estrategia.EstrategiaAleatoria;
-import src.estrategia.EstrategiaLectura;
-import src.sensor.Sensor;
-import src.sensor.SensorTemperatura;
-import src.unidad.Unidad;
-import src.unidad.UnidadHumedad;
-import src.unidad.UnidadTemperatura;
+import estrategia.EstrategiaAleatoria;
+import estrategia.EstrategiaLectura;
+import sensor.Sensor;
+import sensor.SensorTemperatura;
+import unidad.Unidad;
+import unidad.UnidadHumedad;
+import unidad.UnidadTemperatura;
 
 public class SensorTemperaturaTest {
 

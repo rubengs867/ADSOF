@@ -1,9 +1,9 @@
-package src.sensor;
+package sensor;
 
-import src.estrategia.EstrategiaAleatoria;
-import src.estrategia.EstrategiaLectura;
-import src.unidad.Unidad;
-import src.unidad.UnidadTemperatura;
+import estrategia.EstrategiaAleatoria;
+import estrategia.EstrategiaLectura;
+import unidad.Unidad;
+import unidad.UnidadTemperatura;
 
 /**
  * Clase concreta que representa un sensor de temperatura.

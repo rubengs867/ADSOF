@@ -1,10 +1,10 @@
-package src.formateador;
+package formateador;
 
 import java.util.List;
 import java.util.Map;
 
-import src.documento.IDocumento;
-import src.documento.IFormateador;
+import documento.IDocumento;
+import documento.IFormateador;
 
 /**
  * Seguimos guia del pdf

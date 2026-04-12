@@ -1,7 +1,7 @@
-package src.estrategia;
+package estrategia;
 
 import java.util.Collection; 
-import src.sensor.Sensor;
+import sensor.Sensor;
 
 /**
  * Estrategia que genera un valor aleatorio cercano a la media histórica

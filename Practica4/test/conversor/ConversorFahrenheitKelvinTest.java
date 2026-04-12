@@ -1,11 +1,10 @@
-package test.conversor;
+package conversor;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import src.conversor.ConversorFahrenheitKelvin;
-import src.unidad.UnidadTemperatura;
+import unidad.UnidadTemperatura;
 
 public class ConversorFahrenheitKelvinTest {
 

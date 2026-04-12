@@ -1,6 +1,6 @@
-package src.conversor;
+package conversor;
 
-import src.unidad.Unidad;
+import unidad.Unidad;
 
 public class ConversorCompuesto implements Conversor {
 

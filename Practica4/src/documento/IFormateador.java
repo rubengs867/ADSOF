@@ -1,4 +1,4 @@
-package src.documento;
+package documento;
 
 public interface IFormateador {
   /**

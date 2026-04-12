@@ -1,4 +1,4 @@
-package src.alerta;
+package alerta;
 
 import java.time.LocalDateTime;
 

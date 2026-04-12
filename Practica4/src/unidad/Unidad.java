@@ -1,4 +1,4 @@
-package src.unidad;
+package unidad;
 
 /**
  * Interfaz que define la base para cualquier unidad de medida

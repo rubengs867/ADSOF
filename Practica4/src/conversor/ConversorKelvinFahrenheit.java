@@ -1,7 +1,7 @@
-package src.conversor;
+package conversor;
 
-import src.unidad.Unidad;
-import src.unidad.UnidadTemperatura;
+import unidad.Unidad;
+import unidad.UnidadTemperatura;
 
 /**
  * Clase que convierte de kelvin a Fahrenheit

@@ -1,10 +1,10 @@
-package test.estacion;
+package estacion;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.Field;
 import java.time.LocalDate;
@@ -14,18 +14,16 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
-import src.conversor.Conversor;
-import src.conversor.ConversorIdentidad;
-import src.estacion.EstacionMeteorologica;
-import src.estacion.Ubicacion;
-import src.estrategia.EstrategiaAleatoria;
-import src.excepcion.CambioBruscoException;
-import src.excepcion.ConversionErroneaException;
-import src.excepcion.SensorDescalibradoException;
-import src.excepcion.SensorDuplicadoException;
-import src.sensor.Sensor;
-import src.unidad.Unidad;
-import src.unidad.UnidadHumedad;
+import conversor.Conversor;
+import conversor.ConversorIdentidad;
+import estrategia.EstrategiaAleatoria;
+import excepcion.CambioBruscoException;
+import excepcion.ConversionErroneaException;
+import excepcion.SensorDescalibradoException;
+import excepcion.SensorDuplicadoException;
+import sensor.Sensor;
+import unidad.Unidad;
+import unidad.UnidadHumedad;
 
 /**
  * Banco de pruebas completo para la clase EstacionMeteorologica.
@@ -387,7 +385,7 @@ public class EstacionMeteorologicaTest {
   public void testToString_ContieneNombreYUbicacion() {
     String representacion = estacion.toString();
     assertTrue(representacion.contains("Estacion-Test"));
-    assertTrue(representacion.contains(ubicacionTest.toString()));
+    assertTrue(representacion.contains(estacion.getUbicacion().toString()));
   }
 
   // ==========================================

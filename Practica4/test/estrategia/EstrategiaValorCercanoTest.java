@@ -1,4 +1,4 @@
-package test.estrategia;
+package estrategia;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -6,9 +6,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import src.estrategia.EstrategiaValorCercano;
-import src.sensor.Sensor;
-import src.unidad.Unidad;
+import sensor.Sensor;
+import unidad.Unidad;
 
 public class EstrategiaValorCercanoTest {
 

@@ -1,4 +1,4 @@
-package src.estacion;
+package estacion;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -8,15 +8,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import src.alerta.Alerta;
-import src.conversor.Conversor;
-import src.conversor.ConversorIdentidad;
-import src.documento.IDocumento;
-import src.excepcion.CambioBruscoException;
-import src.excepcion.ConversionErroneaException;
-import src.excepcion.SensorDescalibradoException;
-import src.excepcion.SensorDuplicadoException;
-import src.sensor.Sensor;
+import alerta.Alerta;
+import conversor.Conversor;
+import conversor.ConversorIdentidad;
+import documento.IDocumento;
+import excepcion.CambioBruscoException;
+import excepcion.ConversionErroneaException;
+import excepcion.SensorDescalibradoException;
+import excepcion.SensorDuplicadoException;
+import sensor.Sensor;
 
 /**
  * Clase que representa una estación meteorológica.
@@ -432,6 +432,15 @@ public class EstacionMeteorologica implements IDocumento {
     sb.append("]\n");
 
     return sb.toString();
+  }
+
+  /**
+   * Devuelve la ubicación de la estación
+   * 
+   * @return objeto {@link Ubicacion}
+   */
+  public Ubicacion getUbicacion() {
+    return ubicacion;
   }
 
   /**

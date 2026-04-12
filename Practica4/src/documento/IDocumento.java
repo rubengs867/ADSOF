@@ -1,4 +1,4 @@
-package src.documento;
+package documento;
 
 import java.util.*;
 public interface IDocumento {

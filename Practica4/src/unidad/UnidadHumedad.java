@@ -1,4 +1,4 @@
-package src.unidad;
+package unidad;
 
 /**
  * Enumerado que representa las distintas unidades de medida

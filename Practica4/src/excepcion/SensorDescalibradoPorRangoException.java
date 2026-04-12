@@ -1,6 +1,6 @@
-package src.excepcion;
+package excepcion;
 
-import src.sensor.Sensor;
+import sensor.Sensor;
 
 /**
  * Excepción que se lanza cuando un sensor realiza una medición que excede

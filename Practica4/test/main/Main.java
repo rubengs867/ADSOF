@@ -1,14 +1,14 @@
-package test.main;
+package main;
 
-import src.estacion.EstacionMeteorologica;
-import src.estacion.Ubicacion;
-import src.sensor.Sensor;
-import src.unidad.Unidad;
-import src.unidad.UnidadTemperatura;
-import src.estrategia.EstrategiaLectura;
-import src.formateador.FormateadorHTML;
-import src.formateador.FormateadorMarkdown;
-import src.documento.IFormateador;
+import estacion.EstacionMeteorologica;
+import estacion.Ubicacion;
+import sensor.Sensor;
+import unidad.Unidad;
+import unidad.UnidadTemperatura;
+import estrategia.EstrategiaLectura;
+import formateador.FormateadorHTML;
+import formateador.FormateadorMarkdown;
+import documento.IFormateador;
 
 public class Main {
 

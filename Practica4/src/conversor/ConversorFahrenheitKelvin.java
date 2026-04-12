@@ -1,7 +1,7 @@
-package src.conversor;
+package conversor;
 
-import src.unidad.Unidad;
-import src.unidad.UnidadTemperatura;
+import unidad.Unidad;
+import unidad.UnidadTemperatura;
 
 public class ConversorFahrenheitKelvin implements Conversor {
   @Override

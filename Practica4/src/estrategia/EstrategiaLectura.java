@@ -1,6 +1,6 @@
-package src.estrategia;
+package estrategia;
 
-import src.sensor.Sensor;
+import sensor.Sensor;
 
 /**
  * Interfaz que define el método para las estrategias de lectura.

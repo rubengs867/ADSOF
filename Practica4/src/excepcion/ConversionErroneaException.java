@@ -1,6 +1,6 @@
-package src.excepcion;
+package excepcion;
 
-import src.unidad.Unidad;
+import unidad.Unidad;
 
 /**
  * Esta excepcion salta cuando se intentan establecer un conversor; sin embargo,
