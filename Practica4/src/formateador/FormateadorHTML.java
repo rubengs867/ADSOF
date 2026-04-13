@@ -3,8 +3,7 @@ package formateador;
 import java.util.List;
 import java.util.Map;
 
-import documento.IDocumento;
-import documento.IFormateador;
+import estacion.IDocumento;
 
 /**
  * Seguimos formato del pdf

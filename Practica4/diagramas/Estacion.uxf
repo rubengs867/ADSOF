@@ -5,7 +5,7 @@
     <id>UMLClass</id>
     <coordinates>
       <x>192</x>
-      <y>464</y>
+      <y>416</y>
       <w>1104</w>
       <h>720</h>
     </coordinates>
@@ -44,7 +44,7 @@
     <id>UMLClass</id>
     <coordinates>
       <x>1504</x>
-      <y>464</y>
+      <y>416</y>
       <w>224</w>
       <h>112</h>
     </coordinates>
@@ -58,7 +58,7 @@
     <id>Relation</id>
     <coordinates>
       <x>1280</x>
-      <y>496</y>
+      <y>448</y>
       <w>256</w>
       <h>64</h>
     </coordinates>
@@ -70,7 +70,7 @@ m1=ubicacion</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>1504</x>
-      <y>688</y>
+      <y>640</y>
       <w>208</w>
       <h>64</h>
     </coordinates>
@@ -82,7 +82,7 @@ m1=ubicacion</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1280</x>
-      <y>688</y>
+      <y>640</y>
       <w>256</w>
       <h>80</h>
     </coordinates>
@@ -92,27 +92,10 @@ r2=*</panel_attributes>
     <additional_attributes>10.0;20.0;140.0;20.0</additional_attributes>
   </element>
   <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1504</x>
-      <y>816</y>
-      <w>336</w>
-      <h>208</h>
-    </coordinates>
-    <panel_attributes>&lt;&lt;Interface&gt;&gt;
-Idocumento
---
-+ getTituloDocumento()
- + getTituloSeccion()
-+ getParrafos()
-+ getListas()</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
     <id>UMLPackage</id>
     <coordinates>
       <x>160</x>
-      <y>352</y>
+      <y>304</y>
       <w>1728</w>
       <h>864</h>
     </coordinates>
@@ -125,7 +108,7 @@ bg=YELLOW</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1280</x>
-      <y>912</y>
+      <y>864</y>
       <w>256</w>
       <h>48</h>
     </coordinates>
@@ -136,7 +119,7 @@ bg=YELLOW</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>1536</x>
-      <y>1072</y>
+      <y>1024</y>
       <w>208</w>
       <h>64</h>
     </coordinates>
@@ -148,7 +131,7 @@ Alerta</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1280</x>
-      <y>1072</y>
+      <y>1024</y>
       <w>288</w>
       <h>80</h>
     </coordinates>
@@ -156,5 +139,22 @@ Alerta</panel_attributes>
 m2=registroAlertas
 r2=*</panel_attributes>
     <additional_attributes>10.0;20.0;160.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1504</x>
+      <y>768</y>
+      <w>336</w>
+      <h>208</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Interface&gt;&gt;
+IDocumento
+--
++ getTituloDocumento()
++ getTituloSeccion()
++ getParrafos()
++ getListas()</panel_attributes>
+    <additional_attributes/>
   </element>
 </diagram>

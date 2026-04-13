@@ -11,7 +11,6 @@ import java.util.Map;
 import alerta.Alerta;
 import conversor.Conversor;
 import conversor.ConversorIdentidad;
-import documento.IDocumento;
 import excepcion.CambioBruscoException;
 import excepcion.ConversionErroneaException;
 import excepcion.SensorDescalibradoException;

@@ -1,34 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="15.1">
-  <zoom_level>17</zoom_level>
+  <zoom_level>20</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>816</x>
-      <y>391</y>
-      <w>850</w>
-      <h>306</h>
+      <x>680</x>
+      <y>340</y>
+      <w>1280</w>
+      <h>420</h>
     </coordinates>
     <panel_attributes>Alerta
 --
 - fecha: LocalDateTime
 - idSensor: String
 - mensaje: String
+- exception: Exception
 --
-+ Alerta(fecha: LocalDateTime, idSensor: String, mensaje: String)
++ Alerta(fecha: LocalDateTime, idSensor: String, mensaje: String, exception: Exception)
 + getFecha(): LocalDateTime
 + getIdSensor(): String
 + getMensaje(): String
++ getException(): Exception
 + toString(): String</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>782</x>
-      <y>306</y>
-      <w>952</w>
-      <h>425</h>
+      <x>640</x>
+      <y>260</y>
+      <w>1360</w>
+      <h>540</h>
     </coordinates>
     <panel_attributes>alerta
 layer=-1

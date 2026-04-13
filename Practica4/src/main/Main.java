@@ -8,7 +8,7 @@ import unidad.UnidadTemperatura;
 import estrategia.EstrategiaLectura;
 import formateador.FormateadorHTML;
 import formateador.FormateadorMarkdown;
-import documento.IFormateador;
+import formateador.IFormateador;
 
 public class Main {
 

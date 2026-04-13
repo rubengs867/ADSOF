@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>16</zoom_level>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>112</x>
+      <y>272</y>
+      <w>2128</w>
+      <h>912</h>
+    </coordinates>
+    <panel_attributes>excepcion
+--
+layer=-2
+bg=LIGHT_GRAY</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>144</x>
+      <y>624</y>
+      <w>336</w>
+      <h>224</h>
+    </coordinates>
+    <panel_attributes>CambioBruscoException
+--
+- sensor: Sensor
+- valorAnterior: double
+- valorActual: double
+--
++ getSensor(): Sensor
++ getValorAnterior(): double
++ getValorActual(): double</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>512</x>
+      <y>624</y>
+      <w>752</w>
+      <h>128</h>
+    </coordinates>
+    <panel_attributes>ConversionErroneaException
+--
+
+--
++ ConversionErroneaException(mensaje: String)
++ ConversionErroneaException(origen: Unidad, destino: Unidad)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>992</x>
+      <y>784</y>
+      <w>736</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>SensorDescalibradoException
+--
+- sensor: Sensor
+--
++ SensorDescalibradoException(sensor: Sensor, motivo: String)
++ getSensor(): Sensor</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>544</x>
+      <y>1008</y>
+      <w>736</w>
+      <h>128</h>
+    </coordinates>
+    <panel_attributes>SensorDescalibradoPorCaducidadException
+--
+
+--
++ SensorDescalibradoPorCaducidadException(sensor: Sensor)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1312</x>
+      <y>1008</y>
+      <w>896</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>SensorDescalibradoPorRangoException
+--
+- desviacion: double
+--
++ SensorDescalibradoPorRangoException(sensor: Sensor, desviacion: double)
++ getDesviacion(): double</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1440</x>
+      <y>560</y>
+      <w>784</w>
+      <h>192</h>
+    </coordinates>
+    <panel_attributes>SensorDuplicadoException
+--
+- existente: Sensor
+- duplicado: Sensor
+--
++ SensorDuplicadoException(existente: Sensor, duplicado: Sensor)
++ getExistente(): Sensor
++ getDuplicado(): Sensor</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1056</x>
+      <y>400</y>
+      <w>160</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>Exception</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1120</x>
+      <y>432</y>
+      <w>48</w>
+      <h>224</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1152</x>
+      <y>432</y>
+      <w>208</w>
+      <h>384</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0;110.0;90.0;110.0;220.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1200</x>
+      <y>400</y>
+      <w>640</w>
+      <h>192</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;380.0;10.0;380.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>352</x>
+      <y>432</y>
+      <w>768</w>
+      <h>224</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>460.0;10.0;460.0;90.0;10.0;90.0;10.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1152</x>
+      <y>912</y>
+      <w>48</w>
+      <h>128</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1488</x>
+      <y>912</y>
+      <w>48</w>
+      <h>128</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+</diagram>
