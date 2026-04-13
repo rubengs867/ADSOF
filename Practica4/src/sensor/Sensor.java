@@ -280,8 +280,9 @@ public abstract class Sensor {
 
   /**
    * Comprueba si el sensor ha realizado alguna lectura mirando su historial
-   * * @return {@code true} si NO ha realizado lecturas;
-   * {@code false} en caso contrario.
+   * 
+   * @return {@code true} si NO ha realizado lecturas;
+   *         {@code false} en caso contrario.
    */
   public boolean primeraLectura() {
     return this.historial.isEmpty();
@@ -289,7 +290,8 @@ public abstract class Sensor {
 
   /**
    * Devuelve una lista inmutable del historial de lecturas del sensor.
-   * * @return lista con los valores en bruto registrados por el sensor.
+   * 
+   * @return lista con los valores en bruto registrados por el sensor.
    */
   public List<Double> getHistoricoLecturas() {
     // Devuelve su propia lista, protegida contra modificaciones externas
@@ -470,7 +472,7 @@ public abstract class Sensor {
    * Establece el estado de la calibración de un sensor. Si el offset está
    * caducado o no.
    * 
-   * @param estado
+   * @param estado nuevo estado de calibración
    */
   public void setCalibrado(boolean estado) {
     this.calibrado = estado;
@@ -489,7 +491,7 @@ public abstract class Sensor {
   /**
    * Establece el umbral de cambio permitido entre lecturas para detectar cambios
    * 
-   * @param umbralCambio
+   * @param umbralCambio nuevo umbral de cambio
    */
   public void setUmbralCambio(double umbralCambio) {
     this.umbralCambio = umbralCambio;
@@ -505,7 +507,10 @@ public abstract class Sensor {
   public abstract String toString();
 
   /**
-   * Representación textual del sensor con el procesador.
+   * Devuelve una representación detallada del sensor incluyendo su identificador,
+   * la unidad de medida y las estadísticas del procesador de datos.
+   * 
+   * @return Una cadena con el formato "ID (Unidad): [Estadísticas]".
    */
   public String procesadorDatoString() {
     return this.id + " (" + this.unidad.getTexto() + "): " + procesador.toString();

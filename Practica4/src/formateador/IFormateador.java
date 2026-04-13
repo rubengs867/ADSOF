@@ -19,6 +19,7 @@ public interface IFormateador {
    * y devuelve su representación en texto formateado.
    * 
    * @param doc Documento a formatear.
+   * @return representación en texto.
    */
   String formatear(IDocumento doc);
 
