@@ -4,15 +4,16 @@ package estacion;
  * Clase que representa una ubicación geográfica mediante coordenadas.
  * <p>
  * Una ubicación se define a partir de:
+ * 1. Latitud: posición norte-sur.
+ * 2. Longitud: posición este-oeste.
  * </p>
- * <ul>
- *   <li>Latitud: posición norte-sur.</li>
- *   <li>Longitud: posición este-oeste.</li>
- * </ul>
  * <p>
  * Estas coordenadas se utilizan, por ejemplo, para situar una estación
  * meteorológica en un punto concreto del mapa.
  * </p>
+ * 
+ * @author Alejandro Seguido
+ * @author Rubén García
  */
 public class Ubicacion {
 
@@ -25,7 +26,7 @@ public class Ubicacion {
   /**
    * Constructor que crea una nueva ubicación geográfica.
    *
-   * @param latitud Coordenada de latitud.
+   * @param latitud  Coordenada de latitud.
    * @param longitud Coordenada de longitud.
    */
   public Ubicacion(double latitud, double longitud) {
@@ -51,7 +52,7 @@ public class Ubicacion {
     return longitud;
   }
 
-  /** 
+  /**
    * Representación textual de una Ubicación.
    */
   @Override
@@ -59,5 +60,4 @@ public class Ubicacion {
     return longitud+ ", " + latitud;
   }
 
-  
 }

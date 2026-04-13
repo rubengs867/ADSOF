@@ -3,6 +3,8 @@ package unidad;
 /**
  * Interfaz que define la base para cualquier unidad de medida
  * soportada por los sensores del sistema.
+ * @author Alejandro Seguido
+ * @author Rubén García
  */
 public interface Unidad {
 

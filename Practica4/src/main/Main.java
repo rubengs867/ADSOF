@@ -10,6 +10,11 @@ import formateador.FormateadorHTML;
 import formateador.FormateadorMarkdown;
 import formateador.IFormateador;
 
+/**
+ * Pruebas para del apartado 5.
+ * @author Alejandro Seguido
+ * @author Rubén García
+ */
 public class Main {
 
   public static void main(String[] args) {

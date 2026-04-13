@@ -7,6 +7,8 @@ import sensor.Sensor;
  * que no está correctamente calibrado.
  * Esta excepción proporciona acceso al sensor afectado para su posterior
  * gestión o recalibración por parte de la estación meteorológica.
+ * @author Alejandro Seguido
+ * @author Rubén García
  */
 public class SensorDescalibradoException extends Exception {
 

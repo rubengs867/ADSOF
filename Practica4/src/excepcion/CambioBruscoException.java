@@ -4,7 +4,9 @@ import sensor.Sensor;
 
 /**
  * Excepción que se lanza cuando un sensor registra una lectura válida, pero
- * que presenta un cambio muy brusco, un aumento del X% respecto a la lectura anterior
+ * que presenta un cambio muy brusco, un aumento del X% respecto a la lectura anterior.
+ * @author Alejandro Seguido
+ * @author Rubén García
  */
 public class CambioBruscoException extends Exception {
 

@@ -11,6 +11,8 @@ import unidad.UnidadHumedad;
  * Esta clase extiende {@link Sensor} y define un sensor específico cuya
  * magnitud de medida es el porcentaje de humedad.
  * </p>
+ * @author Alejandro Seguido
+ * @author Rubén García
  */
 public class SensorHumedad extends Sensor {
 

@@ -7,6 +7,8 @@ package unidad;
  * Implementa la interfaz {@link Unidad} para garantizar que
  * proporcione una representación textual estandarizada.
  * </p>
+ * @author Alejandro Seguido
+ * @author Rubén García
  */
 public enum UnidadTemperatura implements Unidad {
 

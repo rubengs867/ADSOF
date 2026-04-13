@@ -17,6 +17,8 @@ import unidad.Unidad;
 /**
  * Clase abstracta que representa el comportamiento base de cualquier tipo de
  * sensor.
+ * @author Alejandro Seguido
+ * @author Rubén García
  */
 public abstract class Sensor {
 

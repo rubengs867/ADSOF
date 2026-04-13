@@ -6,6 +6,8 @@ import unidad.Unidad;
  * Esta excepcion salta cuando se intentan establecer un conversor; sin embargo,
  * la entrada del conversor no es compotible con la salida o los datos que debe
  * convertir.
+ * @author Alejandro Seguido
+ * @author Rubén García
  */
 public class ConversionErroneaException extends RuntimeException {
 

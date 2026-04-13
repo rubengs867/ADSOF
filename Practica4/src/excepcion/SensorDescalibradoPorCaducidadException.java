@@ -5,6 +5,8 @@ import sensor.Sensor;
 /**
  * Excepción que se lanza cuando un sensor ha superado su periodo de validez
  * de calibración.
+ * @author Alejandro Seguido
+ * @author Rubén García
  */
 public class SensorDescalibradoPorCaducidadException extends SensorDescalibradoException {
 

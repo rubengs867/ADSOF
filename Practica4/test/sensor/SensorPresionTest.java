@@ -16,6 +16,11 @@ import unidad.Unidad;
 import unidad.UnidadHumedad;
 import unidad.UnidadPresion;
 
+/**
+ * Banco de pruebas completo para la clase SensorPresion.
+ * @author Alejandro Seguido
+ * @author Rubén García
+ */
 public class SensorPresionTest {
 
   /**

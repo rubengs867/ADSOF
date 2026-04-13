@@ -6,6 +6,11 @@ import org.junit.Test;
 
 import unidad.UnidadTemperatura;
 
+/**
+ * Banco de pruebas completo para la clase ConversorKelvinCelsius.
+ * @author Alejandro Seguido
+ * @author Rubén García
+ */
 public class ConversorKelvinCelsiusTest {
 
   private static final double DELTA = 0.001;

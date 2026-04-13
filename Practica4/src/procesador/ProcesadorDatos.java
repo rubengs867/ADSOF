@@ -15,6 +15,8 @@ import java.util.*;
  * ser
  * guardadas. También proporciona las estadisticas basicas, minimo, maximo y
  * media.
+ * @author Alejandro Seguido
+ * @author Rubén García
  */
 public class ProcesadorDatos {
 

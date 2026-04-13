@@ -3,6 +3,17 @@ package conversor;
 import unidad.Unidad;
 import unidad.UnidadTemperatura;
 
+/**
+ * Implementación de conversor para transformar grados Fahrenheit a escala
+ * Kelvin.
+ * <p>
+ * Realiza la conversión intermedia a Celsius para obtener el resultado final en
+ * Kelvin.
+ * </p>
+ * 
+ * @author Alejandro Seguido
+ * @author Rubén García
+ */
 public class ConversorFahrenheitKelvin implements Conversor {
   @Override
   public Unidad getUnidadOrigen() {

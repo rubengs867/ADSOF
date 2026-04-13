@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
  * Esta clase encapsula toda la información necesaria para identificar qué
  * sensor falló, en qué momento exacto ocurrió y cuál fue el motivo.
  * </p>
+ * @author Alejandro Seguido
+ * @author Rubén García
  */
 public class Alerta {
 

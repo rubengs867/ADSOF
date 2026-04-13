@@ -6,7 +6,12 @@ import java.util.Map;
 import estacion.IDocumento;
 
 /**
- * Seguimos formato del pdf
+ * Implementación de {@link IFormateador} encargada de generar una
+ * representación del documento en formato Markdown siguiendo la guía PDF.
+ * </p>
+ * 
+ * @author Alejandro Seguido
+ * @author Rubén García
  */
 public class FormateadorHTML implements IFormateador {
 

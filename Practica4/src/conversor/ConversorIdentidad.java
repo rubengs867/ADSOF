@@ -2,9 +2,20 @@ package conversor;
 
 import unidad.Unidad;
 
+/**
+ * Conversor neutro que devuelve el valor de entrada sin aplicar ninguna
+ * transformación.
+ * <p>
+ * Se utiliza cuando las unidades de origen y destino son idénticas, actuando
+ * como un elemento identidad en el sistema de procesamiento.
+ * </p>
+ * 
+ * @author Alejandro Seguido
+ * @author Rubén García
+ */
 public class ConversorIdentidad implements Conversor {
 
-  /**Guardamos la unidad aunque devolvamos la misma unidad */
+  /** Guardamos la unidad aunque devolvamos la misma unidad */
   private Unidad unidad;
 
   /**
@@ -18,6 +29,7 @@ public class ConversorIdentidad implements Conversor {
 
   /**
    * Como es la identidad devuelve su propia unidad
+   * 
    * @return unidad del conversor
    */
   @Override
@@ -27,6 +39,7 @@ public class ConversorIdentidad implements Conversor {
 
   /**
    * Como es la identidad devuelve su propia unidad
+   * 
    * @return unidad del conversor
    */
   @Override
@@ -36,6 +49,7 @@ public class ConversorIdentidad implements Conversor {
 
   /**
    * Devuelve el mismo valor, es como multiplicar por la matriz identidad
+   * 
    * @param valor valor de entrada
    * @return double el mismo valor que entra
    */

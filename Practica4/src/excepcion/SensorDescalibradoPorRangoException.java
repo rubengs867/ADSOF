@@ -9,6 +9,8 @@ import sensor.Sensor;
  * Al producirse esta excepción, el sensor se marca automáticamente como
  * no calibrado para evitar futuras mediciones erróneas.
  * </p>
+ * @author Alejandro Seguido
+ * @author Rubén García
  */
 public class SensorDescalibradoPorRangoException extends SensorDescalibradoException {
 

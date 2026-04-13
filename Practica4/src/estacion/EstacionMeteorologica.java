@@ -18,10 +18,15 @@ import excepcion.SensorDuplicadoException;
 import sensor.Sensor;
 
 /**
- * Clase que representa una estación meteorológica.
+ * Clase central del sistema encargada de gestionar los sensores y coordinar las
+ * mediciones.
  * <p>
- * Esta clase gestiona un conjunto de sensores y realizar búsquedas sobre ellos.
+ * Además actúa como un contenedor de información estructurada para la
+ * generación de informes mediante la interfaz {@link IDocumento}.
  * </p>
+ * 
+ * @author Alejandro Seguido
+ * @author Rubén García
  */
 public class EstacionMeteorologica implements IDocumento {
 

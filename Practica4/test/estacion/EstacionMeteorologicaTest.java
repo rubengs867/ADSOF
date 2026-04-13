@@ -26,6 +26,8 @@ import unidad.UnidadHumedad;
 
 /**
  * Banco de pruebas completo para la clase EstacionMeteorologica.
+ * @author Alejandro Seguido
+ * @author Rubén García
  */
 public class EstacionMeteorologicaTest {
 

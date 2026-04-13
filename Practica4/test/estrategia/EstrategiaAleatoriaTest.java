@@ -7,6 +7,11 @@ import org.junit.Test;
 import sensor.Sensor;
 import unidad.Unidad;
 
+/**
+ * Banco de pruebas completo para la clase EstrategiaAleatoria.
+ * @author Alejandro Seguido
+ * @author Rubén García
+ */
 public class EstrategiaAleatoriaTest {
 
   /**

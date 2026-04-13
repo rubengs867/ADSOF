@@ -11,6 +11,8 @@ import estrategia.EstrategiaAleatoria;
  * Esta clase extiende {@link Sensor} y define un sensor específico cuya
  * magnitud de medida son los hectopascales (hPa).
  * </p>
+ * @author Alejandro Seguido
+ * @author Rubén García
  */
 public class SensorPresion extends Sensor {
 

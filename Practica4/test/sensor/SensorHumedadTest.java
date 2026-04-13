@@ -15,6 +15,11 @@ import unidad.Unidad;
 import unidad.UnidadHumedad;
 import unidad.UnidadTemperatura;
 
+/**
+ * Banco de pruebas completo para la clase SensorHumedad.
+ * @author Alejandro Seguido
+ * @author Rubén García
+ */
 public class SensorHumedadTest {
 
   /**

@@ -4,20 +4,28 @@ import unidad.Unidad;
 import unidad.UnidadTemperatura;
 
 /**
- * Conversor de Celsius a Kelvin.
- * La fórmula de conversión es: K = C + 273.15
+ * Implementación de conversor para transformar grados Celsius a escala Kelvin.
+ * <p>
+ * Aplica la fórmula estándar sumando la constante 273.15 al valor de entrada.
+ * </p>
+ * 
+ * @author Alejandro Seguido
+ * @author Rubén García
  */
 public class ConversorCelsiusKelvin implements Conversor {
   /**
    * Implementa la funcion de la interfaz
+   * 
    * @return Unidad de origen, Celsius
    */
   @Override
   public Unidad getUnidadOrigen() {
     return UnidadTemperatura.CELSIUS;
   }
+
   /**
    * Implementa la funcion de la interfaz
+   * 
    * @return Unidad de destino, Kelvin
    */
   @Override
@@ -27,6 +35,7 @@ public class ConversorCelsiusKelvin implements Conversor {
 
   /**
    * Convierte el valor de celsius a kelvin
+   * 
    * @return double el valor de celsius convertido en kelvin
    */
   @Override

@@ -7,6 +7,11 @@ import org.junit.Test;
 import excepcion.ConversionErroneaException;
 import unidad.UnidadTemperatura;
 
+/**
+ * Banco de pruebas completo para la clase Conversor.
+ * @author Alejandro Seguido
+ * @author Rubén García
+ */
 public class ConversorTest {
 
   @Test

@@ -10,6 +10,8 @@ import sensor.Sensor;
  * registrado como al sensor que ha causado el conflicto, lo que
  * permite gestionar el error con mayor detalle.
  * </p>
+ * @author Alejandro Seguido
+ * @author Rubén García
  */
 public class SensorDuplicadoException extends Exception {
 

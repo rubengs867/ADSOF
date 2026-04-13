@@ -20,6 +20,11 @@ import excepcion.SensorDescalibradoPorRangoException;
 import unidad.Unidad;
 import unidad.UnidadTemperatura;
 
+/**
+ * Banco de pruebas completo para la clase Sensor.
+ * @author Alejandro Seguido
+ * @author Rubén García
+ */
 public class SensorTest {
 
   /**
