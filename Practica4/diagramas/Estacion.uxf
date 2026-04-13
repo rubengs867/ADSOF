@@ -4,9 +4,9 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>256</x>
+      <x>192</x>
       <y>464</y>
-      <w>992</w>
+      <w>1104</w>
       <h>720</h>
     </coordinates>
     <panel_attributes>EstacionMeteorologica
@@ -18,24 +18,26 @@
 -maxLecturas: int
 -ultimaLectura: LocalDateTime
 --
-+EstacionMeteorologica(nombre, ubicacion, periodo, maxLecturas)
-+EstacionMeteorologica(nombre, ubicacion)
-+realizarLecturaPuntual(numSensores: int): void
-+realizarLecturasPeriodicas(): boolean
-+addSensor(nuevoSensor: Sensor): void
-+addSensor(nuevoSensor: Sensor, conversor: Conversor): void
-+getSensor(id: String): Sensor
-+getSensoresRegistrados(): List&lt;Sensor&gt;
-+getSensoresPorTipo(tipoClase: String): List&lt;Sensor&gt;
-+getFechaInstalacion(id: String): LocalDate
-+setPeriodo(periodo: long): void
-+setMaxLecturas(maxLecturas: int): void
-+listaSensoresString(): String
---
++ EstacionMeteorologica(nombre: String, ubicacion: Ubicacion, periodo: long, maxLecturas: int)
++ EstacionMeteorologica(nombre: String, ubicacion: Ubicacion)
++ calibrarSensor(id: String, offset: double): void
++ realizarLecturaPuntual(numSensores: int): void
+- sensorConAlertaSinCalibrar(s: Sensor): boolean
++ comprobarYRealizarLecturaPeriodica(): boolean
++ addSensor(nuevoSensor: Sensor): void
++ addSensor(nuevoSensor: Sensor, conversor: Conversor): void
++ getSensor(id: String): Sensor
++ getSensoresRegistrados(): List&lt;Sensor&gt;
++ getSensoresPorTipo(tipoClase: String): List&lt;Sensor&gt;
++ getFechaInstalacion(id: String): LocalDate
++ setPeriodo(periodo: long): void
++ setMaxLecturas(maxLecturas: int): void
 + getTituloDocumento(): String
 + getTituloSeccion(): String
 + getParrafos(): List&lt;String&gt;
-+ getListas(): Map&lt;String, List&lt;String&gt;&gt;</panel_attributes>
++ getListas(): Map&lt;String, List&lt;String&gt;&gt;
++ listaSensoresString(): String
++ toString(): String</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -55,14 +57,14 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1232</x>
+      <x>1280</x>
       <y>496</y>
-      <w>304</w>
+      <w>256</w>
       <h>64</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=ubicacion</panel_attributes>
-    <additional_attributes>170.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>140.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
@@ -79,15 +81,15 @@ m1=ubicacion</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1232</x>
+      <x>1280</x>
       <y>688</y>
-      <w>304</w>
+      <w>256</w>
       <h>80</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;
 m2=sensores
 r2=*</panel_attributes>
-    <additional_attributes>10.0;20.0;170.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;140.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
@@ -109,10 +111,10 @@ Idocumento
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>240</x>
+      <x>160</x>
       <y>352</y>
-      <w>1648</w>
-      <h>928</h>
+      <w>1728</w>
+      <h>864</h>
     </coordinates>
     <panel_attributes>estacion
 layer=-1
@@ -122,13 +124,13 @@ bg=YELLOW</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1232</x>
+      <x>1280</x>
       <y>912</y>
-      <w>304</w>
+      <w>256</w>
       <h>48</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>170.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>140.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
@@ -145,14 +147,14 @@ Alerta</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1232</x>
+      <x>1280</x>
       <y>1072</y>
-      <w>336</w>
+      <w>288</w>
       <h>80</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;
 m2=registroAlertas
 r2=*</panel_attributes>
-    <additional_attributes>10.0;20.0;190.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;160.0;20.0</additional_attributes>
   </element>
 </diagram>
