@@ -490,6 +490,13 @@ public abstract class Sensor {
   public abstract String toString();
 
   /**
+   * Representación textual del sensor con el procesador.
+   */
+  public String procesadorDatoString() {
+    return this.id + " ("+this.unidad.getTexto()+"): " + procesador.toString();
+  }
+
+  /**
    * Compara este sensor con otro objeto para determinar su igualdad.
    * <p>
    * Dos sensores se consideran iguales si y solo si tienen el mismo

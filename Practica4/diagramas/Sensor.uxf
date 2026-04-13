@@ -5,9 +5,9 @@
     <id>UMLClass</id>
     <coordinates>
       <x>880</x>
-      <y>260</y>
+      <y>230</y>
       <w>550</w>
-      <h>470</h>
+      <h>500</h>
     </coordinates>
     <panel_attributes>&lt;&lt;abstract&gt;&gt;
 /Sensor/
@@ -38,7 +38,8 @@ _-contadoresTipo: Map&lt;String, Integer&gt;_
 +calibrar(offset:double): void
 +setCaducacionCalibracion(duracionCalibracionDias:int): void
 +estaCalibrado(): boolean
-+estaCalibracionCaducada(): boolean</panel_attributes>
++estaCalibracionCaducada(): boolean
++procesadorDatoString(): String</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -163,9 +164,9 @@ m1=unidad</panel_attributes>
     <id>UMLPackage</id>
     <coordinates>
       <x>210</x>
-      <y>230</y>
+      <y>190</y>
       <w>1710</w>
-      <h>850</h>
+      <h>890</h>
     </coordinates>
     <panel_attributes>sensor
 bg=PINK
