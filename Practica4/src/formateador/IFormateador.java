@@ -1,4 +1,6 @@
-package documento;
+package formateador;
+
+import estacion.IDocumento;
 
 public interface IFormateador {
   /**

@@ -29,7 +29,7 @@ public class Alerta {
    * @param fecha     Fecha y hora de la incidencia.
    * @param idSensor  Identificador del sensor.
    * @param mensaje   Descripción detallada del error.
-   * @param excepción que ha generado la alerta.
+   * @param exception Excepción que ha generado la alerta.
    */
   public Alerta(LocalDateTime fecha, String idSensor, String mensaje, Exception exception) {
     this.fecha = fecha;

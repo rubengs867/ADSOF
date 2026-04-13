@@ -1,4 +1,4 @@
-package documento;
+package estacion;
 
 import java.util.*;
 public interface IDocumento {
