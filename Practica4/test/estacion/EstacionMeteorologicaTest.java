@@ -23,9 +23,11 @@ import excepcion.SensorDuplicadoException;
 import sensor.Sensor;
 import unidad.Unidad;
 import unidad.UnidadHumedad;
+import unidad.UnidadTemperatura;
 
 /**
  * Banco de pruebas completo para la clase EstacionMeteorologica.
+ * 
  * @author Alejandro Seguido
  * @author Rubén García
  */
@@ -42,9 +44,9 @@ public class EstacionMeteorologicaTest {
     estacion = new EstacionMeteorologica("Estacion-Test", ubicacionTest, PERIODO_TEST, MAX_LECTURAS_TEST);
   }
 
-  // ==========================================
-  // PRUEBAS DE addSensor()
-  // ==========================================
+  // =======================
+  // TESTS DE addSensor()
+  // =======================
 
   @Test
   public void testAddSensor_CasoCorrecto_AgregaSensorYLoMapeaBien() throws SensorDuplicadoException {
@@ -79,48 +81,40 @@ public class EstacionMeteorologicaTest {
   }
 
   // ==========================================
-  // PRUEBAS DE addSensor(Sensor, Conversor)
+  // TESTS DE addSensor(Sensor, Conversor)
   // ==========================================
 
   @Test
   public void testAddSensorConConversor_ConversorValido_FuncionaCorrectamente() throws Exception {
     SensorStub s = new SensorStub("V-01", "VELOCIDAD");
     Conversor conversor = new ConversorIdentidad(UnidadHumedad.PORCENTAJE);
-    
+
     estacion.addSensor(s, conversor);
     assertEquals("El sensor debe haberse registrado exitosamente con el conversor", s, estacion.getSensor("V-01"));
   }
 
   @Test(expected = ConversionErroneaException.class)
   public void testAddSensorConConversor_ConversorInvalido_LanzaConversionErroneaException() throws Exception {
+    // Se inicializa con unidad % humedad
     SensorStub s = new SensorStub("ERR-01", "TEMP");
-    
-    // Se fuerza una excepción inyectando un mock anónimo que lance la excepción al intentar asignarse,
-    // simulando la incompatibilidad de unidades en el procesador.
-    Conversor conversorIncompatible = new ConversorIdentidad(UnidadHumedad.PORCENTAJE) {
-        @Override
-        public Unidad getUnidadOrigen() {
-            throw new ConversionErroneaException("Incompatibilidad de test");
-        }
-    };
-    
-    // Si la arquitectura del ProcesadorDatos invoca métodos del conversor en setConversor, esto lanzará la excepción
+
+    // No es competible con humedad
+    Conversor conversorIncompatible = new ConversorIdentidad(UnidadTemperatura.CELSIUS);
+
+    // Lnaza excepción
     estacion.addSensor(s, conversorIncompatible);
-    
-    // Fallback: Si no salta sola, simulamos el comportamiento que debería tener ProcesadorDatos
-    throw new ConversionErroneaException("Simulacion fallback");
   }
 
-  // ==========================================
-  // PRUEBAS DE calibrarSensor()
-  // ==========================================
+  // ===========================
+  // TESTS DE calibrarSensor()
+  // ===========================
 
   @Test
   public void testCalibrarSensor_SensorExistente_CambiaOffsetYEliminaAlertas() throws Exception {
     SensorStub s = new SensorStub("TEMP-1", "TEMP");
     s.lanzarDescalibrado = true; // Forzamos que falle para generar una alerta
     estacion.addSensor(s);
-    
+
     // Generamos la alerta
     estacion.realizarLecturaPuntual(1);
     assertFalse("Debe haber alertas antes de calibrar", estacion.getListas().get("Alertas activas").isEmpty());
@@ -129,8 +123,8 @@ public class EstacionMeteorologicaTest {
     estacion.calibrarSensor("TEMP-1", 5.5);
 
     assertEquals("El offset de calibración debe haberse actualizado", 5.5, s.offsetCalibracion, 0.001);
-    assertTrue("Las alertas del sensor deben haberse eliminado tras calibrar", 
-                estacion.getListas().get("Alertas activas").isEmpty());
+    assertTrue("Las alertas del sensor deben haberse eliminado tras calibrar",
+        estacion.getListas().get("Alertas activas").isEmpty());
   }
 
   @Test
@@ -142,7 +136,7 @@ public class EstacionMeteorologicaTest {
   }
 
   // ==========================================
-  // PRUEBAS DE realizarLecturaPuntual()
+  // TESTS DE realizarLecturaPuntual()
   // ==========================================
 
   @Test
@@ -163,7 +157,7 @@ public class EstacionMeteorologicaTest {
     estacion.addSensor(s1);
 
     estacion.realizarLecturaPuntual(100);
-    
+
     assertEquals("Debe medir el único sensor disponible", 1, s1.contadorMediciones);
   }
 
@@ -211,9 +205,9 @@ public class EstacionMeteorologicaTest {
     assertTrue("La alerta debe contener el ID del sensor", alertas.get(0).contains("BRUSCO-1"));
   }
 
-  // ==========================================
-  // PRUEBAS DE comprobarYRealizarLecturaPeriodica()
-  // ==========================================
+  // ================================================
+  // TESTS DE comprobarYRealizarLecturaPeriodica()
+  // =================================================
 
   @Test
   public void testLecturaPeriodica_PrimeraVez_SiempreEjecuta() throws Exception {
@@ -225,8 +219,8 @@ public class EstacionMeteorologicaTest {
   public void testLecturaPeriodica_SinPasarTiempo_NoEjecuta() throws Exception {
     estacion.addSensor(new SensorStub("T1", "T"));
 
-    estacion.comprobarYRealizarLecturaPeriodica(); 
-    boolean ejecutadoDeNuevo = estacion.comprobarYRealizarLecturaPeriodica(); 
+    estacion.comprobarYRealizarLecturaPeriodica();
+    boolean ejecutadoDeNuevo = estacion.comprobarYRealizarLecturaPeriodica();
 
     assertFalse("No debe ejecutar si no ha pasado el periodo", ejecutadoDeNuevo);
   }
@@ -254,21 +248,21 @@ public class EstacionMeteorologicaTest {
     assertEquals("Debe respetar el maxLecturas establecido", 1, s1.contadorMediciones + s2.contadorMediciones);
   }
 
-  // ==========================================
-  // PRUEBAS DE GETTERS Y LISTAS
-  // ==========================================
+  // ==========================
+  // TESTS DE GETTERS Y LISTAS
+  // ==========================
 
   @Test
   public void testGetSensoresRegistrados_DevuelveCopiaInmutable() throws Exception {
     estacion.addSensor(new SensorStub("S1", "T"));
     List<Sensor> copia = estacion.getSensoresRegistrados();
-    
+
     try {
-        copia.clear();
+      copia.clear();
     } catch (UnsupportedOperationException e) {
-        // Correcto si es inmutable
+      // Correcto si es inmutable
     }
-    
+
     assertFalse("La lista original no debe verse alterada", estacion.getSensoresRegistrados().isEmpty());
   }
 
@@ -276,9 +270,9 @@ public class EstacionMeteorologicaTest {
   public void testGetSensoresPorTipo_TipoExistente_DevuelveListaCopia() throws Exception {
     estacion.addSensor(new SensorStub("TEMP-01", "TEMP"));
     List<Sensor> lista = estacion.getSensoresPorTipo("TEMP");
-    
+
     lista.clear();
-    
+
     assertFalse("La lista interna no debería verse afectada", estacion.getSensoresPorTipo("TEMP").isEmpty());
   }
 
@@ -300,9 +294,9 @@ public class EstacionMeteorologicaTest {
     assertNull(estacion.getFechaInstalacion("NO_EXISTE"));
   }
 
-  // ==========================================
-  // PRUEBAS DE SETTER
-  // ==========================================
+  // =================
+  // TESTS DE SETTER
+  // =================
 
   @Test
   public void testSetMaxLecturas_ValoresValidos_Actualiza() {
@@ -319,9 +313,9 @@ public class EstacionMeteorologicaTest {
     assertEquals("Debe mantener el valor anterior válido", 5, estacion.getMaxLecturas());
   }
 
-  // ==========================================
-  // PRUEBAS DE IDocumento Y FORMATO
-  // ==========================================
+  // ================================
+  // TESTS DE IDocumento Y FORMATO
+  // ================================
 
   @Test
   public void testGetTituloDocumento_FormatoCorrecto() {
@@ -337,11 +331,11 @@ public class EstacionMeteorologicaTest {
   public void testGetParrafos_ContieneUbicacionSensoresYUltimaLectura() throws Exception {
     estacion.addSensor(new SensorStub("S1", "T"));
     List<String> parrafos = estacion.getParrafos();
-    
+
     assertTrue(parrafos.get(0).contains("Ubicación"));
     assertTrue(parrafos.get(1).contains("Sensores instalados: 1"));
     assertTrue(parrafos.get(2).contains("Última lectura: Ninguna"));
-    
+
     estacion.comprobarYRealizarLecturaPeriodica();
     assertFalse("Tras medir, la fecha no debe ser 'Ninguna'", estacion.getParrafos().get(2).contains("Ninguna"));
   }
@@ -350,7 +344,7 @@ public class EstacionMeteorologicaTest {
   public void testGetListas_ContieneSensoresYAlertas() throws Exception {
     estacion.addSensor(new SensorStub("S1", "T"));
     Map<String, List<String>> listas = estacion.getListas();
-    
+
     assertTrue(listas.containsKey("Sensores activos"));
     assertTrue(listas.containsKey("Alertas activas"));
     assertEquals(1, listas.get("Sensores activos").size());
@@ -360,7 +354,7 @@ public class EstacionMeteorologicaTest {
   public void testListaSensoresString_FormatoCorrecto() throws Exception {
     estacion.addSensor(new SensorStub("S1", "TEMP", "PruebaSensor"));
     String formato = estacion.listaSensoresString();
-    
+
     assertTrue("Debe empezar por [", formato.startsWith("["));
     assertTrue("Debe terminar con ]\\n", formato.endsWith("]\n"));
     assertTrue("Debe contener el ID del sensor", formato.contains("S1"));
@@ -374,22 +368,21 @@ public class EstacionMeteorologicaTest {
     assertTrue(representacion.contains(estacion.getUbicacion().toString()));
   }
 
-  // ==========================================
-  // CLASE AUXILIAR (STUB)
-  // ==========================================
-
+  /**
+   * Stub de Sensor para proporcionar rangos controlados a la estrategia.
+   */
   private static class SensorStub extends Sensor {
     private String id;
     private String tipo;
     private String nombre;
     public int contadorMediciones = 0;
     public double offsetCalibracion = 0.0;
-    
+
     public boolean lanzarDescalibrado = false;
     public boolean lanzarCambioBrusco = false;
 
     public SensorStub(String id, String tipo) {
-      this(id, tipo, "SensorDummy");
+      this(id, tipo, "STUB");
     }
 
     public SensorStub(String id, String tipo, String nombre) {
