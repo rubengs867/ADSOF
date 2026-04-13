@@ -6,10 +6,8 @@ import unidad.UnidadTemperatura;
 /**
  * Implementación de conversor para transformar la escala Kelvin a grados
  * Fahrenheit.
- * <p>
  * Utiliza la relación matemática directa entre Kelvin y Fahrenheit para
  * realizar el cálculo.
- * </p>
  * 
  * @author Alejandro Seguido
  * @author Rubén García

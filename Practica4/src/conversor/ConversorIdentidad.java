@@ -5,11 +5,8 @@ import unidad.Unidad;
 /**
  * Conversor neutro que devuelve el valor de entrada sin aplicar ninguna
  * transformación.
- * <p>
  * Se utiliza cuando las unidades de origen y destino son idénticas, actuando
- * como un elemento identidad en el sistema de procesamiento.
- * </p>
- * 
+ * como un elemento identidad en el sistema de procesamiento. 
  * @author Alejandro Seguido
  * @author Rubén García
  */

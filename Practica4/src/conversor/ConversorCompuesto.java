@@ -5,10 +5,8 @@ import unidad.Unidad;
 /**
  * Clase que permite encadenar dos conversores para realizar transformaciones
  * múltiples.
- * <p>
  * Facilita la creación de rutas de conversión indirectas siempre que la unidad
  * de salida del primer conversor coincida con la de entrada del segundo.
- * </p>
  * 
  * @author Alejandro Seguido
  * @author Rubén García

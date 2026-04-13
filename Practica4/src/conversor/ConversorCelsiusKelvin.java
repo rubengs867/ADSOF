@@ -5,9 +5,7 @@ import unidad.UnidadTemperatura;
 
 /**
  * Implementación de conversor para transformar grados Celsius a escala Kelvin.
- * <p>
  * Aplica la fórmula estándar sumando la constante 273.15 al valor de entrada.
- * </p>
  * 
  * @author Alejandro Seguido
  * @author Rubén García
