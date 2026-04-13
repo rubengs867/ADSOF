@@ -12,32 +12,41 @@ import unidad.Unidad;
  */
 public interface Conversor {
 
-  /** Unidad origen */
+  /**
+   * Obtiene la unidad de medida a partir de la cual se realiza la conversión.
+   * 
+   * @return La unidad de origen.
+   */
   Unidad getUnidadOrigen();
 
-  /** Unidad destino */
+  /**
+   * Obtiene la unidad de medida resultante tras aplicar la conversión.
+   * 
+   * @return La unidad de destino.
+   */
   Unidad getUnidadDestino();
 
   /**
-   * esta funcion recibe un valor y segun el tipo de conversor
-   * hace unas operaciones u otras
-   * 
-   * @param valor
-   * @return
+   * Aplica la lógica de conversión sobre un valor numérico.
+   *
+   * @param valor El valor original en la unidad de origen.
+   * @return El valor transformado a la unidad de destino.
    */
   double convertir(double valor);
 
   /**
-   * El default es porque la interfaz no requiere, ya que estamos metiendo
-   * codigo en una interfaz
-   * 
-   * Le pasamos a conversor compuesto nuestro conversor como el siguiente
-   * 
-   * @param siguiente
-   * @return
+   * Crea un conversor compuesto encadenando este conversor con otro.
+   * <p>
+   * Permite realizar conversiones en cadena siempre que la unidad de destino
+   * de este conversor coincida con la de origen del siguiente.
+   * </p>
+   *
+   * @param siguiente El conversor que se aplicará a continuación.
+   * @return Una nueva instancia de {@code ConversorCompuesto} que une ambos.
+   * @throws ConversionErroneaException Si las unidades no son compatibles para el
+   *                                    encadenamiento.
    */
-  default Conversor concatenar(Conversor siguiente) {
-
+  default Conversor concatenar(Conversor siguiente) throws ConversionErroneaException {
     if (this.getUnidadDestino() != siguiente.getUnidadOrigen()) {
       throw new ConversionErroneaException(this.getUnidadDestino(), siguiente.getUnidadOrigen());
     }

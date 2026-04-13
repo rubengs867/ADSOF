@@ -55,7 +55,7 @@ public class ConversorCompuesto implements Conversor {
   /**
    * Convierte sucesivamente, yendo a traves de los conversores
    * 
-   * @param double valor a convertir
+   * @param valor valor a convertir
    * @return double el valor convertido
    */
   @Override
