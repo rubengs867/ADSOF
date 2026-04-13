@@ -74,7 +74,7 @@ public class Alerta {
   /**
    * Obtiene la excepción que ha generado la alerta
    * 
-   * @return objeto {@Exception}
+   * @return objeto {@link Exception}
    */
   public Exception getException() {
     return exception;

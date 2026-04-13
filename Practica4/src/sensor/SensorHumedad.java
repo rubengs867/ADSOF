@@ -11,6 +11,7 @@ import unidad.UnidadHumedad;
  * Esta clase extiende {@link Sensor} y define un sensor específico cuya
  * magnitud de medida es el porcentaje de humedad.
  * </p>
+ * 
  * @author Alejandro Seguido
  * @author Rubén García
  */
@@ -38,7 +39,7 @@ public class SensorHumedad extends Sensor {
    * @param offset Ajuste de calibración.
    */
   public SensorHumedad(double offset) {
-    this(offset, new EstrategiaAleatoria(0.05));
+    this(offset, UnidadHumedad.PORCENTAJE ,new EstrategiaAleatoria(0.05));
   }
 
   /**
@@ -51,10 +52,12 @@ public class SensorHumedad extends Sensor {
    * 2. Unidad de medida en porcentaje.
    * </p>
    *
-   * @param offset Ajuste de calibración.
+   * @param offset     Ajuste de calibración.
+   * @param unidad     Unidad de medida (debe ser una unidad de humedad).
+   * @param estrategia Estrategia de lectura a utilizar.
    */
-  public SensorHumedad(double offset, EstrategiaLectura estrategia) {
-    super(TIPO, offset, UnidadHumedad.PORCENTAJE, MIN_VALOR, MAX_VALOR, estrategia);
+  public SensorHumedad(double offset, Unidad unidad, EstrategiaLectura estrategia) {
+    super(TIPO, offset, unidad, MIN_VALOR, MAX_VALOR, estrategia);
   }
 
   /**

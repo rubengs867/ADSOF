@@ -11,6 +11,7 @@ import unidad.UnidadTemperatura;
  * Esta clase extiende {@link Sensor} y define un sensor específico cuya
  * magnitud de medida es la temperatura.
  * </p>
+ * 
  * @author Alejandro Seguido
  * @author Rubén García
  */
@@ -37,8 +38,9 @@ public class SensorTemperatura extends Sensor {
    * Además, valida que la unidad proporcionada corresponda a una magnitud
    * de temperatura.
    *
-   * @param offset Ajuste de calibración.
-   * @param unidad Unidad de medida (debe ser una unidad de temperatura).
+   * @param offset     Ajuste de calibración.
+   * @param unidad     Unidad de medida (debe ser una unidad de temperatura).
+   * @param estrategia Estrategia de lectura a utilizar.
    *
    * @throws IllegalArgumentException si la unidad no es de tipo temperatura.
    */

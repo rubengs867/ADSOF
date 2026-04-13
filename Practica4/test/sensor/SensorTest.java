@@ -18,6 +18,7 @@ import excepcion.SensorDescalibradoException;
 import excepcion.SensorDescalibradoPorCaducidadException;
 import excepcion.SensorDescalibradoPorRangoException;
 import unidad.Unidad;
+import unidad.UnidadHumedad;
 import unidad.UnidadTemperatura;
 
 /**
@@ -110,7 +111,7 @@ public class SensorTest {
   @Test
   public void testGeneracionId_CuandoDistintosTipos_EntoncesContadoresIndependientes() {
     Sensor sTemp = new SensorTemperatura(0.0, UnidadTemperatura.CELSIUS, estrategiaFija);
-    Sensor sHum = new SensorHumedad(0.0, estrategiaFija);
+    Sensor sHum = new SensorHumedad(0.0, UnidadHumedad.PORCENTAJE, estrategiaFija);
 
     assertTrue("El ID de Temperatura debe usar su prefijo", sTemp.getId().startsWith("TEMP-"));
     assertTrue("El ID de Humedad debe usar su prefijo", sHum.getId().startsWith("HUM-"));

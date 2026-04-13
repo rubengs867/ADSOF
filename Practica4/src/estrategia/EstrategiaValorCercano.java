@@ -18,6 +18,12 @@ public class EstrategiaValorCercano implements EstrategiaLectura {
   /** Fracción de variación permitida */
   private double variacionPermitida;
 
+  /**
+   * Contructor base
+   * 
+   * @param variacionPermitida Variación que se aplica a la lectura inmediatamente
+   *                           anterior para obtener la siguiente.
+   */
   public EstrategiaValorCercano(double variacionPermitida) {
     this.variacionPermitida = variacionPermitida;
   }

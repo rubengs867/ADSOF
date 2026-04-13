@@ -199,7 +199,7 @@ public class EstacionMeteorologica implements IDocumento {
    * @return {@code true} si se ha realizado una medición en esta llamada;
    *         {@code false} en caso constrario.
    */
-  public boolean comprobarYRealizarLecturaPeriodica() throws Exception {
+  public boolean comprobarYRealizarLecturaPeriodica() {
 
     LocalDateTime ahora = LocalDateTime.now();
 
@@ -370,18 +370,25 @@ public class EstacionMeteorologica implements IDocumento {
       this.maxLecturas = maxLecturas;
   }
 
-  // IDocumento
-
+  /**
+   * @return Título descriptivo del documento con el nombre de la estación.
+   */
   @Override
   public String getTituloDocumento() {
     return "Estación Meteorológica: " + this.nombre;
   }
 
+  /**
+   * @return El nombre de la estación como encabezado de la sección.
+   */
   @Override
   public String getTituloSeccion() {
     return this.nombre;
   }
 
+  /**
+   * @return Lista de párrafos con la ubicación, conteo de sensores y fecha de última lectura.
+   */
   @Override
   public List<String> getParrafos() {
     List<String> parrafos = new ArrayList<>();
@@ -394,6 +401,9 @@ public class EstacionMeteorologica implements IDocumento {
     return parrafos;
   }
 
+  /**
+   * @return Mapa ordenado con los listados detallados de sensores y alertas activas.
+   */
   @Override
   public Map<String, List<String>> getListas() {
     /*

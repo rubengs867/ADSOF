@@ -11,12 +11,20 @@ import formateador.FormateadorMarkdown;
 import formateador.IFormateador;
 
 /**
- * Pruebas para del apartado 5.
+ * Clase principal del sistema encargada de la ejecución y validación del
+ * Apartado 5.
+ * 
  * @author Alejandro Seguido
  * @author Rubén García
  */
 public class Main {
 
+  /**
+   * Inicializa la estación, configura sensores (incluyendo casos de alerta) y
+   * muestra por consola los informes generados por los formateadores.
+   * 
+   * @param args Argumentos de la línea de comandos (no utilizados).
+   */
   public static void main(String[] args) {
     try {
       Ubicacion ubicacion = new Ubicacion(40.4168, -3.7038);
@@ -51,16 +59,15 @@ public class Main {
       estacion.addSensor(temp1);
       estacion.addSensor(hum1);
 
-
       System.out.println("Realizando mediciones...\n");
       estacion.realizarLecturaPuntual(-1);
 
-      //Probamos el formateo a HTML
+      // Probamos el formateo a HTML
       IFormateador html = new FormateadorHTML();
       System.out.println("          SALIDA EN FORMATO HTML         ");
       System.out.println(html.formatear(estacion));
 
-      //Probamos el formateo a Markdown
+      // Probamos el formateo a Markdown
       IFormateador md = new FormateadorMarkdown();
       System.out.println("        SALIDA EN FORMATO MARKDOWN       ");
       System.out.println(md.formatear(estacion));

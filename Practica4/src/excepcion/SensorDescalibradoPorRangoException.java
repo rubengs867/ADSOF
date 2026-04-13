@@ -14,7 +14,7 @@ import sensor.Sensor;
  */
 public class SensorDescalibradoPorRangoException extends SensorDescalibradoException {
 
-  /** Porcentaje de desviación con respecto al intervalo */
+  /** Porcentaje de desviación con respecto al intervalo de valores permitidos en el sensor */
   private double desviacion;
 
   /**
@@ -25,6 +25,7 @@ public class SensorDescalibradoPorRangoException extends SensorDescalibradoExcep
    * </p>
    * 
    * @param sensor Sensor que ha generado un valor fuera de rango.
+   * @param desviacion Porcentaje de desviación con respecto al intervalo de valores permitidos en el sensor.
    */
   public SensorDescalibradoPorRangoException(Sensor sensor, double desviacion) {
     super(sensor, "Lectura fuera de rango en " + sensor.getId() + ": " + String.format("%.2f", desviacion) + "%");

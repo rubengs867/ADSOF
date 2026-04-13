@@ -45,7 +45,7 @@ public class SensorPresionTest {
   @Before
   public void setUp() {
     estrategiaFija = new EstrategiaFija(1013.25);
-    sensor = new SensorPresion(0.0, estrategiaFija);
+    sensor = new SensorPresion(0.0, UnidadPresion.HPA, estrategiaFija);
     // Aseguramos estado calibrado para tests de medición
     sensor.calibrar(0.0);
   }

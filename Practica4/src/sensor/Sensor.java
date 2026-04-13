@@ -17,6 +17,7 @@ import unidad.Unidad;
 /**
  * Clase abstracta que representa el comportamiento base de cualquier tipo de
  * sensor.
+ * 
  * @author Alejandro Seguido
  * @author Rubén García
  */
@@ -82,25 +83,45 @@ public abstract class Sensor {
   private static Map<Class<? extends Sensor>, Integer> contadoresTipo = new HashMap<>();
 
   /**
-   * Constructor protegido para ser utilizado por las clases hijas.
+   * Constructor protegido que inicializa un sensor con valores por defecto de
+   * calibración.
    * <p>
-   * Este constructor inicializa los atributos comunes del sensor y genera
-   * automáticamente un identificador único basado en el tipo.
+   * Establece una duración de calibración estándar de 365 días y un umbral de
+   * cambio de 0.5. Genera automáticamente un ID único basado en el tipo.
    * </p>
-   * Se establece un procesador con el conversor Identidad por defecto
    *
-   * @param tipo     Prefijo identificador del tipo de sensor.
-   *                 Se utiliza para generar el ID único.
-   * @param offset   Ajuste de calibración.
-   * @param unidad   Unidad de medida asociada al sensor.
-   * @param minRango Valor mínimo permitido dentro del rango operativo.
-   * @param maxRango Valor máximo permitido dentro del rango operativo.
-   *
+   * @param tipo       Prefijo identificador del tipo de sensor.
+   * @param offset     Ajuste de calibración.
+   * @param unidad     Unidad de medida asociada al sensor.
+   * @param minRango   Valor mínimo del rango operativo.
+   * @param maxRango   Valor máximo del rango operativo.
+   * @param estrategia Estrategia de lectura a utilizar.
    * @throws IllegalArgumentException si {@code minRango} es mayor que
    *                                  {@code maxRango}.
    */
   protected Sensor(String tipo, double offset, Unidad unidad, double minRango, double maxRango,
       EstrategiaLectura estrategia) {
+    // Llamamos al constructor principal pasando los valores por defecto (365 y 0.5)
+    this(tipo, offset, unidad, minRango, maxRango, estrategia, 365, 0.5);
+  }
+
+  /**
+   * Constructor protegido completo para inicialización detallada del sensor.
+   *
+   * @param tipo                    Prefijo identificador del tipo de sensor.
+   * @param offset                  Ajuste de calibración.
+   * @param unidad                  Unidad de medida asociada al sensor.
+   * @param minRango                Valor mínimo del rango operativo.
+   * @param maxRango                Valor máximo del rango operativo.
+   * @param estrategia              Estrategia de lectura a utilizar.
+   * @param duracionCalibracionDias Días de validez de la calibración actual.
+   * @param umbralCambio            Diferencia mínima para registrar una nueva
+   *                                lectura.
+   * @throws IllegalArgumentException si {@code minRango} es mayor que
+   *                                  {@code maxRango}.
+   */
+  protected Sensor(String tipo, double offset, Unidad unidad, double minRango, double maxRango,
+      EstrategiaLectura estrategia, int duracionCalibracionDias, double umbralCambio) {
     if (minRango > maxRango) {
       throw new IllegalArgumentException("El rango mínimo no puede ser mayor que el máximo");
     }
@@ -111,21 +132,13 @@ public abstract class Sensor {
     this.minRango = minRango;
     this.maxRango = maxRango;
     this.estrategia = estrategia;
+    this.duracionCalibracionDias = duracionCalibracionDias;
+    this.umbralCambio = umbralCambio;
     generarValorID(tipo);
-    this.fechaUltimaLectura = null;
     this.historial = new ArrayList<>();
     this.procesador = new ProcesadorDatos(unidad);
     this.fechaCalibracion = LocalDate.now();
     this.fechaUltimaLectura = LocalDate.now();
-    this.duracionCalibracionDias = 365;
-    this.umbralCambio = 0.5;
-  }
-
-  protected Sensor(String tipo, double offset, Unidad unidad, double minRango, double maxRango,
-      EstrategiaLectura estrategia, int duracionCalibracionDias, double umbralCambio) {
-    this(tipo, offset, unidad, minRango, maxRango, estrategia);
-    this.duracionCalibracionDias = duracionCalibracionDias;
-    this.umbralCambio = umbralCambio;
   }
 
   /**
@@ -192,7 +205,7 @@ public abstract class Sensor {
     if (estaCalibracionCaducada()) {
       throw new SensorDescalibradoPorCaducidadException(this);
 
-    // Descalibrado por alguna lectura anterior
+      // Descalibrado por alguna lectura anterior
     } else if (!this.calibrado) {
       throw new SensorDescalibradoException(this, "Offset del sensor descalibrado");
     }
@@ -485,7 +498,7 @@ public abstract class Sensor {
   /**
    * Reprsentación textual de un sensor. Formato:
    * <p>
-   * (< VALOR >< UNIDAD >) útlima lectura: < FECHA >
+   * (VALOR UNIDAD) útlima lectura: FECHA
    * </p>
    */
   @Override
@@ -495,7 +508,7 @@ public abstract class Sensor {
    * Representación textual del sensor con el procesador.
    */
   public String procesadorDatoString() {
-    return this.id + " ("+this.unidad.getTexto()+"): " + procesador.toString();
+    return this.id + " (" + this.unidad.getTexto() + "): " + procesador.toString();
   }
 
   /**

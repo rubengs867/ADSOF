@@ -8,7 +8,6 @@ import estacion.IDocumento;
 /**
  * Implementación de {@link IFormateador} encargada de generar una
  * representación del documento en formato Markdown siguiendo la guía PDF.
- * </p>
  * 
  * @author Alejandro Seguido
  * @author Rubén García

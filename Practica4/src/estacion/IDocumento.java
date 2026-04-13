@@ -14,11 +14,26 @@ import java.util.*;
  * @author Rubén García
  */
 public interface IDocumento {
+
+  /**
+   * @return El título principal del documento.
+   */
   String getTituloDocumento();
 
+  /**
+   * @return El título o encabezado de la sección actual.
+   */
   String getTituloSeccion();
 
+  /**
+   * @return Una lista de cadenas de texto que representan los párrafos del
+   *         documento.
+   */
   List<String> getParrafos();
 
+  /**
+   * @return Un mapa donde cada clave es el nombre de una lista y el valor es el
+   *         conjunto de sus elementos.
+   */
   Map<String, List<String>> getListas();
 }

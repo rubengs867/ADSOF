@@ -20,6 +20,12 @@ public class EstrategiaHistorica implements EstrategiaLectura {
   /** Fracción de variación permitida respecto a la media */
   private double variacionPermitida;
 
+  /**
+   * Constructor base
+   * 
+   * @param variacionPermitida Variación porcentual permitida sobre el promedio
+   *                           histórico de lecturas.
+   */
   public EstrategiaHistorica(double variacionPermitida) {
     this.variacionPermitida = variacionPermitida;
   }

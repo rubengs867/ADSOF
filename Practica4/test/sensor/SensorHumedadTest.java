@@ -44,7 +44,7 @@ public class SensorHumedadTest {
   @Before
   public void setUp() {
     estrategiaFija = new EstrategiaFija(50.0);
-    sensor = new SensorHumedad(0.0, estrategiaFija);
+    sensor = new SensorHumedad(0.0, UnidadHumedad.PORCENTAJE, estrategiaFija);
     // Aseguramos estado calibrado para tests de medición
     sensor.calibrar(0.0);
   }

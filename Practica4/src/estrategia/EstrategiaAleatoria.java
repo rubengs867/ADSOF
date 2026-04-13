@@ -17,6 +17,10 @@ public class EstrategiaAleatoria implements EstrategiaLectura {
   /** Probabilidad de generar un valor fuera del rango permitido por el sensor */
   private double probFueraRango;
 
+  /**
+   * Constructor base.
+   * @param probFueraRango probabilidad de generar lecturas fuera de rango.
+   */
   public EstrategiaAleatoria(double probFueraRango) {
     this.probFueraRango = probFueraRango;
   }

@@ -11,6 +11,7 @@ import estrategia.EstrategiaAleatoria;
  * Esta clase extiende {@link Sensor} y define un sensor específico cuya
  * magnitud de medida son los hectopascales (hPa).
  * </p>
+ * 
  * @author Alejandro Seguido
  * @author Rubén García
  */
@@ -35,9 +36,11 @@ public class SensorPresion extends Sensor {
    * 2. Unidad de medida en hectopascales.
    * </p>
    *
-   * @param offset Ajuste de calibración.
+   * @param offset     Ajuste de calibración.
+   * @param unidad     Unidad de medida (debe ser una unidad de presión).
+   * @param estrategia Estrategia de lectura a utilizar.
    */
-  public SensorPresion(double offset, EstrategiaLectura estrategia) {
+  public SensorPresion(double offset, Unidad unidad, EstrategiaLectura estrategia) {
     super(TIPO, offset, UnidadPresion.HPA, MIN_VALOR, MAX_VALOR, estrategia);
   }
 
@@ -54,7 +57,7 @@ public class SensorPresion extends Sensor {
    * @param offset Ajuste de calibración.
    */
   public SensorPresion(double offset) {
-    this(offset, new EstrategiaAleatoria(0.05));
+    this(offset, UnidadPresion.HPA, new EstrategiaAleatoria(0.05));
   }
 
   /**
