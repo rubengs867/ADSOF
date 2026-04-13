@@ -189,6 +189,8 @@ public abstract class Sensor {
     // Comprobación de caducación de la calibración del sensor
     if (estaCalibracionCaducada()) {
       throw new SensorDescalibradoPorCaducidadException(this);
+
+    // Descalibrado por alguna lectura anterior
     } else if (!this.calibrado) {
       throw new SensorDescalibradoException(this, "Offset del sensor descalibrado");
     }

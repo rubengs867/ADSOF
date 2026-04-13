@@ -20,17 +20,22 @@ public class Alerta {
   /** Mensaje descriptivo del error o anomalía detectada. */
   private final String mensaje;
 
+  /** Excepción que ha generado la alerta */
+  private final Exception exception;
+
   /**
    * Crea una nueva instancia de Alerta.
    *
-   * @param fecha    Fecha y hora de la incidencia.
-   * @param idSensor Identificador del sensor.
-   * @param mensaje  Descripción detallada del error.
+   * @param fecha     Fecha y hora de la incidencia.
+   * @param idSensor  Identificador del sensor.
+   * @param mensaje   Descripción detallada del error.
+   * @param excepción que ha generado la alerta.
    */
-  public Alerta(LocalDateTime fecha, String idSensor, String mensaje) {
+  public Alerta(LocalDateTime fecha, String idSensor, String mensaje, Exception exception) {
     this.fecha = fecha;
     this.idSensor = idSensor;
     this.mensaje = mensaje;
+    this.exception = exception;
   }
 
   /**
@@ -62,6 +67,15 @@ public class Alerta {
    */
   public String getMensaje() {
     return mensaje;
+  }
+
+  /**
+   * Obtiene la excepción que ha generado la alerta
+   * 
+   * @return objeto {@Exception}
+   */
+  public Exception getException() {
+    return exception;
   }
 
   /**

@@ -133,21 +133,6 @@ public class EstacionMeteorologicaTest {
   }
 
   @Test
-  public void testCalibrarSensor_SensorExistenteYPeriodoCero_RestableceAutomaticamente() throws Exception {
-    EstacionMeteorologica estSinPeriodo = new EstacionMeteorologica("Test", ubicacionTest, 0, 1);
-    estSinPeriodo.addSensor(new SensorStub("S-1", "TEMP"));
-
-    estSinPeriodo.calibrarSensor("S-1", 2.0);
-
-    // Accedemos al periodo por reflexión al carecer de un getter público
-    Field field = EstacionMeteorologica.class.getDeclaredField("periodo");
-    field.setAccessible(true);
-    long periodoActual = (long) field.get(estSinPeriodo);
-
-    assertEquals("El periodo debe restablecerse automáticamente a 300000ms", 300000L, periodoActual);
-  }
-
-  @Test
   public void testCalibrarSensor_SensorInexistente_NoFallaNiModifica() {
     // No debe lanzar excepción
     estacion.calibrarSensor("NO_EXISTE", 10.0);

@@ -104,8 +104,9 @@ public class EstacionMeteorologica implements IDocumento {
    * 1. Actualiza el offset de lectura del sensor (marcándolo como calibrado).
    * 2. Elimina todas las alertas previas asociadas a este sensor del registro
    * histórico.
-   * 3. Si la toma de datos periódica estaba detenida (periodo en 0), la reanuda
-   * automáticamente con un valor por defecto.
+   * 3. Si la toma de datos de este sensor no se realizaba por las alertas que
+   * tenía, al haberlas eliminado, en la siguiente lectura sí que podrá realizar
+   * la medición.
    * </p>
    *
    * @param id     Identificador único del sensor a calibrar.
@@ -121,12 +122,6 @@ public class EstacionMeteorologica implements IDocumento {
 
       // Eliminar alertas asociadas con dicho sensor
       registroAlertas.removeIf(alerta -> alerta.getIdSensor().equals(id));
-
-      // Retomar la toma de datos si estaba detenida (periodo = 0)
-      if (this.periodo <= 0) {
-        // Reanudamos con un periodo estándar de 5 minutos (300.000 ms)
-        this.setPeriodo(300000);
-      }
     }
   }
 
@@ -154,6 +149,9 @@ public class EstacionMeteorologica implements IDocumento {
 
     for (int i = 0; i < total; i++) {
       Sensor s = lista.get(i);
+
+      if (sensorConAlertaSinCalibrar(s))
+        continue;
       try {
         s.realizarMedicion();
       } catch (SensorDescalibradoException | CambioBruscoException e) {
@@ -162,12 +160,31 @@ public class EstacionMeteorologica implements IDocumento {
         Alerta nuevaAlerta = new Alerta(
             LocalDateTime.now(),
             s.getId(),
-            e.getMessage());
+            e.getMessage(),
+            e);
 
         // El ArrayList garantiza el orden de llegada (inserción al final)
         registroAlertas.add(nuevaAlerta);
       }
     }
+  }
+
+  /**
+   * Comprueba si un sensor tiene una alerta donde se indica que está descalibrado
+   * 
+   * @param s sensor a evaluar
+   * @return {@code true} en caso de que exista una alerta para el sensor
+   *         vinculada a estar descalibrado;
+   *         {@code false} en caso contrario
+   */
+  private boolean sensorConAlertaSinCalibrar(Sensor s) {
+    for (Alerta a : registroAlertas) {
+      // Si el sensor tiene una alerta vinculada a que está descalibrado
+      if (a.getIdSensor().equals(s.getId()) &&
+          a.getException() instanceof SensorDescalibradoException)
+        return true;
+    }
+    return false;
   }
 
   /**
