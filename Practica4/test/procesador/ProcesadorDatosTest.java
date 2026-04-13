@@ -11,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import conversor.ConversorCelsiusKelvin;
-import procesador.ProcesadorDatos;
 import unidad.UnidadTemperatura;
 
 public class ProcesadorDatosTest {

@@ -351,9 +351,9 @@ public class EstacionMeteorologicaTest {
     estacion.addSensor(new SensorStub("S1", "T"));
     Map<String, List<String>> listas = estacion.getListas();
     
-    assertTrue(listas.containsKey("Sensores instalados"));
+    assertTrue(listas.containsKey("Sensores activos"));
     assertTrue(listas.containsKey("Alertas activas"));
-    assertEquals(1, listas.get("Sensores instalados").size());
+    assertEquals(1, listas.get("Sensores activos").size());
   }
 
   @Test
