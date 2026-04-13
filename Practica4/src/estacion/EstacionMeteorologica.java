@@ -403,7 +403,7 @@ public class EstacionMeteorologica implements IDocumento {
     for (Sensor s : sensores.values()) {
       infoSensores.add(s.toString());
     }
-    listas.put("Sensores instalados", infoSensores);
+    listas.put("Sensores activos", infoSensores);
 
     // Lista 2: Alertas
     List<String> infoAlertas = new ArrayList<>();
