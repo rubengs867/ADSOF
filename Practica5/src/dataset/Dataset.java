@@ -1,38 +1,123 @@
 package dataset;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-public class Dataset<T extends Comparable<T>> {
+public class Dataset<T> { // Eliminamos la restricción 'extends Comparable' aquí
 
   /** Datos de interés de los objetos que componen el Dataset */
-  Map<String, Feature<?>> data = new LinkedHashMap<>();
+  private LinkedHashMap<String, Feature<?>> data = new LinkedHashMap<>();
+
+  /** Interfaz que obtiene las features de interés */
+  private IFeaturizer<T> featurizer;
 
   /**
-   * Interfaz que obtiene las features de interés y el valor que tienen dichas
-   * features
-   */
-  IFeaturizer<T> featurizer;
-
-  /** Objetos que componen el Dataset */
-  List<T> objects;
-
-  /**
-   * Constructor base de {@link Dataset}
+   * Constructor base de Dataset
    * 
-   * @param featurizer Interfaz para
+   * @param featurizer Interfaz para extraer datos
    */
   public Dataset(IFeaturizer<T> featurizer) {
     this.featurizer = featurizer;
+
+    // Inicializamos una Feature por cada característica de interés
+    for (String featureName : featurizer.featureDeInteres()) {
+      data.put(featureName, new Feature<>());
+    }
   }
 
-  public Feature<?> feature(String featureName) {
-    return data.get(featureName);
+  /**
+   * Recibe un array de objetos, extrae sus features y las añade al dataset
+   */
+  @SuppressWarnings({ "rawtypes", "unchecked" })
+  public void addAll(T[] objects) {
+    for (T obj : objects) {
+      for (String featureName : featurizer.featureDeInteres()) {
+        Comparable value = featurizer.datoDeInteres(obj, featureName);
+        // Extraemos la feature de nuestro mapa y le añadimos el valor
+        Feature currentFeature = data.get(featureName);
+        currentFeature.add(value);
+      }
+    }
   }
 
+  /**
+   * Devuelve la Feature correspondiente con un casteo automático al tipo de dato
+   * esperado
+   * (por ejemplo, Feature<Integer> para la edad).
+   */
+  @SuppressWarnings("unchecked")
+  public <R extends Comparable<R>> Feature<R> feature(String featureName) {
+    return (Feature<R>) data.get(featureName);
+  }
+
+  /**
+   * Elimina las filas duplicadas.
+   * Dos filas son duplicadas si para todas las features sus valores son iguales.
+   */
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   public boolean removeDuplicates() {
-    return false;
+    // Comprobar que el dataset no está vacío y contiene features.
+    if (data.isEmpty() || data.values().iterator().next().isEmpty()) {
+      return false;
+    }
+
+    // Tamaño de una de las listas de Feature
+    int size = data.values().iterator().next().size();
+
+    /*
+     * Set que va a comparar las filas compuestas por las features de cada objeto
+     * que compone el dataset
+     */
+    Set<List<Object>> unicos = new HashSet<>();
+
+    // Índices de las filas únicas
+    List<Integer> indices = new ArrayList<>();
+
+    // Recorremos por filas e identificamos cuáles son únicas
+    for (int i = 0; i < size; i++) {
+
+      // Creo la lista de features que define a un objeto
+      List<Object> fila = new ArrayList<>();
+      for (String key : featurizer.featureDeInteres()) {
+        fila.add(data.get(key).get(i));
+      }
+
+      // HashSet.add() devuelve true si el elemento no estaba previamente en el Set
+      if (unicos.add(fila)) {
+        indices.add(i);
+      }
+    }
+
+    // Si todos los índices se conservan, no había duplicados
+    if (indices.size() == size) {
+      return false;
+    }
+
+    // Reconstruimos el mapa de features solo con los índices filtrados
+    for (String featureName : featurizer.featureDeInteres()) {
+      Feature antiguo = data.get(featureName);
+      Feature nuevo = new Feature();
+      for (int i : indices) {
+        nuevo.add((Comparable) antiguo.get(i));
+      }
+      data.put(featureName, nuevo);
+    }
+
+    return true;
+  }
+
+  /**
+   * Sobrescribimos el toString para que coincida con la salida esperada del
+   * enunciado:
+   * {age=[...], weight=[...], gender=[...]}
+   */
+  @Override
+  public String toString() {
+    return data.toString();
   }
 
   public Map<String, Feature<?>> getData() {
@@ -41,9 +126,5 @@ public class Dataset<T extends Comparable<T>> {
 
   public IFeaturizer<T> getFeaturizer() {
     return featurizer;
-  }
-
-  public List<T> getObjects() {
-    return objects;
   }
 }

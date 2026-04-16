@@ -4,7 +4,12 @@ import java.util.List;
 
 public interface IFeaturizer<T> {
 
-  public List<String> featureDeInteres();
+  /** Devuelve la lista de nombres de las características a extraer */
+  List<String> featureDeInteres();
 
-  public Object datoDeInteres(T object, String featureName);
+  /**
+   * Devuelve el valor de la característica solicitada para el objeto dado.
+   * Retorna Comparable<?> porque la clase Feature exige valores comparables.
+   */
+  Comparable<?> datoDeInteres(T object, String featureName);
 }
