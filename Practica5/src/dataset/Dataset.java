@@ -1,45 +1,49 @@
 package dataset;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Dataset<T extends Comparable<T>> {
-  Map<String, Feature<?>> datos = new HashMap<>();
-  IFeaturizer featurizer;
-  Feature<T> objetos;
-  
+
+  /** Datos de interés de los objetos que componen el Dataset */
+  Map<String, Feature<?>> data = new LinkedHashMap<>();
+
+  /**
+   * Interfaz que obtiene las features de interés y el valor que tienen dichas
+   * features
+   */
+  IFeaturizer<T> featurizer;
+
+  /** Objetos que componen el Dataset */
+  List<T> objects;
+
   /**
    * Constructor base de {@link Dataset}
-   * @param featurizer Interfaz para 
+   * 
+   * @param featurizer Interfaz para
    */
-  public Dataset(IFeaturizer featurizer) {
+  public Dataset(IFeaturizer<T> featurizer) {
     this.featurizer = featurizer;
-  }
-  
-  
-  
-  
-  
-  
-  
-  public Map<String, Feature<?>> getDatos() {
-    return datos;
-  }
-  public void setDatos(Map<String, Feature<?>> datos) {
-    this.datos = datos;
-  }
-  public IFeaturizer getFeaturizer() {
-    return featurizer;
-  }
-  public void setFeaturizer(IFeaturizer featurizer) {
-    this.featurizer = featurizer;
-  }
-  public Feature<T> getObjetos() {
-    return objetos;
-  }
-  public void setObjetos(Feature<T> objetos) {
-    this.objetos = objetos;
   }
 
-  
+  public Feature<?> feature(String featureName) {
+    return data.get(featureName);
+  }
+
+  public boolean removeDuplicates() {
+    return false;
+  }
+
+  public Map<String, Feature<?>> getData() {
+    return data;
+  }
+
+  public IFeaturizer<T> getFeaturizer() {
+    return featurizer;
+  }
+
+  public List<T> getObjects() {
+    return objects;
+  }
 }
