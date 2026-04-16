@@ -35,9 +35,13 @@ public class Dataset<T> { // Eliminamos la restricción 'extends Comparable' aqu
   @SuppressWarnings({ "rawtypes", "unchecked" })
   public void addAll(T[] objects) {
     for (T obj : objects) {
+      // Recorro todas las features de interés del objeto (mismas que las claves del mapa)
       for (String featureName : featurizer.featureDeInteres()) {
+
+        // Obtengo el valor de cada feature de interés del objeto
         Comparable value = featurizer.datoDeInteres(obj, featureName);
-        // Extraemos la feature de nuestro mapa y le añadimos el valor
+
+        // Añado el valor al Feature del mapa de datos
         Feature currentFeature = data.get(featureName);
         currentFeature.add(value);
       }
@@ -47,7 +51,6 @@ public class Dataset<T> { // Eliminamos la restricción 'extends Comparable' aqu
   /**
    * Devuelve la Feature correspondiente con un casteo automático al tipo de dato
    * esperado
-   * (por ejemplo, Feature<Integer> para la edad).
    */
   @SuppressWarnings("unchecked")
   public <R extends Comparable<R>> Feature<R> feature(String featureName) {
@@ -80,7 +83,7 @@ public class Dataset<T> { // Eliminamos la restricción 'extends Comparable' aqu
     // Recorremos por filas e identificamos cuáles son únicas
     for (int i = 0; i < size; i++) {
 
-      // Creo la lista de features que define a un objeto
+      // Creo la lista de features de interés que define a un objeto
       List<Object> fila = new ArrayList<>();
       for (String key : featurizer.featureDeInteres()) {
         fila.add(data.get(key).get(i));
@@ -97,7 +100,7 @@ public class Dataset<T> { // Eliminamos la restricción 'extends Comparable' aqu
       return false;
     }
 
-    // Reconstruimos el mapa de features solo con los índices filtrados
+    // Reconstruimos el mapa de Feature solo con los índices filtrados
     for (String featureName : featurizer.featureDeInteres()) {
       Feature antiguo = data.get(featureName);
       Feature nuevo = new Feature();
