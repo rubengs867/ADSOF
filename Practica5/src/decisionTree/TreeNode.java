@@ -1,6 +1,7 @@
 package decisionTree;
 
 import java.util.*;
+import java.util.function.Predicate; //para usar la interfaz Predicate, su metodo es .test
 
 public class TreeNode<T> {
   private String name;
@@ -34,6 +35,17 @@ public class TreeNode<T> {
 
   public String getNodoPorDefecto() {
     return nodoDefecto;
+  }
+
+  public String evaluate(T dato){
+    for(Rama r : this.ramas){
+      //cogemos la condicion de la rama y probamos con el metodo de la interfaz test
+      //el metodo .test es de tipo boolean
+      if(r.getCondicion().test(dato)){
+        return r.getNodoDestino();
+      }
+    }
+    return this.nodoDefecto;
   }
 
 }

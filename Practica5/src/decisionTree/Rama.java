@@ -4,6 +4,7 @@ import java.util.function.Predicate;
 
 public class Rama<T> {
   private String nodoDestino;
+  /*Se va a encargar de guardar la funcion lamnbdda */
   private Predicate<T> condicion;
 
   //la interfaz predicate lo unico que hace es evaluar true o false la condicion
