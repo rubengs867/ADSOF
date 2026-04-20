@@ -5,13 +5,35 @@ public class Person {
   private int age;
   private int weight;
   private int height;
-  private boolean male;
+  private boolean gender;
 
   public Person(String name, int age, int weight, int height, boolean male) {
     this.name = name;
     this.age = age;
     this.weight = weight;
     this.height = height;
-    this.male = male;
+    this.gender = male;
   }
+
+  public String getName() {
+    return name;
+  }
+
+  public int getAge() {
+    return age;
+  }
+
+  public int getWeight() {
+    return weight;
+  }
+
+  public int getHeight() {
+    return height;
+  }
+
+  public boolean isGender() {
+    return gender;
+  }
+
+  
 }

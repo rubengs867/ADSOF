@@ -2,7 +2,7 @@ package decisionTree;
 import java.util.*;
 
 public class DecisionTree <T>{
-  private TreeNode raiz = null;
+  private TreeNode<T> raiz = null;
   //cada TreeNode guarda el valor generico
   private Map<String, TreeNode<T>> nodos;
 

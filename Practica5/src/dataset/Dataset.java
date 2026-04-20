@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class Dataset<T> { // Eliminamos la restricción 'extends Comparable' aquí
+public class Dataset<T> {
 
   /** Datos de interés de los objetos que componen el Dataset */
   private LinkedHashMap<String, Feature<?>> data = new LinkedHashMap<>();
