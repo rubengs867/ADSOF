@@ -1,6 +1,8 @@
 package decisionTree;
 import java.util.*;
 
+import dataset.Dataset;
+
 public class DecisionTree <T>{
   private TreeNode<T> raiz = null;
   //cada TreeNode guarda el valor generico
@@ -25,6 +27,38 @@ public class DecisionTree <T>{
     return nuevoNodo;
   }
 
+
+
+  public  Map<String, List<T>> predict(Collection<T> datos) {
+    Map<String, List<T>> resultados = new HashMap<>();
+
+    // Recorremos todos los elementos
+    for (T dato : datos) {
+      String etiqueta = predicate(dato);
+
+      resultados.putIfAbsent(etiqueta, new ArrayList<>());
+      
+      resultados.get(etiqueta).add(dato);
+    }
+
+    return resultados;
+  }
+
+
+  public Map<String, List<T>> predict(Dataset<T> dataset) {
+
+    
+    // Lo único que hacemos es preparar un mapa vacío
+    Map<String, List<T>> resultados = new HashMap<>();
+
+    for (T dato : dataset.getObjetos()) { 
+      String etiqueta = predicate(dato);
+      resultados.putIfAbsent(etiqueta, new ArrayList<>());
+      resultados.get(etiqueta).add(dato);
+    }
+
+    return resultados;
+  }
   private String predicate(T dato){
     TreeNode<T> nodo_actual = this.raiz;
 
