@@ -113,11 +113,6 @@ public class Dataset<T> {
     return true;
   }
 
-  /**
-   * Sobrescribimos el toString para que coincida con la salida esperada del
-   * enunciado:
-   * {age=[...], weight=[...], gender=[...]}
-   */
   @Override
   public String toString() {
     return data.toString();
