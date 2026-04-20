@@ -31,7 +31,7 @@ public class Person {
     return height;
   }
 
-  public boolean isGender() {
+  public boolean isMale() {
     return gender;
   }
 

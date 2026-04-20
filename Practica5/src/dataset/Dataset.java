@@ -3,6 +3,7 @@ package dataset;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -10,10 +11,12 @@ import java.util.Set;
 public class Dataset<T> {
 
   /** Datos de interés de los objetos que componen el Dataset */
-  private LinkedHashMap<String, Feature<?>> data = new LinkedHashMap<>();
+  private LinkedHashMap<String, Feature<?>> features = new LinkedHashMap<>();
 
   /** Interfaz que obtiene las features de interés */
   private IFeaturizer<T> featurizer;
+
+  private Set<T> data = new LinkedHashSet<>();
 
   /**
    * Constructor base de Dataset
@@ -25,7 +28,7 @@ public class Dataset<T> {
 
     // Inicializamos una Feature por cada característica de interés
     for (String featureName : featurizer.featureDeInteres()) {
-      data.put(featureName, new Feature<>());
+      features.put(featureName, new Feature<>());
     }
   }
 
@@ -42,9 +45,11 @@ public class Dataset<T> {
         Comparable value = featurizer.datoDeInteres(obj, featureName);
 
         // Añado el valor al Feature del mapa de datos
-        Feature currentFeature = data.get(featureName);
+        Feature currentFeature = features.get(featureName);
         currentFeature.add(value);
       }
+
+      data.add(obj);
     }
   }
 
@@ -54,7 +59,7 @@ public class Dataset<T> {
    */
   @SuppressWarnings("unchecked")
   public <R extends Comparable<R>> Feature<R> feature(String featureName) {
-    return (Feature<R>) data.get(featureName);
+    return (Feature<R>) features.get(featureName);
   }
 
   /**
@@ -64,12 +69,12 @@ public class Dataset<T> {
   @SuppressWarnings({ "rawtypes", "unchecked" })
   public boolean removeDuplicates() {
     // Comprobar que el dataset no está vacío y contiene features.
-    if (data.isEmpty() || data.values().iterator().next().isEmpty()) {
+    if (features.isEmpty() || features.values().iterator().next().isEmpty()) {
       return false;
     }
 
     // Tamaño de una de las listas de Feature
-    int size = data.values().iterator().next().size();
+    int size = features.values().iterator().next().size();
 
     /*
      * Set que va a comparar las filas compuestas por las features de cada objeto
@@ -86,7 +91,7 @@ public class Dataset<T> {
       // Creo la lista de features de interés que define a un objeto
       List<Object> fila = new ArrayList<>();
       for (String key : featurizer.featureDeInteres()) {
-        fila.add(data.get(key).get(i));
+        fila.add(features.get(key).get(i));
       }
 
       // HashSet.add() devuelve true si el elemento no estaba previamente en el Set
@@ -102,12 +107,12 @@ public class Dataset<T> {
 
     // Reconstruimos el mapa de Feature solo con los índices filtrados
     for (String featureName : featurizer.featureDeInteres()) {
-      Feature antiguo = data.get(featureName);
+      Feature antiguo = features.get(featureName);
       Feature nuevo = new Feature();
       for (int i : indices) {
         nuevo.add((Comparable) antiguo.get(i));
       }
-      data.put(featureName, nuevo);
+      features.put(featureName, nuevo);
     }
 
     return true;
@@ -115,11 +120,11 @@ public class Dataset<T> {
 
   @Override
   public String toString() {
-    return data.toString();
+    return features.toString();
   }
 
-  public Map<String, Feature<?>> getData() {
-    return data;
+  public Map<String, Feature<?>> getFeatures() {
+    return features;
   }
 
   public IFeaturizer<T> getFeaturizer() {

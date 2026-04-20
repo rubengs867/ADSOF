@@ -23,7 +23,7 @@ public class PersonFeaturizer implements IFeaturizer<Person> {
         break;
       case "gender":
       default:
-        c = object.isGender() ? "MALE" : "FEMALE";
+        c = object.isMale() ? "MALE" : "FEMALE";
         break;
     }
     return c;
