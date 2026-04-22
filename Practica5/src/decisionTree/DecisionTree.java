@@ -1,7 +1,6 @@
 package decisionTree;
-import java.util.*;
-
 import dataset.Dataset;
+import java.util.*;
 
 public class DecisionTree <T>{
   private TreeNode<T> raiz = null;
@@ -28,9 +27,9 @@ public class DecisionTree <T>{
   }
 
 
-
-  public  Map<String, List<T>> predict(Collection<T> datos) {
-    Map<String, List<T>> resultados = new HashMap<>();
+  @SafeVarargs
+  public  final Map<String, List<T>> predict(T... datos) {
+    Map<String, List<T>> resultados = new LinkedHashMap<>();
 
     // Recorremos todos los elementos
     for (T dato : datos) {
@@ -49,7 +48,7 @@ public class DecisionTree <T>{
 
     
     // Lo único que hacemos es preparar un mapa vacío
-    Map<String, List<T>> resultados = new HashMap<>();
+    Map<String, List<T>> resultados = new LinkedHashMap<>();
 
     for (T dato : dataset.getObjetos()) { 
       String etiqueta = predicate(dato);
@@ -83,12 +82,9 @@ public class DecisionTree <T>{
         nodo_actual = this.nodos.get(next);
       }
       else{
-        //caso donde nuestro nodo no tiene otro nodo
-        //lanzar excepcion
-        break;
+        return next;
       }
     }
-    return nodo_actual.getName();
   }
 
 }

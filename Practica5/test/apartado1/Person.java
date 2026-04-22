@@ -35,5 +35,10 @@ public class Person {
     return gender;
   }
 
+  @Override
+    public String toString() {
+        String genero = this.gender ? "male" : "female";
+        return this.name + "(age: " + this.age + ", " + genero + ")";
+    }
   
 }

@@ -10,8 +10,9 @@ import java.util.Set;
 public class Dataset<T> {
 
   /** Datos de interés de los objetos que componen el Dataset */
+  //tal vez habria que poner que ? extienda de algo por si acaso
   private LinkedHashMap<String, Feature<?>> data = new LinkedHashMap<>();
-
+  List<T> objetos = new ArrayList<>();  
   /** Interfaz que obtiene las features de interés */
   private IFeaturizer<T> featurizer;
 
@@ -35,6 +36,7 @@ public class Dataset<T> {
   @SuppressWarnings({ "rawtypes", "unchecked" })
   public void addAll(T[] objects) {
     for (T obj : objects) {
+      this.objetos.add(obj);
       // Recorro todas las features de interés del objeto (mismas que las claves del mapa)
       for (String featureName : featurizer.featureDeInteres()) {
 
@@ -46,6 +48,10 @@ public class Dataset<T> {
         currentFeature.add(value);
       }
     }
+  }
+
+  public List<T> getObjetos() {
+      return this.objetos;
   }
 
   /**
@@ -109,6 +115,12 @@ public class Dataset<T> {
       }
       data.put(featureName, nuevo);
     }
+
+    List<T> objetosFiltrados = new ArrayList<>();
+    for (int i : indices) {
+        objetosFiltrados.add(this.objetos.get(i));
+    }
+    this.objetos = objetosFiltrados;
 
     return true;
   }
