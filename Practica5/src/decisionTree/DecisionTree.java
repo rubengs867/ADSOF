@@ -16,7 +16,7 @@ public class DecisionTree <T>{
     if(nodos.containsKey(name)){
       return nodos.get(name);
     }
-    //no existe ese nuevo nodo, entonces hay que crearlo, el constructor de Treenode podria ser protected
+    //no existe ese nuevo nodo, entonces hay que crearlo
     TreeNode<T> nuevoNodo = new TreeNode<>(name);
     nodos.put(name, nuevoNodo);
 

@@ -19,7 +19,7 @@ public class Main {
   public static DecisionTree<Person> buildPersonDecisionTree() {
     DecisionTree<Person> dt = new DecisionTree<>();
     dt.node("root")
-        .withCondition("male", p -> p.isGender())
+        .withCondition("male", p -> p.isMale())
         .otherwise("female");
     dt.node("male")
         .withCondition("old male", p -> p.getAge() > 65)
