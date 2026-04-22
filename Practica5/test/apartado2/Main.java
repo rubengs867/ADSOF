@@ -2,6 +2,7 @@ package apartado2;
 
 import decisionTree.*;
 import dataset.*;
+import java.util.function.Predicate;
 
 import apartado1.Person;
 import apartado1.PersonFeaturizer;
@@ -14,6 +15,10 @@ public class Main {
 
     System.out.println(dt.predict(dataSet));
     System.out.println(dt.predict(new Person("Miguel", 86, 72, 165, true), new Person("Clara", 42, 59, 162, false)));
+
+    Predicate<Person> isYoungMale = dt.getPredicate("young male");
+    System.out.println("Es Pedro un young male? " + isYoungMale.test(new Person("Pedro", 66, 75, 180, true)));
+    System.out.println("Es Luis un young male? " + isYoungMale.test(new Person("Luis", 34, 75, 176, true)));
   }
 
   public static DecisionTree<Person> buildPersonDecisionTree() {
