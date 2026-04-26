@@ -4,10 +4,10 @@ import decisionTree.*;
 import java.util.*;
 
 /**
- * Clase encargada de generar un Árbol de Decisión (DecisionTree) de forma automática
- * a partir de un conjunto de datos etiquetados (LabeledDataset) utilizando un algoritmo Greedy.
- * * @param <T> El tipo de objeto que clasifica el árbol (ej. Person, Weather).
- * @param <L> El tipo de la etiqueta (ej. String, Boolean).
+ * Clase que genera un Árbol de Decisión  de forma automática
+ * a partir de un conjunto de datos etiquetados (LabeledDataset) 
+ * * @param <T> El tipo de objeto que clasifica el árbol 
+ * @param <L> El tipo de la etiqueta 
  */
 public class GreedyTreeLearner<T, L> {
 
@@ -26,8 +26,8 @@ public class GreedyTreeLearner<T, L> {
 
   /**
    * Constructor parametrizado.
-   * Permite inyectar una estrategia específica para la selección de características.
-   * * @param estrategia La estrategia a utilizar (ej. RandomStrategy, MisclassificationStrategy).
+   * Permite asignar una estrategia específica para la selección de características.
+   * * @param estrategia La estrategia a utilizar 
    */
   public GreedyTreeLearner(FeatureSelectionStrategy<T, L> estrategia) {
       this.estrategia = estrategia;
@@ -55,7 +55,7 @@ public class GreedyTreeLearner<T, L> {
   }
 
   /**
-   * Método recursivo interno que implementa el algoritmo Greedy de aprendizaje.
+   * Método recursivo interno que implementa el algoritmo Greedy
    * Divide el conjunto de datos en subconjuntos y crea los nodos del árbol iterativamente.
    * * @param arbol El árbol de decisión que se está construyendo.
    * @param nombreNodoActual El identificador del nodo que se está procesando en esta llamada.
@@ -72,7 +72,7 @@ public class GreedyTreeLearner<T, L> {
       return "";
     }
 
-    // PASO 1: Comprobar si todas las etiquetas de los datos actuales son iguales
+    //comprobamos si todas las etiquetas son iguales
     L primeraEtiqueta = dataset.getLabel(datos.get(0));
     boolean todosIguales = true;
 
@@ -89,30 +89,30 @@ public class GreedyTreeLearner<T, L> {
       return primeraEtiqueta.toString();
     }
 
-    // Medida de seguridad: Si no quedan características para dividir, devolvemos la etiqueta del primero
+
     if (featuresDisponibles.isEmpty()) {
       return primeraEtiqueta.toString();
     }
 
-    // PASO 2: Elegir la mejor característica usando el Patrón Strategy
+    //elegir la mejor etiqueta segun la interfaz de feature Selection
     String featureElegida = estrategia.chooseBestFeature(datos, featuresDisponibles, dataset);
 
     // Creamos la nueva lista de características para los hijos, quitando la que acabamos de usar
     List<String> featuresRestantes = new ArrayList<>(featuresDisponibles);
     featuresRestantes.remove(featureElegida); 
 
-    // PASO 3: Dividir los datos en subconjuntos según el valor de la característica elegida
+    //Dividir los datos en subconjuntos según el valor de la característica elegida
     Map<Object, List<T>> subconjuntos = new HashMap<>();
 
     for (T dato : datos) {
-      // Extraemos el valor de la feature para este dato (ej. true, false, 45, "soleado"...)
+      // Extraemos el valor de la feature para este dato 
       Object valorDato = dataset.getFeaturizer().datoDeInteres(dato, featureElegida);
-
+      //lo metemos en nuestro mapa
       subconjuntos.putIfAbsent(valorDato, new ArrayList<>());
       subconjuntos.get(valorDato).add(dato);
     }
 
-    // PASO 4: Construir el nodo actual y enlazar a los sub-árboles
+    //Creamos el nodo actual y enlazar a los sub-árboles
     arbol.node(nombreNodoActual);
 
     // Por cada subconjunto (rama) que hemos creado:
@@ -123,7 +123,7 @@ public class GreedyTreeLearner<T, L> {
       // Inventamos un nombre único para el nodo hijo
       String nombreHijo = nombreNodoActual + "_" + featureElegida + "_" + valorRama.toString();
 
-      // LLAMADA RECURSIVA: Construimos el sub-árbol para esta rama
+      //recursion, Construimos el sub arbol para esta rama
       String destinoHijo = construirArbol(arbol, nombreHijo, datosRama, featuresRestantes, dataset);
 
       // Conectamos el nodo actual con el hijo usando una condición lambda

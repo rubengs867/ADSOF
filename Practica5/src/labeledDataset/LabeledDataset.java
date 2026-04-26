@@ -1,27 +1,60 @@
-package labeledDataset; 
+package labeledDataset;
 
 import dataset.Dataset;
 import dataset.IFeaturizer;
 
-
+/**
+ * Representa un conjunto de datos en el que cada objeto tiene una etiqueta
+ * asociada.
+ * combina los datos extraídos por el featurizer con las respuestas correctas
+ * proporcionadas por el etiquetador.
+ *
+ * @param <T> El tipo de objeto que almacena el dataset (por ejemplo, Person,
+ *            Weather).
+ * @param <L> El tipo de la etiqueta asignada a cada objeto (por ejemplo,
+ *            String, Boolean).
+ */
 public class LabeledDataset<T, L> extends Dataset<T> {
 
+  /**
+   * El proveedor encargado de asignar o recuperar la etiqueta de cada objeto.
+   */
   private LabelProvider<T, L> labelProvider;
 
-  // El constructor ahora pide las DOS herramientas
+  /**
+   * Construye un nuevo LabeledDataset, inicializando tanto el extractor de
+   * características
+   * como el asignador de etiquetas.
+   * * @param featurizer Herramienta para extraer las características de los
+   * objetos de tipo T.
+   * 
+   * @param labelProvider Herramienta para obtener la etiqueta de tipo L
+   *                      correspondiente a cada objeto.
+   */
   public LabeledDataset(IFeaturizer<T> featurizer, LabelProvider<T, L> labelProvider) {
-    super(featurizer); // 1º Pasamos el featurizer al padre para que monte las columnas
-    this.labelProvider = labelProvider; // 2º Guardamos nuestro etiquetador
+    super(featurizer);
+    this.labelProvider = labelProvider;
   }
 
-  // Ahora devuelve el tipo L (ej. Boolean) en lugar de un Object genérico
+  /**
+   * Obtiene la etiqueta asociada a un objeto específico utilizando el
+   * LabelProvider.
+   * * @param object El objeto del cual se quiere conocer la etiqueta.
+   * 
+   * @return La etiqueta correspondiente al objeto, de tipo L.
+   */
   public L getLabel(T object) {
     return labelProvider.getLabel(object);
   }
-  
-  // Te recomiendo añadir este getter, ¡el algoritmo GreedyTreeLearner lo va a agradecer luego!
+
+  /**
+   * Devuelve el proveedor de etiquetas asociado a este dataset.
+   * Útil para algoritmos de clasificación (como GreedyTreeLearner) que necesiten
+   * consultar el etiquetador original.
+   * * @return El objeto LabelProvider utilizado por este dataset.
+   */
   public LabelProvider<T, L> getLabelProvider() {
-      return this.labelProvider;
+    return this.labelProvider;
   }
-  
+
 }
