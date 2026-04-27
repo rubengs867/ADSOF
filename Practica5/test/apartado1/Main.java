@@ -1,7 +1,8 @@
 package apartado1;
 
-import dataset.*;
-import java.util.Collections; 
+import java.util.Collections;
+
+import model.*; 
 
 public class Main { 
   public static void main(String[] args) {

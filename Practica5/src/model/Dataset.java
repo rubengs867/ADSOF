@@ -1,4 +1,4 @@
-package dataset;
+package model;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -11,13 +11,14 @@ import java.util.Set;
 public class Dataset<T> {
 
   /** Datos de interés de los objetos que componen el Dataset */
-  //tal vez habria que poner que ? extienda de algo por si acaso
   private LinkedHashMap<String, Feature<?>> features = new LinkedHashMap<>();
-  List<T> objetos = new ArrayList<>();  
+
+  private List<T> objetos = new ArrayList<>();
+
   /** Interfaz que obtiene las features de interés */
   private IFeaturizer<T> featurizer;
 
-  private Set<T> data = new LinkedHashSet<>();
+  private LinkedHashSet<T> data = new LinkedHashSet<>();
 
   /**
    * Constructor base de Dataset
@@ -141,5 +142,9 @@ public class Dataset<T> {
 
   public IFeaturizer<T> getFeaturizer() {
     return featurizer;
+  }
+
+  public LinkedHashSet<T> getData() {
+    return data;
   }
 }

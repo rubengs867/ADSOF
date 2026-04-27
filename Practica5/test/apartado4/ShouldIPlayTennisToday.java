@@ -1,6 +1,6 @@
 package apartado4;
 
-import labeledDataset.LabelProvider; // Ajusta el import a tu paquete real
+import model.LabelProvider;
 
 public class ShouldIPlayTennisToday implements LabelProvider<Weather, Boolean> {
     @Override

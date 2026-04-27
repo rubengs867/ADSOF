@@ -1,8 +1,11 @@
-package labeledDataset;
+package strategy;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+
+import model.LabeledDataset;
 
 /**
  * Estrategia de selección de características que elige una característica de
@@ -25,14 +28,14 @@ public class RandomStrategy<T, L> implements FeatureSelectionStrategy<T, L> {
    * Selecciona una característica al azar de la lista de características
    * disponibles.
    *
-   * @param datos La lista de objetos presentes en el nodo actual, no se utiliza en esta estrategia, pero es requerida por la interfaz
-   * @param featuresDisponibles La lista de nombres de las características que aún  pueden usarse para dividir.
    * @param dataset             El conjunto de datos etiquetados original (no se
    *                            utiliza en esta estrategia).
    * @return El nombre de la característica seleccionada aleatoriamente.
    */
   @Override
-  public String chooseBestFeature(List<T> datos, List<String> featuresDisponibles, LabeledDataset<T, L> dataset) {
+  public String chooseBestFeature(LabeledDataset<T, L> dataset) {
+    Set<String> featuresDisponibles = dataset.getFeatures().keySet();
+    
     // Hacemos una copia para no alterar la lista original al mezclar.
     // Esto previene "efectos colaterales" indeseados en la lista del llamador.
     List<String> mezclada = new ArrayList<>(featuresDisponibles);

@@ -1,9 +1,12 @@
 package apartado4;
 
-import decisionTree.DecisionTree;
-import labeledDataset.GreedyTreeLearner;
-import labeledDataset.LabeledDataset;
+import tree.DecisionTree;
+import tree.GreedyTreeLearner;
+
 import java.util.Map;
+
+import model.LabeledDataset;
+
 import java.util.List;
 
 public class Main {

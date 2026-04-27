@@ -1,15 +1,16 @@
-package decisionTree;
+package tree;
 
-import dataset.Dataset;
 import java.util.*;
 import java.util.function.Predicate;
+
+import model.Dataset;
 
 public class DecisionTree<T> {
   private TreeNode<T> raiz = null;
   // cada TreeNode guarda el valor generico
   private Map<String, TreeNode<T>> nodos;
 
-  // Constructor vacio para el javadoc
+  // Constructor
   public DecisionTree() {
     this.nodos = new HashMap<>();
   }

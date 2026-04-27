@@ -2,7 +2,8 @@ package apartado4;
 
 import java.util.Arrays;
 import java.util.List;
-import dataset.IFeaturizer; 
+
+import model.IFeaturizer; 
 
 public class WeatherFeaturizer implements IFeaturizer<Weather> {
     @Override

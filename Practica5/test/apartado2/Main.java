@@ -1,11 +1,12 @@
 package apartado2;
 
-import decisionTree.*;
-import dataset.*;
+import tree.*;
+
 import java.util.function.Predicate;
 
 import apartado1.Person;
 import apartado1.PersonFeaturizer;
+import model.*;
 
 public class Main {
 

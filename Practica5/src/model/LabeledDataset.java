@@ -1,7 +1,4 @@
-package labeledDataset;
-
-import dataset.Dataset;
-import dataset.IFeaturizer;
+package model;
 
 /**
  * Representa un conjunto de datos en el que cada objeto tiene una etiqueta
@@ -25,9 +22,9 @@ public class LabeledDataset<T, L> extends Dataset<T> {
    * Construye un nuevo LabeledDataset, inicializando tanto el extractor de
    * características
    * como el asignador de etiquetas.
-   * * @param featurizer Herramienta para extraer las características de los
-   * objetos de tipo T.
    * 
+   * @param featurizer    Herramienta para extraer las características de los
+   *                      objetos de tipo T.
    * @param labelProvider Herramienta para obtener la etiqueta de tipo L
    *                      correspondiente a cada objeto.
    */
@@ -39,8 +36,8 @@ public class LabeledDataset<T, L> extends Dataset<T> {
   /**
    * Obtiene la etiqueta asociada a un objeto específico utilizando el
    * LabelProvider.
-   * * @param object El objeto del cual se quiere conocer la etiqueta.
    * 
+   * @param object El objeto del cual se quiere conocer la etiqueta.
    * @return La etiqueta correspondiente al objeto, de tipo L.
    */
   public L getLabel(T object) {
@@ -51,7 +48,8 @@ public class LabeledDataset<T, L> extends Dataset<T> {
    * Devuelve el proveedor de etiquetas asociado a este dataset.
    * Útil para algoritmos de clasificación (como GreedyTreeLearner) que necesiten
    * consultar el etiquetador original.
-   * * @return El objeto LabelProvider utilizado por este dataset.
+   * 
+   * @return El objeto LabelProvider utilizado por este dataset.
    */
   public LabelProvider<T, L> getLabelProvider() {
     return this.labelProvider;

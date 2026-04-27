@@ -1,4 +1,4 @@
-package decisionTree;
+package tree;
 
 import java.util.function.Predicate;
 

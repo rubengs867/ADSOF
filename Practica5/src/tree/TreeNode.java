@@ -1,6 +1,7 @@
-package decisionTree;
+package tree;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Predicate; //para usar la interfaz Predicate, su metodo es .test
 
 public class TreeNode<T> {
@@ -37,6 +38,8 @@ public class TreeNode<T> {
     return nodoDefecto;
   }
 
+  
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   public String evaluate(T dato){
     for(Rama r : this.ramas){
       //cogemos la condicion de la rama y probamos con el metodo de la interfaz test

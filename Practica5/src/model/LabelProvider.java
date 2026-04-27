@@ -1,4 +1,4 @@
-package labeledDataset;
+package model;
 
 /**
  * @param <T> El tipo de objeto que estamos evaluando

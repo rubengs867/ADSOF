@@ -2,7 +2,7 @@ package apartado1;
 
 import java.util.List;
 
-import dataset.IFeaturizer;
+import model.IFeaturizer;
 
 public class PersonFeaturizer implements IFeaturizer<Person> {
 
