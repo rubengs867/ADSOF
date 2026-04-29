@@ -1,26 +1,30 @@
 package tree;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 
 import model.Dataset;
 
 public class DecisionTree<T> {
-  private TreeNode<T> raiz = null;
+  private Node<T> raiz = null;
   // cada TreeNode guarda el valor generico
-  private Map<String, TreeNode<T>> nodos;
+  private Map<String, Node<T>> nodos;
 
   // Constructor
   public DecisionTree() {
     this.nodos = new HashMap<>();
   }
 
-  public TreeNode<T> node(String name) {
+  public Node<T> node(String name) {
     if (nodos.containsKey(name)) {
       return nodos.get(name);
     }
     // no existe ese nuevo nodo, entonces hay que crearlo
-    TreeNode<T> nuevoNodo = new TreeNode<>(name);
+    Node<T> nuevoNodo = new Node<>(name);
     nodos.put(name, nuevoNodo);
 
     if (this.raiz == null) {
@@ -60,7 +64,7 @@ public class DecisionTree<T> {
   }
 
   private String predicate(T dato) {
-    TreeNode<T> nodo_actual = this.raiz;
+    Node<T> nodo_actual = this.raiz;
 
     while (true) {
       // evaluamos la condcion actual
@@ -97,7 +101,7 @@ public class DecisionTree<T> {
     return buscarPredicado(this.raiz, etiquetaDestino);
   }
 
-  private Predicate<T> buscarPredicado(TreeNode<T> nodo, String etiquetaDestino) {
+  private Predicate<T> buscarPredicado(Node<T> nodo, String etiquetaDestino) {
     if (nodo == null)
       return null;
 
@@ -114,13 +118,13 @@ public class DecisionTree<T> {
       Predicate<T> formulaParaEntrarAqui = hanFalladoAnteriores.and(rama.getCondicion());
 
       // CASO A: ¡Esta rama apunta directamente a la etiqueta que buscamos!
-      if (rama.getNodoDestino().equals(etiquetaDestino)) {
+      if (rama.getNodoDestino().getName().equals(etiquetaDestino)) {
         return formulaParaEntrarAqui;
       }
 
       // CASO B: Es un nodo intermedio. Hacemos recursividad para seguir bajando.
-      if (this.nodos.containsKey(rama.getNodoDestino())) {
-        TreeNode<T> nodoHijo = this.nodos.get(rama.getNodoDestino());
+      if (this.nodos.containsKey(rama.getNodoDestino().getName())) {
+        Node<T> nodoHijo = this.nodos.get(rama.getNodoDestino().getName());
         Predicate<T> formulaHijo = buscarPredicado(nodoHijo, etiquetaDestino);
 
         // Si por ese camino abajo se encontró la etiqueta, unimos nuestra fórmula a la
@@ -139,7 +143,7 @@ public class DecisionTree<T> {
     // 3. EL CAMINO POR DEFECTO (otherwise)
     // Si el bucle termina, la fórmula para caer en el otherwise es exactamente
     // nuestro acumulador (todas las ramas negadas y unidas por AND).
-    String destinoDefecto = nodo.getNodoPorDefecto();
+    String destinoDefecto = nodo.getNodoPorDefecto().getName();
     if (destinoDefecto != null) {
 
       // CASO A: El otherwise es nuestra etiqueta
@@ -149,7 +153,7 @@ public class DecisionTree<T> {
 
       // CASO B: El otherwise es un nodo intermedio (Recursividad)
       if (this.nodos.containsKey(destinoDefecto)) {
-        TreeNode<T> nodoHijo = this.nodos.get(destinoDefecto);
+        Node<T> nodoHijo = this.nodos.get(destinoDefecto);
         Predicate<T> formulaHijo = buscarPredicado(nodoHijo, etiquetaDestino);
 
         if (formulaHijo != null) {
@@ -162,5 +166,4 @@ public class DecisionTree<T> {
     // salida
     return null;
   }
-
 }
