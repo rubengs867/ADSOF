@@ -53,7 +53,7 @@ public class GreedyTreeLearner<T, L> {
     DecisionTree<T> arbol = new DecisionTree<>();
 
     // Obtenemos los datos completos para empezar
-    List<T> datos = dataset.getObjetos();
+    List<T> datos = new ArrayList<>(dataset.getData());
 
     // Obtenemos la lista de características disponibles
     List<String> featuresDisponibles = new ArrayList<>(dataset.getFeaturizer().featureDeInteres());
@@ -112,8 +112,8 @@ public class GreedyTreeLearner<T, L> {
       return primeraEtiqueta.toString();
     }
 
-    // elegir la mejor etiqueta segun la interfaz de feature Selection
-    String featureElegida = estrategia.chooseBestFeature(dataset);
+    LabeledDataset<T, L> sub = dataset.subset(datos, featuresDisponibles);
+    String featureElegida = estrategia.chooseBestFeature(sub);
 
     // Creamos la nueva lista de características para los hijos, quitando la que
     // acabamos de usar

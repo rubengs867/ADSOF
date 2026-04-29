@@ -1,17 +1,16 @@
 package apartado2;
 
-import tree.*;
-
 import java.util.function.Predicate;
 
+import apartado1.Main1;
 import apartado1.Person;
-import apartado1.PersonFeaturizer;
-import model.*;
+import model.Dataset;
+import tree.DecisionTree;
 
-public class Main {
+public class Main2 {
 
   public static void main(String[] args) {
-    Dataset<Person> dataSet = buildDataSet();
+    Dataset<Person> dataSet = Main1.buildDataSet();
     DecisionTree<Person> dt = buildPersonDecisionTree();
 
     System.out.println(dt.predict(dataSet));
@@ -33,17 +32,4 @@ public class Main {
         .otherwise("young male");
     return dt;
   }
-
-  public static Dataset<Person> buildDataSet() {
-    Person people[] = { new Person("Pedro", 66, 75, 180, true), // name, age, weight, height, male?
-        new Person("Ana", 47, 54, 158, false),
-        new Person("Luis", 34, 75, 176, true),
-        new Person("Rosa", 47, 54, 158, false)
-    };
-
-    Dataset<Person> dataSet = new Dataset<>(new PersonFeaturizer()); // A Featurizer for Person objects
-    dataSet.addAll(people);
-    return dataSet;
-  }
-
 } 

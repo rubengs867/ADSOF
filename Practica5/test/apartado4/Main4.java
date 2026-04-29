@@ -9,7 +9,7 @@ import model.LabeledDataset;
 
 import java.util.List;
 
-public class Main {
+public class Main4 {
 
     public static void main(String[] args) {
         DecisionTree<Weather> tree = learnTree();

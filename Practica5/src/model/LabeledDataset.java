@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 /**
  * Representa un conjunto de datos en el que cada objeto tiene una etiqueta
  * asociada.
@@ -53,6 +55,31 @@ public class LabeledDataset<T, L> extends Dataset<T> {
    */
   public LabelProvider<T, L> getLabelProvider() {
     return this.labelProvider;
+  }
+
+  public LabeledDataset<T, L> subset(List<T> datos, List<String> featuresSeleccionadas) {
+
+    // Crear nuevo dataset con mismo featurizer y labelProvider
+    LabeledDataset<T, L> sub = new LabeledDataset<>(this.getFeaturizer(), this.labelProvider);
+
+    // Filtrar features: eliminar las que no están disponibles
+    sub.getFeatures().keySet().retainAll(featuresSeleccionadas);
+
+    // Añadir datos filtrados
+    for (T obj : datos) {
+
+      // Añadir valores de features seleccionadas
+      for (String featureName : featuresSeleccionadas) {
+        Comparable value = getFeaturizer().datoDeInteres(obj, featureName);
+        Feature feature = sub.getFeatures().get(featureName);
+        feature.add(value);
+      }
+
+      // Añadir objeto al dataset
+      sub.getData().add(obj);
+    }
+
+    return sub;
   }
 
 }

@@ -24,7 +24,7 @@ public class DecisionTree<T> {
       return nodos.get(name);
     }
     // no existe ese nuevo nodo, entonces hay que crearlo
-    Node<T> nuevoNodo = new Node<>(name);
+    Node<T> nuevoNodo = new Node<>(name, this);
     nodos.put(name, nuevoNodo);
 
     if (this.raiz == null) {
@@ -54,7 +54,7 @@ public class DecisionTree<T> {
     // Lo único que hacemos es preparar un mapa vacío
     Map<String, List<T>> resultados = new LinkedHashMap<>();
 
-    for (T dato : dataset.getObjetos()) {
+    for (T dato : dataset.getData()) {
       String etiqueta = predicate(dato);
       resultados.putIfAbsent(etiqueta, new ArrayList<>());
       resultados.get(etiqueta).add(dato);
@@ -143,7 +143,8 @@ public class DecisionTree<T> {
     // 3. EL CAMINO POR DEFECTO (otherwise)
     // Si el bucle termina, la fórmula para caer en el otherwise es exactamente
     // nuestro acumulador (todas las ramas negadas y unidas por AND).
-    String destinoDefecto = nodo.getNodoPorDefecto().getName();
+    Node<T> nodoDefecto = nodo.getNodoPorDefecto();
+    String destinoDefecto = (nodoDefecto == null) ? null : nodoDefecto.getName();
     if (destinoDefecto != null) {
 
       // CASO A: El otherwise es nuestra etiqueta

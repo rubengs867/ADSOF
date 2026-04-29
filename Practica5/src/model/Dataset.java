@@ -13,8 +13,6 @@ public class Dataset<T> {
   /** Datos de interés de los objetos que componen el Dataset */
   private LinkedHashMap<String, Feature<?>> features = new LinkedHashMap<>();
 
-  private List<T> objetos = new ArrayList<>();
-
   /** Interfaz que obtiene las features de interés */
   private IFeaturizer<T> featurizer;
 
@@ -40,7 +38,6 @@ public class Dataset<T> {
   @SuppressWarnings({ "rawtypes", "unchecked" })
   public void addAll(T[] objects) {
     for (T obj : objects) {
-      this.objetos.add(obj);
       // Recorro todas las features de interés del objeto (mismas que las claves del mapa)
       for (String featureName : featurizer.featureDeInteres()) {
 
@@ -54,10 +51,6 @@ public class Dataset<T> {
 
       data.add(obj);
     }
-  }
-
-  public List<T> getObjetos() {
-      return this.objetos;
   }
 
   /**
@@ -121,12 +114,6 @@ public class Dataset<T> {
       }
       features.put(featureName, nuevo);
     }
-
-    List<T> objetosFiltrados = new ArrayList<>();
-    for (int i : indices) {
-        objetosFiltrados.add(this.objetos.get(i));
-    }
-    this.objetos = objetosFiltrados;
 
     return true;
   }

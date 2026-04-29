@@ -1,16 +1,19 @@
 package apartado5; 
 
-import decisionTree.DecisionTree;
-import labeledDataset.*;
+import java.util.List;
+import java.util.Map;
+
+import apartado4.ShouldIPlayTennisToday;
+import apartado4.Temperature;
 // Importamos las clases del clima que hicimos en el apartado 4
 import apartado4.Weather;
 import apartado4.WeatherCondition;
-import apartado4.Temperature;
 import apartado4.WeatherFeaturizer;
-import apartado4.ShouldIPlayTennisToday;
-
-import java.util.Map;
-import java.util.List;
+import model.LabeledDataset;
+import strategy.MisclassificationStrategy;
+import strategy.RandomStrategy;
+import tree.DecisionTree;
+import tree.GreedyTreeLearner;
 
 public class Main {
 

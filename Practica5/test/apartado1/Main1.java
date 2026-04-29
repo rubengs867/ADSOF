@@ -4,7 +4,7 @@ import java.util.Collections;
 
 import model.*; 
 
-public class Main { 
+public class Main1 { 
   public static void main(String[] args) {
     Dataset<Person> dataSet = buildDataSet();
     System.out.println("dataset: " + dataSet);
