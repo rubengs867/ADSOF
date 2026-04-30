@@ -15,7 +15,7 @@ import strategy.RandomStrategy;
 import tree.DecisionTree;
 import tree.GreedyTreeLearner;
 
-public class Main {
+public class Main5 {
 
     public static void main(String[] args) {
         System.out.println("PRUEBA APARTADO 5: ");
