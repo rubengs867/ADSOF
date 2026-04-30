@@ -66,7 +66,8 @@ public class Node<T> implements TreeElement {
     }
 
     if (nodoDefecto != null) {
-      nodoDefecto.accept(visitor, depth + 1);
+      Rama<T> ramaOtherwise = new Rama<>(this, nodoDefecto, null);
+      ramaOtherwise.accept(visitor, depth + 1);
     }
   }
 

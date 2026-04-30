@@ -167,4 +167,12 @@ public class DecisionTree<T> {
     // salida
     return null;
   }
+
+  public Node<T> getRaiz() {
+    return raiz;
+  }
+
+  public Map<String, Node<T>> getNodos() {
+    return nodos;
+  }
 }
