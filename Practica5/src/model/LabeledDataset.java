@@ -18,7 +18,7 @@ public class LabeledDataset<T, L> extends Dataset<T> {
   /**
    * El proveedor encargado de asignar o recuperar la etiqueta de cada objeto.
    */
-  private LabelProvider<T, L> labelProvider;
+  private ILabelProvider<T, L> labelProvider;
 
   /**
    * Construye un nuevo LabeledDataset, inicializando tanto el extractor de
@@ -30,7 +30,7 @@ public class LabeledDataset<T, L> extends Dataset<T> {
    * @param labelProvider Herramienta para obtener la etiqueta de tipo L
    *                      correspondiente a cada objeto.
    */
-  public LabeledDataset(IFeaturizer<T> featurizer, LabelProvider<T, L> labelProvider) {
+  public LabeledDataset(IFeaturizer<T> featurizer, ILabelProvider<T, L> labelProvider) {
     super(featurizer);
     this.labelProvider = labelProvider;
   }
@@ -53,7 +53,7 @@ public class LabeledDataset<T, L> extends Dataset<T> {
    * 
    * @return El objeto LabelProvider utilizado por este dataset.
    */
-  public LabelProvider<T, L> getLabelProvider() {
+  public ILabelProvider<T, L> getLabelProvider() {
     return this.labelProvider;
   }
 

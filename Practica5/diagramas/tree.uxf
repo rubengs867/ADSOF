@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>13</zoom_level>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>91</x>
+      <y>351</y>
+      <w>2093</w>
+      <h>832</h>
+    </coordinates>
+    <panel_attributes>tree
+layer=-1
+bg=CYAN</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>169</x>
+      <y>416</y>
+      <w>650</w>
+      <h>286</h>
+    </coordinates>
+    <panel_attributes>DecisionTree&lt;T&gt;
+--
+-nodos: Map&lt;String, Node&lt;T&gt; &gt;
+-nodosVisitados: Set&lt;Node&lt;T&gt; &gt;
+--
++DecisionTree()
++node(name: String): Node&lt;T&gt;
++predict(datos: T...): Map&lt;String, List&lt;T&gt; &gt;
++predict(dataset: Dataset&lt;T&gt;): Map&lt;String, List&lt;T&gt; &gt;
++getPredicate(etiquetaDestino: String): Predicate&lt;T&gt;
++getRaiz(): Node&lt;T&gt;
++getNodos(): Map&lt;String, Node&lt;T&gt; &gt;
+-predicate(dato: T): String
+-buscarPredicado(nodo: Node&lt;T&gt;, etiqueta: String): Predicate&lt;T&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>182</x>
+      <y>806</y>
+      <w>637</w>
+      <h>143</h>
+    </coordinates>
+    <panel_attributes>GreedyTreeLearner&lt;T, L&gt;
+--
+--
++GreedyTreeLearner()
++GreedyTreeLearner(estrategia: FeatureSelectionStrategy&lt;T, L&gt;)
++learn(dataset: LabeledDataset&lt;T, L&gt;): DecisionTree&lt;T&gt;
+-construirArbol(arbol, nombre, datos, features, dataset): String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1131</x>
+      <y>403</y>
+      <w>650</w>
+      <h>325</h>
+    </coordinates>
+    <panel_attributes>Node&lt;T&gt;
+--
+-name: String
+--
++Node(name: String, tree: DecisionTree&lt;T&gt;)
++withCondition(destino: String, condicion: Predicate&lt;T&gt;): Node&lt;T&gt;
++otherwise(destino: String): Node&lt;T&gt;
++evaluate(dato: T): String
++accept(visitor: TreeVisitor, depth: int): void
++getName(): String
++getRamas(): List&lt;Rama&lt;T&gt; &gt;
++getNodoPorDefecto(): Node&lt;T&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1118</x>
+      <y>884</y>
+      <w>689</w>
+      <h>234</h>
+    </coordinates>
+    <panel_attributes>Rama&lt;T&gt;
+--
+-condicion: Predicate&lt;T&gt;
+--
++Rama(origen: Node&lt;T&gt;, destino: Node&lt;T&gt;, condicion: Predicate&lt;T&gt;)
++accept(visitor: TreeVisitor, depth: int): void
++getOrigen(): Node&lt;T&gt;
++getNodoDestino(): Node&lt;T&gt;
++getCondicion(): Predicate&lt;T&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>806</x>
+      <y>494</y>
+      <w>351</w>
+      <h>65</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;
+r2=nodos
+m2=*</panel_attributes>
+    <additional_attributes>10.0;20.0;250.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>806</x>
+      <y>559</y>
+      <w>351</w>
+      <h>65</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;
+r2=raiz
+m2=0..1</panel_attributes>
+    <additional_attributes>10.0;20.0;250.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>806</x>
+      <y>429</y>
+      <w>351</w>
+      <h>52</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+r1=tree</panel_attributes>
+    <additional_attributes>10.0;20.0;250.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1508</x>
+      <y>715</y>
+      <w>91</w>
+      <h>195</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;
+r2=ramas
+m2=*</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;130.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1196</x>
+      <y>715</y>
+      <w>286</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;
+r2=nodoDefecto
+m2=0..1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0;110.0;80.0;110.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>312</x>
+      <y>1092</y>
+      <w>351</w>
+      <h>65</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;from strategy&gt;&gt;
+FeatureSelectionStrategy&lt;T, L&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>481</x>
+      <y>936</y>
+      <w>130</w>
+      <h>182</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+r1=estrategia</panel_attributes>
+    <additional_attributes>10.0;120.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1625</x>
+      <y>715</y>
+      <w>91</w>
+      <h>195</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+r1=origen</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;130.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1716</x>
+      <y>715</y>
+      <w>104</w>
+      <h>195</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+r1=destino</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;130.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>481</x>
+      <y>689</y>
+      <w>39</w>
+      <h>143</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1924</x>
+      <y>754</y>
+      <w>221</w>
+      <h>52</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;from visualization&gt;&gt;
+TreeElement</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1768</x>
+      <y>546</y>
+      <w>299</w>
+      <h>234</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>210.0;160.0;210.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1794</x>
+      <y>793</y>
+      <w>273</w>
+      <h>234</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>190.0;10.0;190.0;160.0;10.0;160.0</additional_attributes>
+  </element>
+</diagram>

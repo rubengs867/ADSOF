@@ -23,13 +23,21 @@ public class Node<T> implements TreeElement {
 
   public Node<T> withCondition(String destino, Predicate<T> condicion) {
     Node<T> nodoDestino = tree.node(destino);
-    Rama<T> rama = new Rama<>(this, nodoDestino, condicion);
-    this.ramas.add(rama);
+
+    if (tree.getNodosVisitados().add(nodoDestino)) {
+      Rama<T> rama = new Rama<>(this, nodoDestino, condicion);
+      this.ramas.add(rama);
+    }
+    
     return this;
   }
 
   public Node<T> otherwise(String destino) {
-    this.nodoDefecto = tree.node(destino);
+    Node<T> nodoDestino = tree.node(destino);
+
+    if (tree.getNodosVisitados().add(nodoDestino))
+      this.nodoDefecto = nodoDestino;
+
     return this;
   }
 

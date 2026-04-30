@@ -1,16 +1,11 @@
 package visualization;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import tree.Node;
 import tree.Rama;
 
 public class GraphvizTreeVisitor implements TreeVisitor {
 
   private StringBuilder sb = new StringBuilder();
-  private Set<String> nodosVisitados = new HashSet<>();
-  private Set<String> aristasVisitadas = new HashSet<>();
 
   public GraphvizTreeVisitor() {
     sb.append("digraph DecisionTree {\n");
@@ -36,13 +31,11 @@ public class GraphvizTreeVisitor implements TreeVisitor {
     String id = getNodeId(node);
     String label = escape(node.getName());
 
-    if (nodosVisitados.add(id)) {
-      sb.append("  \"")
-          .append(id)
-          .append("\" [label=\"")
-          .append(label)
-          .append("\"];\n");
-    }
+    sb.append("  \"")
+        .append(id)
+        .append("\" [label=\"")
+        .append(label)
+        .append("\"];\n");
   }
 
   @Override
@@ -54,16 +47,12 @@ public class GraphvizTreeVisitor implements TreeVisitor {
         ? escape(rama.getCondicion().toString())
         : "otherwise";
 
-    String edgeKey = origenId + "->" + destinoId + "|" + label;
-
-    if (aristasVisitadas.add(edgeKey)) {
-      sb.append("  \"")
-          .append(origenId)
-          .append("\" -> \"")
-          .append(destinoId)
-          .append("\" [label=\"")
-          .append(label)
-          .append("\"];\n");
-    }
+    sb.append("  \"")
+        .append(origenId)
+        .append("\" -> \"")
+        .append(destinoId)
+        .append("\" [label=\"")
+        .append(label)
+        .append("\"];\n");
   }
 }

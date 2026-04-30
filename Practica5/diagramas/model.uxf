@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>17</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>544</x>
+      <y>544</y>
+      <w>629</w>
+      <h>374</h>
+    </coordinates>
+    <panel_attributes>Dataset&lt;T&gt;
+--
+-features: LinkedHashMap&lt;String, Feature&lt;?&gt; &gt;
+-data: LinkedHashSet&lt;T&gt;
+--
++Dataset(featurizer: IFeaturizer&lt;T&gt;)
++addAll(objects: T[]): void
++feature(featureName: String): Feature&lt;R&gt;
++removeDuplicates(): boolean
++toString(): String
++getFeatures(): Map&lt;String, Feature&lt;?&gt; &gt;
++getFeaturizer(): IFeaturizer&lt;T&gt;
++getData(): LinkedHashSet&lt;T&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1275</x>
+      <y>340</y>
+      <w>816</w>
+      <h>153</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+IFeaturizer&lt;T&gt;
+--
+--
++featureDeInteres(): List&lt;String&gt;
++datoDeInteres(object: T, featureName: String): Comparable&lt;?&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1445</x>
+      <y>782</y>
+      <w>493</w>
+      <h>153</h>
+    </coordinates>
+    <panel_attributes>Feature&lt;T extends Comparable&lt;T&gt; &gt;
+--
+--
++min(): T
++max(): T
++distribution(): Map&lt;T, Integer&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>289</x>
+      <y>1037</y>
+      <w>1054</w>
+      <h>204</h>
+    </coordinates>
+    <panel_attributes>LabeledDataset&lt;T, L&gt;
+--
+--
++LabeledDataset(featurizer: IFeaturizer&lt;T&gt;, labelProvider: LabelProvider&lt;T, L&gt;)
++getLabel(object: T): L
++getLabelProvider(): LabelProvider&lt;T, L&gt;
++subset(datos: List&lt;T&gt;, featuresSeleccionadas: List&lt;String&gt;): LabeledDataset&lt;T, L&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1666</x>
+      <y>1088</y>
+      <w>323</w>
+      <h>119</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+ILabelProvider&lt;T, L&gt;
+--
+--
++getLabel(object: T): L</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>255</x>
+      <y>272</y>
+      <w>1870</w>
+      <h>1003</h>
+    </coordinates>
+    <panel_attributes>model
+layer=-1
+bg=PINK</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1564</x>
+      <y>663</y>
+      <w>238</w>
+      <h>51</h>
+    </coordinates>
+    <panel_attributes>ArrayList&lt;T&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1666</x>
+      <y>697</y>
+      <w>51</w>
+      <h>119</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1156</x>
+      <y>816</y>
+      <w>323</w>
+      <h>85</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;
+r2=features
+m2=*</panel_attributes>
+    <additional_attributes>10.0;20.0;170.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>833</x>
+      <y>901</y>
+      <w>51</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>850</x>
+      <y>374</y>
+      <w>459</w>
+      <h>204</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;
+r2=featurizer</panel_attributes>
+    <additional_attributes>10.0;100.0;10.0;20.0;250.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1326</x>
+      <y>1105</y>
+      <w>374</w>
+      <h>68</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;
+r2=labelProvider</panel_attributes>
+    <additional_attributes>10.0;20.0;200.0;20.0</additional_attributes>
+  </element>
+</diagram>

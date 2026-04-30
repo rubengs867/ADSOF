@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>15</zoom_level>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>345</x>
+      <y>360</y>
+      <w>1560</w>
+      <h>465</h>
+    </coordinates>
+    <panel_attributes>strategy
+layer=-1
+bg=YELLOW</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>735</x>
+      <y>435</y>
+      <w>690</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+FeatureSelectionStrategy&lt;T, L&gt;
+--
+--
+/+chooseBestFeature(dataset: LabeledDataset&lt;T, L&gt;): String/</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>375</x>
+      <y>705</y>
+      <w>675</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>MisclassificationStrategy&lt;T, L&gt;
+--
+--
++chooseBestFeature(dataset: LabeledDataset&lt;T, L&gt;): String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1095</x>
+      <y>705</y>
+      <w>675</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>RandomStrategy&lt;T, L&gt;
+--
+--
++chooseBestFeature(dataset: LabeledDataset&lt;T, L&gt;): String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1275</x>
+      <y>540</y>
+      <w>45</w>
+      <h>195</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>870</x>
+      <y>540</y>
+      <w>45</w>
+      <h>195</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1560</x>
+      <y>450</y>
+      <w>300</w>
+      <h>75</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;from model&gt;&gt;
+LabeledDataset&lt;T, L&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1410</x>
+      <y>465</y>
+      <w>180</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>100.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>

@@ -1,8 +1,8 @@
 package apartado4;
 
-import model.LabelProvider;
+import model.ILabelProvider;
 
-public class ShouldIPlayTennisToday implements LabelProvider<Weather, Boolean> {
+public class ShouldIPlayTennisToday implements ILabelProvider<Weather, Boolean> {
     @Override
     public Boolean getLabel(Weather w) {
         // Reglas inventadas 

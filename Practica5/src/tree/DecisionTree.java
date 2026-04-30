@@ -2,9 +2,11 @@ package tree;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import model.Dataset;
@@ -12,12 +14,10 @@ import model.Dataset;
 public class DecisionTree<T> {
   private Node<T> raiz = null;
   // cada TreeNode guarda el valor generico
-  private Map<String, Node<T>> nodos;
+  private Map<String, Node<T>> nodos = new HashMap<>();
 
-  // Constructor
-  public DecisionTree() {
-    this.nodos = new HashMap<>();
-  }
+  /** Nodos que tienen una rama apuntando a ellos */
+  private Set<Node<T>> nodosVisitados = new HashSet<>();
 
   public Node<T> node(String name) {
     if (nodos.containsKey(name)) {
@@ -29,6 +29,7 @@ public class DecisionTree<T> {
 
     if (this.raiz == null) {
       this.raiz = nuevoNodo;
+      nodosVisitados.add(raiz);
     }
     return nuevoNodo;
   }
@@ -91,7 +92,7 @@ public class DecisionTree<T> {
     }
   }
 
-  //pertenece a la interfaz de functions
+  // pertenece a la interfaz de functions
   public Predicate<T> getPredicate(String etiquetaDestino) {
     // Si el destino es la propia raíz, el predicado es "siempre true"
     if (this.raiz != null && this.raiz.getName().equals(etiquetaDestino)) {
@@ -174,5 +175,9 @@ public class DecisionTree<T> {
 
   public Map<String, Node<T>> getNodos() {
     return nodos;
+  }
+
+  public Set<Node<T>> getNodosVisitados() {
+    return nodosVisitados;
   }
 }
