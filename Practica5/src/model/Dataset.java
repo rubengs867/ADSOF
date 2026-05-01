@@ -38,7 +38,8 @@ public class Dataset<T> {
   @SuppressWarnings({ "rawtypes", "unchecked" })
   public void addAll(T[] objects) {
     for (T obj : objects) {
-      // Recorro todas las features de interés del objeto (mismas que las claves del mapa)
+      // Recorro todas las features de interés del objeto (mismas que las claves del
+      // mapa)
       for (String featureName : featurizer.featureDeInteres()) {
 
         // Obtengo el valor de cada feature de interés del objeto
@@ -113,6 +114,14 @@ public class Dataset<T> {
         nuevo.add((Comparable) antiguo.get(i));
       }
       features.put(featureName, nuevo);
+    }
+
+    List<T> dataList = new ArrayList<>(this.data);
+    this.data.clear(); // Vaciamos el set actual
+
+    // Añadimos de nuevo solo los elementos cuyos índices sobrevivieron
+    for (int i : indices) {
+      this.data.add(dataList.get(i));
     }
 
     return true;
