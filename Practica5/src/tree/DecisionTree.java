@@ -40,7 +40,7 @@ public class DecisionTree<T> {
 
     // Recorremos todos los elementos
     for (T dato : datos) {
-      String etiqueta = predicate(dato);
+      String etiqueta = evaluar(dato);
 
       resultados.putIfAbsent(etiqueta, new ArrayList<>());
 
@@ -56,7 +56,7 @@ public class DecisionTree<T> {
     Map<String, List<T>> resultados = new LinkedHashMap<>();
 
     for (T dato : dataset.getData()) {
-      String etiqueta = predicate(dato);
+      String etiqueta = evaluar(dato);
       resultados.putIfAbsent(etiqueta, new ArrayList<>());
       resultados.get(etiqueta).add(dato);
     }
@@ -64,7 +64,7 @@ public class DecisionTree<T> {
     return resultados;
   }
 
-  private String predicate(T dato) {
+  private String evaluar(T dato) {
     Node<T> nodo_actual = this.raiz;
 
     while (true) {

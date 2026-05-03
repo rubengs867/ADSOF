@@ -34,7 +34,7 @@ bg=CYAN</panel_attributes>
 +getPredicate(etiquetaDestino: String): Predicate&lt;T&gt;
 +getRaiz(): Node&lt;T&gt;
 +getNodos(): Map&lt;String, Node&lt;T&gt; &gt;
--predicate(dato: T): String
+-evaluar(dato: T): String
 -buscarPredicado(nodo: Node&lt;T&gt;, etiqueta: String): Predicate&lt;T&gt;</panel_attributes>
     <additional_attributes/>
   </element>
