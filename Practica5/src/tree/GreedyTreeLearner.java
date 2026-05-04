@@ -37,7 +37,8 @@ public class GreedyTreeLearner<T, L> {
    * Constructor parametrizado.
    * Permite asignar una estrategia específica para la selección de
    * características.
-   * * @param estrategia La estrategia a utilizar
+   * 
+   * @param estrategia La estrategia a utilizar
    */
   public GreedyTreeLearner(FeatureSelectionStrategy<T, L> estrategia) {
     this.estrategia = estrategia;
@@ -45,8 +46,8 @@ public class GreedyTreeLearner<T, L> {
 
   /**
    * Inicia el proceso de aprendizaje y construye el árbol de decisión completo.
-   * * @param dataset El conjunto de datos etiquetados de entrenamiento.
    * 
+   * @param dataset El conjunto de datos etiquetados de entrenamiento.
    * @return Un objeto DecisionTree configurado y listo para hacer predicciones.
    */
   public DecisionTree<T> learn(LabeledDataset<T, L> dataset) {

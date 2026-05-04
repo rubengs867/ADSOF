@@ -8,44 +8,56 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Estructura de datos que almacena objetos y sus características de interés
+ * organizadas por columnas.
+ *
+ * @param <T> Tipo de objeto base almacenado en el dataset.
+ */
 public class Dataset<T> {
 
-  /** Datos de interés de los objetos que componen el Dataset */
+  /**
+   * Mapa de características con sus valores asociados.
+   */
   private LinkedHashMap<String, Feature<?>> features = new LinkedHashMap<>();
 
-  /** Interfaz que obtiene las features de interés */
+  /**
+   * Componente encargado de extraer las características de los objetos.
+   */
   private IFeaturizer<T> featurizer;
 
+  /**
+   * Conjunto de objetos originales almacenados.
+   */
   private LinkedHashSet<T> data = new LinkedHashSet<>();
 
   /**
-   * Constructor base de Dataset
-   * 
-   * @param featurizer Interfaz para extraer datos
+   * Crea un dataset vacío e inicializa sus características disponibles.
+   *
+   * @param featurizer Estrategia para obtener los datos de interés.
    */
   public Dataset(IFeaturizer<T> featurizer) {
     this.featurizer = featurizer;
 
-    // Inicializamos una Feature por cada característica de interés
+    // Inicializa una columna por cada característica declarada.
     for (String featureName : featurizer.featureDeInteres()) {
       features.put(featureName, new Feature<>());
     }
   }
 
   /**
-   * Recibe un array de objetos, extrae sus features y las añade al dataset
+   * Añade múltiples objetos al dataset y extrae automáticamente sus
+   * características configuradas.
+   *
+   * @param objects Objetos a insertar.
    */
   @SuppressWarnings({ "rawtypes", "unchecked" })
   public void addAll(T[] objects) {
     for (T obj : objects) {
-      // Recorro todas las features de interés del objeto (mismas que las claves del
-      // mapa)
       for (String featureName : featurizer.featureDeInteres()) {
 
-        // Obtengo el valor de cada feature de interés del objeto
         Comparable value = featurizer.datoDeInteres(obj, featureName);
 
-        // Añado el valor al Feature del mapa de datos
         Feature currentFeature = features.get(featureName);
         currentFeature.add(value);
       }
@@ -55,8 +67,12 @@ public class Dataset<T> {
   }
 
   /**
-   * Devuelve la Feature correspondiente con un casteo automático al tipo de dato
-   * esperado
+   * Devuelve una característica concreta del dataset.
+   *
+   * @param <R>         Tipo de dato de la característica.
+   * @param featureName Nombre de la característica.
+   *
+   * @return Feature solicitada o {@code null} si no existe.
    */
   @SuppressWarnings("unchecked")
   public <R extends Comparable<R>> Feature<R> feature(String featureName) {
@@ -64,82 +80,102 @@ public class Dataset<T> {
   }
 
   /**
-   * Elimina las filas duplicadas.
-   * Dos filas son duplicadas si para todas las features sus valores son iguales.
+   * Elimina filas duplicadas del dataset.
+   * Dos filas se consideran duplicadas cuando todas sus características
+   * contienen los mismos valores en el mismo orden.
+   *
+   * @return {@code true} si se eliminaron duplicados, {@code false} en caso
+   *         contrario.
    */
   @SuppressWarnings({ "rawtypes", "unchecked" })
   public boolean removeDuplicates() {
-    // Comprobar que el dataset no está vacío y contiene features.
+
+    // Verifica que existan columnas con datos.
     if (features.isEmpty() || features.values().iterator().next().isEmpty()) {
       return false;
     }
 
-    // Tamaño de una de las listas de Feature
     int size = features.values().iterator().next().size();
 
-    /*
-     * Set que va a comparar las filas compuestas por las features de cada objeto
-     * que compone el dataset
-     */
-    Set<List<Object>> unicos = new HashSet<>();
+    Set<List<Object>> uniqueRows = new HashSet<>();
+    List<Integer> validIndexes = new ArrayList<>();
 
-    // Índices de las filas únicas
-    List<Integer> indices = new ArrayList<>();
-
-    // Recorremos por filas e identificamos cuáles son únicas
+    // Detecta filas únicas.
     for (int i = 0; i < size; i++) {
 
-      // Creo la lista de features de interés que define a un objeto
-      List<Object> fila = new ArrayList<>();
+      List<Object> row = new ArrayList<>();
+
       for (String key : featurizer.featureDeInteres()) {
-        fila.add(features.get(key).get(i));
+        row.add(features.get(key).get(i));
       }
 
-      // HashSet.add() devuelve true si el elemento no estaba previamente en el Set
-      if (unicos.add(fila)) {
-        indices.add(i);
+      if (uniqueRows.add(row)) {
+        validIndexes.add(i);
       }
     }
 
-    // Si todos los índices se conservan, no había duplicados
-    if (indices.size() == size) {
+    // No había duplicados.
+    if (validIndexes.size() == size) {
       return false;
     }
 
-    // Reconstruimos el mapa de Feature solo con los índices filtrados
+    // Reconstruye cada columna filtrando índices válidos.
     for (String featureName : featurizer.featureDeInteres()) {
-      Feature antiguo = features.get(featureName);
-      Feature nuevo = new Feature();
-      for (int i : indices) {
-        nuevo.add((Comparable) antiguo.get(i));
+
+      Feature oldFeature = features.get(featureName);
+      Feature newFeature = new Feature();
+
+      for (int index : validIndexes) {
+        newFeature.add((Comparable) oldFeature.get(index));
       }
-      features.put(featureName, nuevo);
+
+      features.put(featureName, newFeature);
     }
 
-    List<T> dataList = new ArrayList<>(this.data);
-    this.data.clear(); // Vaciamos el set actual
+    List<T> dataList = new ArrayList<>(data);
+    data.clear();
 
-    // Añadimos de nuevo solo los elementos cuyos índices sobrevivieron
-    for (int i : indices) {
-      this.data.add(dataList.get(i));
+    // Reconstruye los objetos originales conservados.
+    for (int index : validIndexes) {
+      data.add(dataList.get(index));
     }
 
     return true;
   }
 
+  /**
+   * Devuelve una representación textual del dataset.
+   *
+   * @return Texto representando las características almacenadas.
+   */
   @Override
   public String toString() {
     return features.toString();
   }
 
+  /**
+   * Devuelve el mapa completo de características.
+   *
+   * @return Mapa de features.
+   */
   public Map<String, Feature<?>> getFeatures() {
     return features;
   }
 
+  /**
+   * Devuelve el componente extractor de características.
+   *
+   * @return Instancia de {@link IFeaturizer}.
+   */
   public IFeaturizer<T> getFeaturizer() {
     return featurizer;
   }
 
+  /**
+   * Devuelve los objetos originales almacenados.
+   *
+   * @return Conjunto de datos base.
+   */
   public LinkedHashSet<T> getData() {
     return data;
   }

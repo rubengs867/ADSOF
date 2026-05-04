@@ -1,12 +1,19 @@
 package model;
 
 /**
- * @param <T> El tipo de objeto que estamos evaluando
- * @param <L> El tipo de la etiqueta que le asignamos
+ * Define el contrato para asignar una etiqueta a un objeto.
+ *
+ * @param <T> Tipo de objeto evaluado.
+ * @param <L> Tipo de etiqueta generada.
  */
 public interface ILabelProvider<T, L> {
 
-  // Recibe un objeto de tipo T y devuelve una etiqueta de tipo L
+  /**
+   * Devuelve la etiqueta asociada al objeto indicado.
+   *
+   * @param object Objeto a etiquetar.
+   *
+   * @return Etiqueta correspondiente.
+   */
   L getLabel(T object);
-
 }
