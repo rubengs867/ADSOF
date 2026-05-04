@@ -33,12 +33,12 @@ public class Main6 {
   private static DecisionTree<Person> buildComplexTree() {
     DecisionTree<Person> dt = new DecisionTree<>();
 
-    // Nivel 1: Clasificación por edad
+    // Clasificación por edad
     dt.node("ROOT")
         .withCondition("ADULTO", p -> p.getAge() >= 18)
         .otherwise("MENOR");
 
-    // Nivel 2: Subclasificación de adultos por peso
+    // Subclasificación de adultos por peso
     dt.node("ADULTO")
         .withCondition("PESADO", p -> p.getWeight() >= 80)
         .otherwise("LIGERO");
@@ -54,7 +54,7 @@ public class Main6 {
     PlainTextTreeVisitor visitor = new PlainTextTreeVisitor();
 
     System.out.println("Representación jerárquica (Root Depth = 1):");
-    // El método accept inicia el recorrido[cite: 22, 25]
+    // El método accept inicia el recorrido
     tree.getRaiz().accept(visitor, 1);
     System.out.println();
   }
@@ -66,7 +66,7 @@ public class Main6 {
     System.out.println("===== VISITOR GRAPHVIZ =====");
     GraphvizTreeVisitor visitor = new GraphvizTreeVisitor();
 
-    // Recorrido para generar el grafo[cite: 20, 25]
+    // Recorrido para generar el grafo
     tree.getRaiz().accept(visitor, 1);
 
     System.out.println("Código DOT generado:");
@@ -87,11 +87,11 @@ public class Main6 {
     single.node("ROOT_ONLY");
     single.getRaiz().accept(visitor, 1);
 
-    // Caso: Nodo con únicamente Otherwise (prueba de Rama virtual)
+    // Caso: Nodo con únicamente Otherwise
     System.out.println("\n Caso 2: Solo Otherwise (Rama Virtual) ");
     DecisionTree<Person> onlyOtherwise = new DecisionTree<>();
     onlyOtherwise.node("START").otherwise("END");
-    // El accept del nodo debe crear la rama virtual para el visitor[cite: 25]
+    // El accept del nodo debe crear la rama virtual para el visitor
     onlyOtherwise.getRaiz().accept(visitor, 1);
 
     // Caso: Profundidad incremental en árbol lineal
