@@ -26,7 +26,7 @@ public class PlainTextTreeVisitor implements TreeVisitor {
 
     String indent = "  ".repeat(Math.max(0, depth));
 
-    sb.append(indent + "└─── [Nodo: " + node.getName() + "]");
+    sb.append("\n" + indent + "└─── [Nodo: " + node.getName() + "]");
   }
 
   /**
@@ -45,7 +45,7 @@ public class PlainTextTreeVisitor implements TreeVisitor {
         ? rama.getCondicion().toString()
         : "otherwise";
 
-    sb.append(indent + "  ├─ Condición: " + condicion);
+    sb.append("\n" + indent + "  ├─ Condición: " + condicion);
   }
 
   /**

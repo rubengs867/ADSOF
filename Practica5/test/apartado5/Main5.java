@@ -1,11 +1,10 @@
-package apartado5; 
+package apartado5;
 
 import java.util.List;
 import java.util.Map;
 
 import apartado4.ShouldIPlayTennisToday;
 import apartado4.Temperature;
-// Importamos las clases del clima que hicimos en el apartado 4
 import apartado4.Weather;
 import apartado4.WeatherCondition;
 import apartado4.WeatherFeaturizer;
@@ -15,42 +14,59 @@ import strategy.RandomStrategy;
 import tree.DecisionTree;
 import tree.GreedyTreeLearner;
 
+/**
+ * Clase principal de pruebas para comparar distintas estrategias
+ * de aprendizaje en la construcción de árboles de decisión.
+ */
 public class Main5 {
 
-    public static void main(String[] args) {
-        System.out.println("PRUEBA APARTADO 5: ");
-        
-        LabeledDataset<Weather, Boolean> dataSet = buildDataSet();
+  /**
+   * Punto de entrada de ejecución.
+   *
+   * @param args argumentos de línea de comandos
+   */
+  public static void main(String[] args) {
+    System.out.println("PRUEBA APARTADO 5: ");
 
-        //usamos la Estrategia Aleatoria
-        System.out.println("\n1. Entrenando árbol con RandomStrategy...");
-        GreedyTreeLearner<Weather, Boolean> learnerAleatorio = new GreedyTreeLearner<>(new RandomStrategy<>());
-        DecisionTree<Weather> arbolAleatorio = learnerAleatorio.learn(dataSet);
-        
-        Map<String, List<Weather>> prediccionesAleatorias = arbolAleatorio.predict(dataSet);
-        System.out.println("Resultados (Aleatorio): " + prediccionesAleatorias);
+    LabeledDataset<Weather, Boolean> dataSet = buildDataSet();
 
-        //estrategia misclassification
-        System.out.println("\n2. Entrenando árbol con MisclassificationStrategy...");
-        GreedyTreeLearner<Weather, Boolean> learnerInteligente = new GreedyTreeLearner<>(new MisclassificationStrategy<>());
-        DecisionTree<Weather> arbolInteligente = learnerInteligente.learn(dataSet);
-        
-        Map<String, List<Weather>> prediccionesInteligentes = arbolInteligente.predict(dataSet);
-        System.out.println("Resultados (Inteligente): " + prediccionesInteligentes);
-    }
+    // usamos la Estrategia Aleatoria
+    System.out.println("\n1. Entrenando árbol con RandomStrategy...");
+    GreedyTreeLearner<Weather, Boolean> learnerAleatorio = new GreedyTreeLearner<>(new RandomStrategy<>());
+    DecisionTree<Weather> arbolAleatorio = learnerAleatorio.learn(dataSet);
 
-    // Reciclamos la creación de datos del apartado anterior
-    private static LabeledDataset<Weather, Boolean> buildDataSet() {
-        Weather[] conditions = {
-            new Weather(WeatherCondition.RAINY, Temperature.COLD),
-            new Weather(WeatherCondition.RAINY, Temperature.HOT),
-            new Weather(WeatherCondition.SUNNY, Temperature.HOT),
-            new Weather(WeatherCondition.SUNNY, Temperature.COLD),
-            new Weather(WeatherCondition.OVERCAST, Temperature.MILD)
-        };
+    Map<String, List<Weather>> prediccionesAleatorias = arbolAleatorio.predict(dataSet);
+    System.out.println("Resultados (Aleatorio): " + prediccionesAleatorias);
 
-        LabeledDataset<Weather, Boolean> ds = new LabeledDataset<>(new WeatherFeaturizer(), new ShouldIPlayTennisToday());
-        ds.addAll(conditions);
-        return ds;
-    }
+    // estrategia misclassification
+    System.out.println("\n2. Entrenando árbol con MisclassificationStrategy...");
+    GreedyTreeLearner<Weather, Boolean> learnerInteligente = new GreedyTreeLearner<>(new MisclassificationStrategy<>());
+    DecisionTree<Weather> arbolInteligente = learnerInteligente.learn(dataSet);
+
+    Map<String, List<Weather>> prediccionesInteligentes = arbolInteligente.predict(dataSet);
+    System.out.println("Resultados (Inteligente): " + prediccionesInteligentes);
+  }
+
+  /**
+   * Construye el conjunto de datos de ejemplo utilizado
+   * para entrenar los árboles.
+   *
+   * @return dataset etiquetado con condiciones meteorológicas
+   */
+  private static LabeledDataset<Weather, Boolean> buildDataSet() {
+    Weather[] conditions = {
+        new Weather(WeatherCondition.RAINY, Temperature.COLD),
+        new Weather(WeatherCondition.RAINY, Temperature.HOT),
+        new Weather(WeatherCondition.SUNNY, Temperature.HOT),
+        new Weather(WeatherCondition.SUNNY, Temperature.COLD),
+        new Weather(WeatherCondition.OVERCAST, Temperature.MILD)
+    };
+
+    LabeledDataset<Weather, Boolean> ds = new LabeledDataset<>(
+        new WeatherFeaturizer(),
+        new ShouldIPlayTennisToday());
+
+    ds.addAll(conditions);
+    return ds;
+  }
 }

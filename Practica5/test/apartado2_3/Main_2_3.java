@@ -11,8 +11,17 @@ import tree.DecisionTree;
 import tree.Node;
 import tree.Rama;
 
+/**
+ * Clase principal de pruebas para validar la construcción y uso
+ * de árboles de decisión aplicados a objetos Person.
+ */
 public class Main_2_3 {
 
+  /**
+   * Punto de entrada de ejecución.
+   *
+   * @param args argumentos de línea de comandos
+   */
   public static void main(String[] args) {
     // Personas de prueba
     Person p1 = new Person("Lucas", 15, 60, 170, true); // MENOR
@@ -37,6 +46,12 @@ public class Main_2_3 {
     testCornerCases();
   }
 
+  /**
+   * Construye un árbol de decisión base para clasificar personas
+   * según edad y peso.
+   *
+   * @return árbol de decisión configurado
+   */
   private static DecisionTree<Person> buildTree1() {
     DecisionTree<Person> dt = new DecisionTree<>();
 
@@ -49,6 +64,12 @@ public class Main_2_3 {
     return dt;
   }
 
+  /**
+   * Muestra por consola la estructura interna del árbol,
+   * incluyendo nodos y ramas disponibles.
+   *
+   * @param tree árbol de decisión analizado
+   */
   private static void testEstructura(DecisionTree<Person> tree) {
     System.out.println("===== CONSTRUCCIÓN DEL ÁRBOL =====");
     Node<Person> root = tree.getRaiz();
@@ -68,6 +89,13 @@ public class Main_2_3 {
         (otherwiseNode != null ? otherwiseNode.getName() : "Ninguno") + "]");
   }
 
+  /**
+   * Evalúa individualmente cada persona desde el nodo raíz
+   * y muestra la etiqueta resultante.
+   *
+   * @param tree    árbol de decisión utilizado
+   * @param persons personas evaluadas
+   */
   private static void testEvaluate(DecisionTree<Person> tree, Person[] persons) {
     System.out.println("\n===== EVALUACIÓN INDIVIDUAL =====");
     Node<Person> root = tree.getRaiz();
@@ -78,9 +106,14 @@ public class Main_2_3 {
     }
   }
 
+  /**
+   * Ejecuta una predicción múltiple mediante argumentos variables.
+   *
+   * @param tree    árbol de decisión utilizado
+   * @param persons personas clasificadas
+   */
   private static void testPredictVariadico(DecisionTree<Person> tree, Person[] persons) {
     System.out.println("\n===== PREDICCIÓN =====");
-    // Usamos el array disperso que Java empaqueta automáticamente como varargs
     Map<String, List<Person>> resultados = tree.predict(persons);
 
     for (Map.Entry<String, List<Person>> entry : resultados.entrySet()) {
@@ -91,6 +124,12 @@ public class Main_2_3 {
     }
   }
 
+  /**
+   * Ejecuta una predicción utilizando un dataset.
+   *
+   * @param tree    árbol de decisión utilizado
+   * @param persons personas incluidas en el dataset
+   */
   private static void testPredictDataset(DecisionTree<Person> tree, Person[] persons) {
     System.out.println("\n===== PREDICCIÓN (CON DATASET) =====");
     Dataset<Person> dataset = new Dataset<>(new PersonFeaturizer());
@@ -103,13 +142,20 @@ public class Main_2_3 {
     }
   }
 
+  /**
+   * Comprueba los predicados generados para cada etiqueta
+   * del árbol de decisión.
+   *
+   * @param tree    árbol de decisión utilizado
+   * @param persons personas evaluadas
+   */
   private static void testPredicates(DecisionTree<Person> tree, Person[] persons) {
     System.out.println("\n===== PREDICADOS =====");
     String[] etiquetas = { "MENOR", "ADULTO_LIGERO", "ADULTO_PESADO", "DESCONOCIDO" };
 
     for (String etiqueta : etiquetas) {
       Predicate<Person> pred = tree.getPredicate(etiqueta);
-      System.out.println("--- Evaluando predicado generado para: " + etiqueta);
+      System.out.println("Evaluando predicado generado para: " + etiqueta);
 
       if (pred != null) {
         for (Person p : persons) {
@@ -121,21 +167,21 @@ public class Main_2_3 {
     }
   }
 
+  /**
+   * Construye y prueba un árbol multinivel con varias profundidades.
+   */
   private static void testMultiLevel() {
     System.out.println("\n===== ÁRBOL MULTINIVEL (PROFUNDIDAD >= 2) =====");
     DecisionTree<Person> tree2 = new DecisionTree<>();
 
-    // Nivel 1
     tree2.node("ROOT")
         .withCondition("ADULTO", p -> p.getAge() >= 18)
         .otherwise("MENOR");
 
-    // Nivel 2
     tree2.node("ADULTO")
         .withCondition("PESADO", p -> p.getWeight() >= 80)
         .otherwise("LIGERO");
 
-    // Nivel 3
     tree2.node("PESADO")
         .withCondition("GIGANTE", p -> p.getHeight() >= 190)
         .otherwise("ESTANDAR");
@@ -151,6 +197,9 @@ public class Main_2_3 {
     System.out.println("Recorrido para Timmy (10a, 40kg, 140cm) -> " + tree2.predict(pMenor).keySet());
   }
 
+  /**
+   * Ejecuta pruebas sobre situaciones límite y estructuras mínimas.
+   */
   private static void testCornerCases() {
     System.out.println("\n===== CASOS LÍMITE =====");
     DecisionTree<Person> emptyTree = new DecisionTree<>();

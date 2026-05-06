@@ -11,6 +11,11 @@ import visualization.PlainTextTreeVisitor;
  */
 public class Main6 {
 
+  /**
+   * Punto de entrada de ejecución.
+   *
+   * @param args argumentos de línea de comandos
+   */
   public static void main(String[] args) {
     // Construcción del árbol de prueba
     DecisionTree<Person> decisionTree = buildComplexTree();

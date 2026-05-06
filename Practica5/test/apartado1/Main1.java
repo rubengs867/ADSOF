@@ -12,10 +12,9 @@ import model.*;
 public class Main1 {
 
   /**
-   * Main de prueba que verifica si el código implementado en el apartado 1 es
-   * correcto y funciona correctamente.
-   * 
-   * @param args argumentos pasados por consola. NO SE USA
+   * Punto de entrada de ejecución.
+   *
+   * @param args argumentos de línea de comandos
    */
   public static void main(String[] args) {
 

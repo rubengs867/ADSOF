@@ -51,11 +51,13 @@ TreeElement
       <x>330</x>
       <y>675</y>
       <w>555</w>
-      <h>120</h>
+      <h>150</h>
     </coordinates>
     <panel_attributes>PlainTextTreeVisitor
 --
+-sb: StringBuilder
 --
++getResult(): String
 +visitTreeNode(node: Node&lt;T&gt;, depth: int): void
 +visitRama(rama: Rama&lt;T&gt;, depth: int): void</panel_attributes>
     <additional_attributes/>

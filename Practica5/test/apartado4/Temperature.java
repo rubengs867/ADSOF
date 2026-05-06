@@ -1,5 +1,16 @@
 package apartado4;
 
+/**
+ * Enumeración de niveles de temperatura disponibles.
+ */
 public enum Temperature {
-    HOT, MILD, COLD
+
+  /** Temperatura alta. */
+  HOT,
+
+  /** Temperatura templada. */
+  MILD,
+
+  /** Temperatura baja. */
+  COLD
 }
