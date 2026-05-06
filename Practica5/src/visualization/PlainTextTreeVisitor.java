@@ -4,10 +4,15 @@ import tree.Node;
 import tree.Rama;
 
 /**
- * Implementación de {@link TreeVisitor} que muestra el árbol
- * en formato de texto plano por consola.
+ * Implementación de {@link TreeVisitor} que genera una visualización del árbol
+ * en texto plano.
  */
 public class PlainTextTreeVisitor implements TreeVisitor {
+
+  /**
+   * Acumulador de texto plano generado.
+   */
+  private StringBuilder sb = new StringBuilder();
 
   /**
    * Imprime un nodo del árbol con sangrado jerárquico.
@@ -21,8 +26,7 @@ public class PlainTextTreeVisitor implements TreeVisitor {
 
     String indent = "  ".repeat(Math.max(0, depth));
 
-    System.out.println(
-        indent + "└─── [Nodo: " + node.getName() + "]");
+    sb.append(indent + "└─── [Nodo: " + node.getName() + "]");
   }
 
   /**
@@ -41,7 +45,15 @@ public class PlainTextTreeVisitor implements TreeVisitor {
         ? rama.getCondicion().toString()
         : "otherwise";
 
-    System.out.println(
-        indent + "  ├─ Condición: " + condicion);
+    sb.append(indent + "  ├─ Condición: " + condicion);
+  }
+
+  /**
+   * Devuelve el árbol completo en texto plano.
+   *
+   * @return Texto plano generado.
+   */
+  public String getResult() {
+    return sb.toString();
   }
 }

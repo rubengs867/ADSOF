@@ -11,23 +11,22 @@ import model.*;
  */
 public class Main1 {
 
+  /**
+   * Main de prueba que verifica si el código implementado en el apartado 1 es
+   * correcto y funciona correctamente.
+   * 
+   * @param args argumentos pasados por consola. NO SE USA
+   */
   public static void main(String[] args) {
-    System.out.println("======================================================");
-    System.out.println("   INICIO DE BATERÍA DE PRUEBAS FUNCIONALES");
-    System.out.println("======================================================\n");
 
     testOperacionesBasicasOriginales();
     testAgregacionYDistribucion();
     testCasosExtremosDuplicados();
     testDatasetVacio();
-
-    System.out.println("\n======================================================");
-    System.out.println("   TODAS LAS PRUEBAS FINALIZADAS");
-    System.out.println("======================================================");
   }
 
   /**
-   * PRUEBA 1: Verifica el funcionamiento original y el tipado genérico seguro.
+   * Verifica el funcionamiento original y el tipado genérico seguro.
    */
   public static void testOperacionesBasicasOriginales() {
     System.out.println(" PRUEBA 1: Operaciones Básicas y Tipado Genérico ");
@@ -46,16 +45,15 @@ public class Main1 {
   }
 
   /**
-   * PRUEBA 2: Verifica las funciones matemáticas y de conteo de la clase Feature.
+   * Verifica las funciones matemáticas y de conteo de la clase Feature.
    */
   public static void testAgregacionYDistribucion() {
-    System.out.println("\n PRUEBA 2: Agregación (Min, Max) y Distribución ");
+    System.out.println("\n PRUEBA 2: Min, Max y Distribución ");
     Dataset<Person> dataSet = buildDataSet();
 
     Feature<Integer> ages = dataSet.feature("age");
     Feature<String> genders = dataSet.feature("gender");
 
-    // Test de agregación numérica
     System.out.println("Mínima edad: " + ages.min());
     System.out.println("Máxima edad: " + ages.max());
 
@@ -63,16 +61,16 @@ public class Main1 {
     Map<String, Integer> distGeneros = genders.distribution();
     System.out.println("Distribución de géneros: " + distGeneros);
 
-    // Verificamos el comportamiento tras ordenar (como en el caso original)
+    // Verificamos el comportamiento tras ordenar
     Collections.sort(ages);
     System.out.println("Edades ordenadas independientemente: " + ages);
   }
 
   /**
-   * PRUEBA 3: Prueba de estrés para el método removeDuplicates.
+   * Prueba de estrés para el método removeDuplicates.
    */
   public static void testCasosExtremosDuplicados() {
-    System.out.println("\n PRUEBA 3: Deduplicación y Casos Extremos ");
+    System.out.println("\n PRUEBA 3: Duplicación");
     Dataset<Person> dataSet = buildDataSet();
 
     // Añadimos explícitamente a personas idénticas a las ya existentes
@@ -99,10 +97,10 @@ public class Main1 {
   }
 
   /**
-   * PRUEBA 4: Casos Frontera (Corner Cases). ¿Qué pasa con un dataset vacío?
+   * Casos Frontera. Dataset vacío.
    */
   public static void testDatasetVacio() {
-    System.out.println("\n PRUEBA 4: Manejo de Dataset Vacío (Corner Cases) ");
+    System.out.println("\n PRUEBA 4: Manejo de Dataset Vacío");
     Dataset<Person> emptySet = new Dataset<>(new PersonFeaturizer());
 
     Feature<Integer> edadesVacias = emptySet.feature("age");
@@ -117,10 +115,9 @@ public class Main1 {
   }
 
   /**
-   * Método de construcción de datos (Helper original ampliado para contexto)
+   * Método de construcción de datos
    */
   public static Dataset<Person> buildDataSet() {
-    // name, age, weight, height, male?
     Person people[] = {
         new Person("Pedro", 66, 75, 180, true),
         new Person("Ana", 47, 54, 158, false),
@@ -128,7 +125,7 @@ public class Main1 {
         new Person("Rosa", 47, 54, 158, false)
     };
 
-    // A Featurizer for Person objects
+    // Featurizer para Person
     Dataset<Person> dataSet = new Dataset<>(new PersonFeaturizer());
     dataSet.addAll(people);
     return dataSet;

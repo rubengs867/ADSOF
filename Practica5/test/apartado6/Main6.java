@@ -56,7 +56,7 @@ public class Main6 {
     System.out.println("Representación jerárquica (Root Depth = 1):");
     // El método accept inicia el recorrido
     tree.getRaiz().accept(visitor, 1);
-    System.out.println();
+    System.out.println(visitor.getResult());
   }
 
   /**
@@ -86,6 +86,7 @@ public class Main6 {
     DecisionTree<Person> single = new DecisionTree<>();
     single.node("ROOT_ONLY");
     single.getRaiz().accept(visitor, 1);
+    System.out.println(visitor.getResult());
 
     // Caso: Nodo con únicamente Otherwise
     System.out.println("\n Caso 2: Solo Otherwise (Rama Virtual) ");
@@ -93,6 +94,7 @@ public class Main6 {
     onlyOtherwise.node("START").otherwise("END");
     // El accept del nodo debe crear la rama virtual para el visitor
     onlyOtherwise.getRaiz().accept(visitor, 1);
+    System.out.println(visitor.getResult());
 
     // Caso: Profundidad incremental en árbol lineal
     System.out.println("\n Caso 3: Profundidad Incremental ");
@@ -102,5 +104,6 @@ public class Main6 {
     linear.node("Nivel 3").withCondition("Hoja", p -> true);
 
     linear.getRaiz().accept(visitor, 1);
+    System.out.println(visitor.getResult());
   }
 }
