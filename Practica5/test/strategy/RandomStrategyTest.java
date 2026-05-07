@@ -5,21 +5,28 @@ import model.ILabelProvider;
 import model.LabeledDataset;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.util.*;
-
 import static org.junit.Assert.*;
 
+/**
+ * Pruebas unitarias para la estrategia de selección aleatoria de
+ * características.
+ */
 public class RandomStrategyTest {
 
+  /** Estrategia a probar */
   private RandomStrategy<String, String> strategy;
+
+  /** Dataset etiquetado de apoyo */
   private LabeledDataset<String, String> dataset;
 
+  /**
+   * Configuración inicial con un featurizer de tres opciones.
+   */
   @Before
   public void setUp() {
     strategy = new RandomStrategy<>();
 
-    // Featurizer simple con 3 características
     IFeaturizer<String> featurizer = new IFeaturizer<String>() {
       @Override
       public List<String> featureDeInteres() {
@@ -36,20 +43,22 @@ public class RandomStrategyTest {
     dataset = new LabeledDataset<>(featurizer, labelProvider);
   }
 
+  /**
+   * Verifica que la característica elegida pertenezca al conjunto disponible.
+   */
   @Test
   public void shouldReturnOneOfTheAvailableFeatures() {
-    // Act
     String chosen = strategy.chooseBestFeature(dataset);
 
-    // Assert
     assertNotNull(chosen);
-    // Debe ser una de las llaves del mapa de características del dataset[cite: 45]
     assertTrue(dataset.getFeatures().containsKey(chosen));
   }
 
+  /**
+   * Valida el caso determinista donde solo existe una opción.
+   */
   @Test
   public void shouldReturnOnlyFeatureWhenOnlyOneIsAvailable() {
-    // Arrange
     IFeaturizer<String> singleFeaturizer = new IFeaturizer<String>() {
       @Override
       public List<String> featureDeInteres() {
@@ -63,16 +72,17 @@ public class RandomStrategyTest {
     };
     LabeledDataset<String, String> singleDataset = new LabeledDataset<>(singleFeaturizer, obj -> "L");
 
-    // Act
     String chosen = strategy.chooseBestFeature(singleDataset);
 
-    // Assert
     assertEquals("Single", chosen);
   }
 
+  /**
+   * Verifica que se lance una excepción si no hay características disponibles
+   * para elegir.
+   */
   @Test(expected = IndexOutOfBoundsException.class)
   public void shouldThrowExceptionIfNoFeaturesAvailable() {
-    // Arrange
     IFeaturizer<String> emptyFeaturizer = new IFeaturizer<String>() {
       @Override
       public List<String> featureDeInteres() {
@@ -86,7 +96,6 @@ public class RandomStrategyTest {
     };
     LabeledDataset<String, String> emptyDataset = new LabeledDataset<>(emptyFeaturizer, obj -> "L");
 
-    // Act
     strategy.chooseBestFeature(emptyDataset);
   }
 }
