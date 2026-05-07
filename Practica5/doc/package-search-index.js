@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"apartado1"},{"l":"apartado2_3"},{"l":"apartado4"},{"l":"apartado5"},{"l":"apartado6"},{"l":"model"},{"l":"strategy"},{"l":"tree"},{"l":"visualization"}];updateSearchResults();

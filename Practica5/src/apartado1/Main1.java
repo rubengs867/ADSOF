@@ -114,7 +114,9 @@ public class Main1 {
   }
 
   /**
-   * Método de construcción de datos
+   * Construye un dataset de ejemplo con varias instancias de {@link Person}.
+   *
+   * @return dataset inicializado con objetos {@code Person}
    */
   public static Dataset<Person> buildDataSet() {
     Person people[] = {
@@ -124,9 +126,9 @@ public class Main1 {
         new Person("Rosa", 47, 54, 158, false)
     };
 
-    // Featurizer para Person
     Dataset<Person> dataSet = new Dataset<>(new PersonFeaturizer());
     dataSet.addAll(people);
+
     return dataSet;
   }
 }
